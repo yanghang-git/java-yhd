@@ -18,5 +18,11 @@ public interface UserDao {
 	 */
 	List<User> getListAll(Connection conn);
 
+	/**
+	 * 修改User用户
+	 * @param conn 连接
+	 * @param user 用户
+	 * @return 是否修改成功
+	 */
 	boolean update(Connection conn, User user);
 }
