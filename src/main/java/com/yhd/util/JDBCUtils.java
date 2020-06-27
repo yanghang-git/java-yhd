@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.UUID;
 
 /**
  * @Author 杨航
@@ -39,14 +40,12 @@ public class JDBCUtils {
 
 	/**
 	 * 将传递进来的字符串。首字母大写 在其前方加上set
-	 * @param field
-	 * @return
+	 * @param field 属性
+	 * @return 属性对应的set方法的名字
 	 */
 	public static String firstAddSet(String field) {
 		// abc   setAbc
-		StringBuilder sb = new StringBuilder("set");
-		sb.append(field.substring(0, 1).toUpperCase()).append(field.substring(1));
-		return sb.toString();
+		return "set" + field.substring(0, 1).toUpperCase() + field.substring(1);
 	}
 
 	/**
@@ -71,7 +70,12 @@ public class JDBCUtils {
 		return result;
 	}
 
-
-
+	/**
+	 * 随即生成一个32位的字符串 作为订单编号
+	 * @return 订单编号
+	 */
+	public static String randomCreateGoodsId() {
+		return UUID.randomUUID().toString().replace("-","");
+	}
 
 }
