@@ -14,28 +14,28 @@ public class Goods implements Serializable {
 	private Integer id;
 	private String name;
 	private BigDecimal price;
-	private Integer statusId;
 	private String style;
 	private String kind;
 	private String content;
 	private String imagePrimary;
 	private String imageDetails;
 	private Integer number;
+	private Integer catalogId;
 
 
 	public Goods() {}
 
-	public Goods(Integer id, String name, BigDecimal price, Integer statusId, String style, String kind, String content, String imagePrimary, String imageDetails, Integer number) {
+	public Goods(Integer id, String name, BigDecimal price,String style, String kind, String content, String imagePrimary, String imageDetails, Integer number, Integer catalogId) {
 		this.id = id;
 		this.name = name;
 		this.price = price;
-		this.statusId = statusId;
 		this.style = style;
 		this.kind = kind;
 		this.content = content;
 		this.imagePrimary = imagePrimary;
 		this.imageDetails = imageDetails;
 		this.number = number;
+		this.catalogId = catalogId;
 	}
 
 	@Override
@@ -46,9 +46,7 @@ public class Goods implements Serializable {
 				+ ",\"name\":\""
 				+ name + '\"'
 				+ ",\"price\":"
-				+ price
-				+ ",\"statusId\":"
-				+ statusId
+				+ price + '\"'
 				+ ",\"style\":\""
 				+ style + '\"'
 				+ ",\"kind\":\""
@@ -61,7 +59,17 @@ public class Goods implements Serializable {
 				+ imageDetails + '\"'
 				+ ",\"number\":"
 				+ number
+				+ ",\"catalogId\":"
+				+ catalogId
 				+ "}";
+	}
+
+	public Integer getCatalogId() {
+		return catalogId;
+	}
+
+	public void setCatalogId(Integer catalogId) {
+		this.catalogId = catalogId;
 	}
 
 	public Integer getId() {
@@ -88,13 +96,6 @@ public class Goods implements Serializable {
 		this.price = price;
 	}
 
-	public Integer getStatusId() {
-		return statusId;
-	}
-
-	public void setStatusId(Integer statusId) {
-		this.statusId = statusId;
-	}
 
 	public String getStyle() {
 		return style;

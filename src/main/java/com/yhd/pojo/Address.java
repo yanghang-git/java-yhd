@@ -13,14 +13,14 @@ public class Address implements Serializable {
 	private String userId;
 	private String username;
 	private String phone;
-	private String city;
-	private String county;
-	private String street;
+	private Integer city;
+	private Integer county;
+	private Integer street;
 	private String detail;
 
 	public Address(){}
 
-	public Address(Integer id, String userId, String username, String phone, String city, String county, String street, String detail) {
+	public Address(Integer id, String userId, String username, String phone, Integer city, Integer county, Integer street, String detail) {
 		this.id = id;
 		this.userId = userId;
 		this.username = username;
@@ -85,27 +85,27 @@ public class Address implements Serializable {
 		this.phone = phone;
 	}
 
-	public String getCity() {
+	public Integer getCity() {
 		return city;
 	}
 
-	public void setCity(String city) {
+	public void setCity(Integer city) {
 		this.city = city;
 	}
 
-	public String getCounty() {
+	public Integer getCounty() {
 		return county;
 	}
 
-	public void setCounty(String county) {
+	public void setCounty(Integer county) {
 		this.county = county;
 	}
 
-	public String getStreet() {
+	public Integer getStreet() {
 		return street;
 	}
 
-	public void setStreet(String street) {
+	public void setStreet(Integer street) {
 		this.street = street;
 	}
 

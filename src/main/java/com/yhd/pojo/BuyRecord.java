@@ -15,7 +15,7 @@ public class BuyRecord implements Serializable {
 	private String id;
 	private String userId;
 	private String goodsName;
-	private String buyNumber;
+	private Integer buyNumber;
 	private String type;
 	private BigDecimal totalPrices;
 	private String addressName;
@@ -25,7 +25,7 @@ public class BuyRecord implements Serializable {
 
 	public BuyRecord() {}
 
-	public BuyRecord(String id, String userId, String goodsName, String buyNumber, String type, BigDecimal totalPrices, String addressName, String addressPhone, String address, Timestamp takeTime) {
+	public BuyRecord(String id, String userId, String goodsName, Integer buyNumber, String type, BigDecimal totalPrices, String addressName, String addressPhone, String address, Timestamp takeTime) {
 		this.id = id;
 		this.userId = userId;
 		this.goodsName = goodsName;
@@ -89,11 +89,11 @@ public class BuyRecord implements Serializable {
 		this.goodsName = goodsName;
 	}
 
-	public String getBuyNumber() {
+	public Integer getBuyNumber() {
 		return buyNumber;
 	}
 
-	public void setBuyNumber(String buyNumber) {
+	public void setBuyNumber(Integer buyNumber) {
 		this.buyNumber = buyNumber;
 	}
 

@@ -78,4 +78,12 @@ public class GoodsComment implements Serializable {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
+
+	public Timestamp getOrderTime() {
+		return orderTime;
+	}
+
+	public void setOrderTime(Timestamp orderTime) {
+		this.orderTime = orderTime;
+	}
 }

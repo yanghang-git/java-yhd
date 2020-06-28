@@ -20,11 +20,11 @@ public class User implements Serializable {
 	private String email;
 	private String phone;
 	private Integer addressId;
-	private boolean freeze;
+	private Boolean freeze;
 
 	public User() {}
 
-	public User(String id, String password, String name, String sex, Timestamp birthday, String email, String phone, Integer addressId, boolean freeze) {
+	public User(String id, String password, String name, String sex, Timestamp birthday, String email, String phone, Integer addressId, Boolean freeze) {
 		this.id = id;
 		this.password = password;
 		this.name = name;
@@ -125,11 +125,11 @@ public class User implements Serializable {
 		this.addressId = addressId;
 	}
 
-	public boolean isFreeze() {
+	public Boolean isFreeze() {
 		return freeze;
 	}
 
-	public void setFreeze(boolean freeze) {
+	public void setFreeze(Boolean freeze) {
 		this.freeze = freeze;
 	}
 }

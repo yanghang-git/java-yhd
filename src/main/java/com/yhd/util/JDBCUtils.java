@@ -74,7 +74,7 @@ public class JDBCUtils {
 	 * 随即生成一个32位的字符串 作为订单编号
 	 * @return 订单编号
 	 */
-	public static String randomCreateGoodsId() {
+	public static String randomCreateIndentId() {
 		return UUID.randomUUID().toString().replace("-","");
 	}
 

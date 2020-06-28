@@ -1,6 +1,6 @@
 package com.yhd.dao;
 
-import com.yhd.pojo.ActivitySlideShow;
+import com.yhd.pojo.ActivitySlideshow;
 
 import java.sql.Connection;
 import java.util.List;
@@ -10,13 +10,13 @@ import java.util.List;
  * @Date 2020/6/27 17:51
  * @Since 1.8
  */
-public interface ActivitySlideShowDao {
+public interface ActivitySlideshowDao {
 	/**
 	 * 获取全部轮播图对象
 	 * @param conn 连接
 	 * @return List集合
 	 */
-	List<ActivitySlideShow> getAllList(Connection conn);
+	List<ActivitySlideshow> getAllList(Connection conn);
 
 	/**
 	 * 添加一个记录
@@ -24,7 +24,7 @@ public interface ActivitySlideShowDao {
 	 * @param slideShow 轮播图单个实例
 	 * @return 是否添加成功
 	 */
-	boolean addSlideShow(Connection conn, ActivitySlideShow slideShow);
+	boolean addSlideshow(Connection conn, ActivitySlideshow slideShow);
 
 	/**
 	 * 根据序号删除
@@ -40,5 +40,5 @@ public interface ActivitySlideShowDao {
 	 * @param slideShow 轮播图单个实例
 	 * @return 是否修改成功
 	 */
-	boolean updateSlideShow(Connection conn, ActivitySlideShow slideShow);
+	boolean updateSlideshow(Connection conn, ActivitySlideshow slideShow);
 }

@@ -24,5 +24,20 @@ public interface UserDao {
 	 * @param user 用户
 	 * @return 是否修改成功
 	 */
-	boolean update(Connection conn, User user);
+	boolean updateUser(Connection conn, User user);
+
+	/**
+	 * 添加User用户
+	 * @param conn 连接
+	 * @param user 用户
+	 * @return 是否添加成功
+	 */
+	boolean addUser(Connection conn, User user);
+	/**
+	 * 删除User用户 根据用户Id
+	 * @param conn 连接
+	 * @param id 用户id
+	 * @return 是否添加删除
+	 */
+	boolean removeById(Connection conn, String id);
 }

@@ -1,5 +1,7 @@
 package com.yhd.dao;
 
+import com.yhd.pojo.Goods;
+
 import java.sql.Connection;
 import java.util.List;
 
@@ -8,7 +10,7 @@ import java.util.List;
  * @Date 2020/6/27 17:33
  * @Since 1.8
  */
-public interface Goods {
+public interface GoodsDao {
 	/**
 	 * 根据商品目录Id查询下所有的商品
 	 * @param conn 连接
@@ -39,7 +41,7 @@ public interface Goods {
 	 * @param goods 商品
 	 * @return 是否修改成功
 	 */
-	boolean update(Connection conn, Goods goods);
+	boolean updateGoods(Connection conn, Goods goods);
 
 }
 

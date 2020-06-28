@@ -7,16 +7,16 @@ import java.io.Serializable;
  * @Date 2020/6/27 14:46
  * @Since 1.8
  */
-public class ActivitySlideShow implements Serializable {
+public class ActivitySlideshow implements Serializable {
 	private static final long serialVersionUID = 6779026118842029746L;
 	private Integer id;
 	private String image;
 	private String font;
 	private String url;
 
-	public ActivitySlideShow() {}
+	public ActivitySlideshow() {}
 
-	public ActivitySlideShow(Integer id, String image, String font, String url) {
+	public ActivitySlideshow(Integer id, String image, String font, String url) {
 		this.id = id;
 		this.image = image;
 		this.font = font;
