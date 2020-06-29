@@ -11,6 +11,16 @@ import java.util.List;
  * @Since 1.8
  */
 public interface IndentDao {
+
+	/**
+	 * 根据用户的id查询出对应的订单
+	 * @param conn 连接
+	 * @param userId 用户id
+	 * @param goodsId 商品id
+	 * @return 订单集合
+	 */
+	List<Indent> getListByUserId(Connection conn, String userId, String goodsId);
+
 	/**
 	 * 根据用户的id查询出对应的订单
 	 * @param conn 连接

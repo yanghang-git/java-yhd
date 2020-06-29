@@ -38,6 +38,7 @@ public abstract class BaseDao<T> {
 			for (int i = 1; i <= args.length; i++) {
 				ps.setObject(i, args[i-1]);
 			}
+			System.out.println(ps);
 			return ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

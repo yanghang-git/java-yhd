@@ -15,6 +15,20 @@ import java.util.List;
 public class IndentDaoImpl extends BaseDao<Indent> implements IndentDao {
 	/**
 	 * 根据用户的id查询出对应的订单
+	 *
+	 * @param conn     连接
+	 * @param userId   用户id
+	 * @param goodsId 商品id
+	 * @return 订单集合
+	 */
+	@Override
+	public List<Indent> getListByUserId(Connection conn, String userId, String goodsId) {
+		String sql = "select id, user_id, goods_id, buy_number, type, total_prices, address_id,order_time from indent where user_id = ? and goods_id = ?";
+		return super.getInstances(conn, sql, userId, goodsId);
+	}
+
+	/**
+	 * 根据用户的id查询出对应的订单
 	 * @param conn   连接
 	 * @param userId 用户id
 	 * @return 订单集合

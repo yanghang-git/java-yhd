@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -42,7 +43,7 @@ public class GoodsDaoImplTest {
 	}
 
 	@Test
-	public void updateGoods() {
+	public void updateGoods() throws SQLException {
 		boolean result = dao.updateGoods(conn, new Goods(1, "name", new BigDecimal(20),  "style", "kind", "content", "imagePrimary"
 				, "imageDetails", 122, 2));
 		assertTrue(result);
