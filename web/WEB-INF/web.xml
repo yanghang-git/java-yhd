@@ -17,13 +17,33 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+	<filter>
+		<filter-name>AdminCheckLoginFilter</filter-name>
+		<filter-class>com.yhd.util.webutil.AdminCheckLoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AdminCheckLoginFilter</filter-name>
+		<url-pattern>/backend/*</url-pattern>
+		<url-pattern>/back/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>AdminLoginFilter</filter-name>
+		<filter-class>com.yhd.util.webutil.AdminLoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AdminLoginFilter</filter-name>
+		<url-pattern>/backendlogin.jsp</url-pattern>
+	</filter-mapping>
+
+
 
 	<servlet>
 		<servlet-name>AdminServlet</servlet-name>
 		<servlet-class>com.yhd.controller.backend.AdminServlet</servlet-class>
 		<init-param>
 			<param-name>maxFailTimes</param-name>
-			<param-value>2</param-value>
+			<param-value>3</param-value>
 		</init-param>
 		<init-param>
 			<param-name>failFreezeDay</param-name>
@@ -35,15 +55,16 @@
 		<url-pattern>/admin</url-pattern>
 	</servlet-mapping>
 
-	<filter>
-		<filter-name>AdminLoginFilter</filter-name>
-		<filter-class>com.yhd.util.webutil.AdminLoginFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>AdminLoginFilter</filter-name>
-		<url-pattern>/backendlogin.jsp</url-pattern>
-		<url-pattern>/admin</url-pattern>
-	</filter-mapping>
+	<servlet>
+		<servlet-name>UserServlet</servlet-name>
+		<servlet-class>com.yhd.controller.backend.UserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserServlet</servlet-name>
+		<url-pattern>/back/user</url-pattern>
+	</servlet-mapping>
+	
+	
 
 
 

@@ -125,7 +125,7 @@ public class User implements Serializable {
 		this.addressId = addressId;
 	}
 
-	public Boolean isFreeze() {
+	public Boolean getFreeze() {
 		return freeze;
 	}
 

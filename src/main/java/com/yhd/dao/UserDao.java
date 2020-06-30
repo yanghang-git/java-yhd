@@ -19,6 +19,23 @@ public interface UserDao {
 	List<User> getListAll(Connection conn);
 
 	/**
+	 * 根据用户的Id进行查询。 模糊查询
+	 * @param conn 连接
+	 * @param id 用户的账号
+	 * @return 用户集合 List
+	 */
+	List<User> getAllByIdList(Connection conn, String id);
+
+	/**
+	 * 根据用户的Id进行 冻结 / 解冻
+	 * @param conn 连接
+	 * @param id 用户的账号
+	 * @param freeze 解冻 / 冻结
+	 * @return 是否修改成功
+	 */
+	boolean updateUserFreeze(Connection conn, String id, boolean freeze);
+
+	/**
 	 * 修改User用户
 	 * @param conn 连接
 	 * @param user 用户

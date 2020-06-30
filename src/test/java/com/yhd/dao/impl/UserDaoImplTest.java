@@ -26,9 +26,23 @@ public class UserDaoImplTest {
 		assertNotNull(list);
 	}
 
+
+	@Test
+	public void getAllByIdList() {
+		List<User> list = dao.getAllByIdList(conn, null);
+		System.out.println(list);
+		assertNotNull(list);
+	}
+	@Test
+	public void updateUserFreeze() {
+		boolean result = dao.updateUserFreeze(conn,"Tom", true);
+		assertTrue(result);
+	}
+
+
 	@Test
 	public void updateUser() {
-		boolean result = dao.updateUser(conn, new User("Tom", "tom", null, null, null, null, "13777777777", null, false));
+		boolean result = dao.updateUser(conn, new User("Jack", "jack", null, null, null, null, "13777777778", null, false));
 		assertTrue(result);
 	}
 

@@ -2,7 +2,7 @@ package com.yhd.controller.backend;
 
 import com.yhd.dao.DaoFlyweightPatternFactory;
 import com.yhd.pojo.Admin;
-import com.yhd.pojo.Hint;
+import com.yhd.bean.Hint;
 import com.yhd.service.backend.AdminService;
 import com.yhd.service.backend.impl.AdminServiceImpl;
 import com.yhd.util.ConnectionFactory;
@@ -36,7 +36,7 @@ public class AdminServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
 		String methodName = req.getParameter(ContentConstant.CONTENT_METHOD_NAME);
 		try {
 			this.getClass().getDeclaredMethod(methodName, HttpServletRequest.class, HttpServletResponse.class).invoke(this, req, resp);
@@ -46,7 +46,7 @@ public class AdminServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
 		doGet(req, resp);
 	}
 
@@ -58,11 +58,12 @@ public class AdminServlet extends HttpServlet {
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 		Admin admin = service.login(username, password);
-		String url = "WEB-INF/backend/index.jsp";
+		String url = "backend/index.jsp";
 		if(admin == null) {
 			url = "/backendlogin.jsp";
 			if (checkLoginTimes(req, resp)) return;
 		} else {
+			req.getSession().setAttribute(ContentConstant.SESSION_ADMIN, admin);
 			req.getSession().removeAttribute(String.valueOf(InetAddress.getLocalHost()));
 		}
 		req.getRequestDispatcher(req.getContextPath() + url).forward(req, resp);

@@ -11,10 +11,11 @@ import java.util.List;
  */
 public interface UserService {
 	/**
-	 * get All User instance result list gather
+	 * fuzzy search get All User instance by user id result list gather
+	 * @param id user of id
 	 * @return User instance all
 	 */
-	List<User> getAllList();
+	List<User> getAllByIdList(String id);
 
 	/**
 	 * will appoint of username freeze

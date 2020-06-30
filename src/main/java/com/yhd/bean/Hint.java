@@ -1,4 +1,4 @@
-package com.yhd.pojo;
+package com.yhd.bean;
 
 import java.io.Serializable;
 

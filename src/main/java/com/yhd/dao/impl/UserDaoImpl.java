@@ -25,6 +25,31 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 	}
 
 	/**
+	 * 根据用户的Id进行查询。 模糊查询
+	 * @param conn 连接
+	 * @param id   用户的账号
+	 * @return 用户集合 List
+	 */
+	@Override
+	public List<User> getAllByIdList(Connection conn, String id) {
+		String sql = "select id, password, name, sex, birthday, email, phone, address_id, freeze from user where id like ?";
+		return super.getInstances(conn, sql, "%" + (id == null || id.length() == 0 ? "" : id) + "%");
+	}
+
+	/**
+	 * 根据用户的Id进行 冻结 / 解冻
+	 * @param conn   连接
+	 * @param id     用户的账号
+	 * @param freeze 解冻 / 冻结
+	 * @return 是否修改成功
+	 */
+	@Override
+	public boolean updateUserFreeze(Connection conn, String id, boolean freeze) {
+		String sql = "update user set freeze = ? where id = ?";
+		return super.update(conn, sql, freeze, id) == 1;
+	}
+
+	/**
 	 * 修改User用户
 	 * @param conn 连接
 	 * @param user 用户
@@ -34,7 +59,7 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 	public boolean updateUser(Connection conn, User user) {
 		String sql = "update user set password = ?, name = ?, sex = ?, birthday = ?, email = ?, phone = ?, address_id = ?, freeze = ? where id = ?";
 		return super.update(conn, sql, user.getPassword(), user.getName(), user.getSex(), user.getBirthday()
-			, user.getEmail(), user.getPhone(), user.getAddressId(), user.isFreeze(), user.getId()) == 1;
+			, user.getEmail(), user.getPhone(), user.getAddressId(), user.getFreeze(), user.getId()) == 1;
 	}
 
 	/**
