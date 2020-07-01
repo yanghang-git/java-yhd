@@ -31,7 +31,7 @@ public interface IndentService {
 	 * get Indent all
 	 * @return Indent instance gather List
 	 */
-	List<Indent> getListAll(Connection conn);
+	List<Indent> getListAll();
 
 	/**
 	 * get Indent all by id

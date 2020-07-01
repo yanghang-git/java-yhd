@@ -29,7 +29,7 @@ public class UserDaoImplTest {
 
 	@Test
 	public void getAllByIdList() {
-		List<User> list = dao.getAllByIdList(conn, null);
+		List<User> list = dao.getAllByIdList(conn, null, 1, 2);
 		System.out.println(list);
 		assertNotNull(list);
 	}
@@ -57,4 +57,12 @@ public class UserDaoImplTest {
 		boolean result = dao.removeById(conn, "Jack");
 		assertTrue(result);
 	}
+	@Test
+	public void getUserCount() {
+		long userCount = dao.getUserCount(conn, null);
+		System.out.println(userCount);
+		assertNotNull(userCount);
+	}
+
+
 }

@@ -29,8 +29,8 @@ public class UserServiceImpl implements UserService {
 	 * @return User instance all
 	 */
 	@Override
-	public List<User> getAllByIdList(String id) {
-		return dao.getAllByIdList(conn, id);
+	public List<User> getAllByIdList(String id, int pageSize, int pageCount) {
+		return dao.getAllByIdList(conn, id, pageSize, pageCount);
 	}
 
 	/**
@@ -51,5 +51,15 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean unfreeze(String username) {
 		return dao.updateUserFreeze(conn, username, false);
+	}
+
+	/**
+	 * fuzzy search  get user all count
+	 * @param id user of id
+	 * @return user count type: long
+	 */
+	@Override
+	public long getUserCount(String id) {
+		return dao.getUserCount(conn, id);
 	}
 }

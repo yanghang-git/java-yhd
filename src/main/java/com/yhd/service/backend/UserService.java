@@ -15,7 +15,7 @@ public interface UserService {
 	 * @param id user of id
 	 * @return User instance all
 	 */
-	List<User> getAllByIdList(String id);
+	List<User> getAllByIdList(String id, int pageSize, int pageCount);
 
 	/**
 	 * will appoint of username freeze
@@ -30,4 +30,11 @@ public interface UserService {
 	 * @return true unfreeze success or  false unfreeze fail
 	 */
 	boolean unfreeze(String username);
+
+	/**
+	 * fuzzy search  get user all count
+	 * @param id user of id
+	 * @return user count type: long
+	 */
+	long getUserCount(String id);
 }

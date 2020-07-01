@@ -26,15 +26,19 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 
 	/**
 	 * 根据用户的Id进行查询。 模糊查询
-	 * @param conn 连接
-	 * @param id   用户的账号
+	 *
+	 * @param conn      连接
+	 * @param id        用户的账号
+	 * @param pageSize  第几页
+	 * @param pageCount 一页显示多少
 	 * @return 用户集合 List
 	 */
 	@Override
-	public List<User> getAllByIdList(Connection conn, String id) {
-		String sql = "select id, password, name, sex, birthday, email, phone, address_id, freeze from user where id like ?";
-		return super.getInstances(conn, sql, "%" + (id == null || id.length() == 0 ? "" : id) + "%");
+	public List<User> getAllByIdList(Connection conn, String id, int pageSize, int pageCount) {
+		String sql = "select id, password, name, sex, birthday, email, phone, address_id, freeze from user where id like ? limit ?, ?";
+		return super.getInstances(conn, sql, "%" + (id == null || id.length() == 0 ? "" : id) + "%", (pageSize - 1) * pageCount, pageCount);
 	}
+
 
 	/**
 	 * 根据用户的Id进行 冻结 / 解冻
@@ -84,5 +88,17 @@ public class UserDaoImpl extends BaseDao<User> implements UserDao {
 	public boolean removeById(Connection conn, String id) {
 		String sql = "delete from user where id = ?";
 		return super.update(conn, sql, id) == 1;
+	}
+
+	/**
+	 * 获取用户的个数
+	 * @param conn 连接
+	 * @param id 用户id
+	 * @return 用户的个数
+	 */
+	@Override
+	public long getUserCount(Connection conn, String id) {
+		String sql = "select count(*) from user where id like ?";
+		return super.getSimple(conn, sql, "%" + (id == null || id.length() == 0 ? "" : id) + "%");
 	}
 }

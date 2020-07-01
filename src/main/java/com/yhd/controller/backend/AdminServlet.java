@@ -29,7 +29,7 @@ public class AdminServlet extends HttpServlet {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		service  = new AdminServiceImpl(ConnectionFactory.INSTANCE.create()
+		service  = new AdminServiceImpl(ConnectionFactory.INSTANCE.create(ConnectionFactory.MYSQL_TOMCAT_CONN)
 				, DaoFlyweightPatternFactory.getInstance().getDaoImpl("admin"));
 		maxFailTimes = Integer.parseInt(config.getInitParameter("maxFailTimes")) - 1;
 		failFreezeDay = Integer.parseInt(config.getInitParameter("failFreezeDay"));

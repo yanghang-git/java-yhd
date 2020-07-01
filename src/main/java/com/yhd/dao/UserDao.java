@@ -11,8 +11,9 @@ import java.util.List;
  * @Since 1.8
  */
 public interface UserDao {
+
 	/**
-	 * 获取全部的User用户
+	 * 获取分页的User用户
 	 * @param conn 连接
 	 * @return 用户集合
 	 */
@@ -22,9 +23,11 @@ public interface UserDao {
 	 * 根据用户的Id进行查询。 模糊查询
 	 * @param conn 连接
 	 * @param id 用户的账号
+	 * @param pageSize 第几页
+	 * @param pageCount 一页显示多少
 	 * @return 用户集合 List
 	 */
-	List<User> getAllByIdList(Connection conn, String id);
+	List<User> getAllByIdList(Connection conn, String id, int pageSize, int pageCount);
 
 	/**
 	 * 根据用户的Id进行 冻结 / 解冻
@@ -57,4 +60,12 @@ public interface UserDao {
 	 * @return 是否添加删除
 	 */
 	boolean removeById(Connection conn, String id);
+
+	/**
+	 * 获取用户的个数.模糊查询
+	 * @param conn 连接
+	 * @param id 用户的账号
+	 * @return 用户的个数
+	 */
+	long getUserCount(Connection conn, String id);
 }

@@ -1,5 +1,6 @@
 package com.yhd.controller.backend;
 
+import com.yhd.bean.Page;
 import com.yhd.dao.DaoFlyweightPatternFactory;
 import com.yhd.pojo.Admin;
 import com.yhd.bean.Hint;
@@ -11,6 +12,7 @@ import com.yhd.util.ContentConstant;
 import com.yhd.util.JsonUtils;
 import com.yhd.util.WebUtils;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,12 +28,18 @@ import java.util.List;
 public class UserServlet extends HttpServlet {
 
 	private UserService service;
+	private int eachPageNumber;
+	private int maxPagination;
 
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		service = new UserServiceImpl(ConnectionFactory.INSTANCE.create()
+		service = new UserServiceImpl(ConnectionFactory.INSTANCE.create(ConnectionFactory.MYSQL_TOMCAT_CONN)
 				, DaoFlyweightPatternFactory.getInstance().getDaoImpl("user"));
+		ServletContext context = this.getServletContext();
+		eachPageNumber = Integer.parseInt(context.getInitParameter("pagingNumberEachPage"));
+		maxPagination = Integer.parseInt(context.getInitParameter("pagingMaxPagination"));
+
 	}
 
 	@Override
@@ -49,24 +57,18 @@ public class UserServlet extends HttpServlet {
 		doGet(req, resp);
 	}
 
-	/**
-	 * the way to use request and response invoke
-	 * 		load page of user data
-	 */
-	private void getAllByIdList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String account = req.getParameter("account");
-		req.setAttribute("userList", service.getAllByIdList(account));
-		req.getRequestDispatcher(req.getContextPath() + "/backend/user/freezemanage.jsp").forward(req, resp);
-	}
 
 	/**
 	 * The way to use ajax invoke
 	 * 		load page of user data
 	 */
-	private void getAllByIdListAjax(HttpServletRequest req, HttpServletResponse resp) {
+	private void getAllByIdList(HttpServletRequest req, HttpServletResponse resp) {
 		String account = req.getParameter("account");
-		List<User> list = service.getAllByIdList(account);
-		WebUtils.sendValue(resp, JsonUtils.getJson(list));
+		int currPageNo = Integer.parseInt(req.getParameter("currPageNo"));  // 显示第几页
+		long userCount = service.getUserCount(account); // 用户个数
+		List<User> list = service.getAllByIdList(account, currPageNo, eachPageNumber);
+		Page<User> pages =new Page<>(userCount, currPageNo, eachPageNumber, maxPagination, list);
+		WebUtils.sendValue(resp, JsonUtils.getJson(pages));
 	}
 
 	/**
@@ -76,7 +78,7 @@ public class UserServlet extends HttpServlet {
 	private void freeze(HttpServletRequest req, HttpServletResponse resp) {
 		String account = req.getParameter("account");
 		boolean freeze = service.freeze(account);
-		Hint hint = new Hint(((Admin) req.getSession().getAttribute(ContentConstant.SESSION_ADMIN)).getId(), freeze ? "冻结成功" : "冻结失败");
+		Hint hint = new Hint(((Admin) req.getSession().getAttribute(ContentConstant.SESSION_ADMIN)).getId(), account + "\t冻结" + (freeze ? "成功" : "失败"));
 		WebUtils.sendValue(resp, JsonUtils.getJson(hint));
 	}
 
@@ -87,7 +89,7 @@ public class UserServlet extends HttpServlet {
 	private void unfreeze(HttpServletRequest req, HttpServletResponse resp) {
 		String account = req.getParameter("account");
 		boolean freeze = service.unfreeze(account);
-		Hint hint = new Hint(((Admin) req.getSession().getAttribute(ContentConstant.SESSION_ADMIN)).getId(), freeze ? "解冻成功" : "解冻失败");
+		Hint hint = new Hint(((Admin) req.getSession().getAttribute(ContentConstant.SESSION_ADMIN)).getId(), account + "\t解冻" + (freeze ? "成功" : "失败"));
 		WebUtils.sendValue(resp, JsonUtils.getJson(hint));
 	}
 }

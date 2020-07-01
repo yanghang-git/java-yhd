@@ -32,9 +32,8 @@ public interface ActivitySlideshowService {
 
 	/**
 	 * update ActivitySlideshow by id
-	 * @param id ActivitySlideShow of id
 	 * @param slideshow ActivitySlideShow instance
 	 * @return true: success or false: fail
 	 */
-	boolean updateById(int id, ActivitySlideshow slideshow);
+	boolean updateById(ActivitySlideshow slideshow);
 }

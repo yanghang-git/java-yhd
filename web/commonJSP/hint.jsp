@@ -22,6 +22,21 @@
 		$('.hint-box').slideDown(500);
 	}
 
+	function mySuccess(data) {
+		data = JSON.parse(data);
+		showHint(data.title, data.value);
+	}
+
+	function myError() {
+		showHint("系统提示", "网络异常");
+	}
+
+	function showHint(title, value, time) {
+		$('.hint-title .title-name').text(title);
+		$('.hint-box .hint-value').text(value);
+		$('.hint-box').slideDown(time);
+	}
+
 	$(".hint-box button").click(function () {
 		$('.hint-box').slideUp(500);
 	});

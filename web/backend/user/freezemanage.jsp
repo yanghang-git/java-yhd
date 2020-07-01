@@ -55,20 +55,9 @@
 					<th scope="col">是否冻结</th>
 					<th scope="col">操作</th>
 				</tr>
-				</thead>
-				<tbody>
-				<c:forEach var="item" items="${userList}">
-					<tr>
-						<th scope="row">${item.id}</th>
-						<td>${item.phone}</td>
-						<td>${item.freeze ? "Freeze" : "notFreeze"}</td>
-						<td>
-							<button ${item.freeze ? "disabled" : ""} class="btn freeze btn-outline-dark">冻结</button>
-							<button ${item.freeze ? "" : "disabled"}  class="btn unfreeze btn-outline-dark">解冻</button>
-						</td>
-					</tr>
-				</c:forEach>
+				</thead><tbody>
 			</table>
+			<%@ include file="../../commonJSP/paging.jsp"%>
 		</div>
 	</div>
 </div>
@@ -80,26 +69,35 @@
 	const urlPath = '${pageContext.request.contextPath}/back/user';
 
 
-	$('button[type="button"]').click(function () {
+	$('button[type="button"]').on('click', () => {
+		initPageNo();
+	});
+
+	function pagingAjax() {
 		$.ajax({
 			url: urlPath,
 			method:'post',
 			data: {
-				'${ContentConstant.CONTENT_METHOD_NAME}': 'getAllByIdListAjax',
-				'account': $('#account').val()
+				'${ContentConstant.CONTENT_METHOD_NAME}': 'getAllByIdList',
+				account: $('#account').val(),
+				currPageNo:pageNo
 			},
 			success: (date) => {
+				let pageData = loadPaging(JSON.parse(date));
 				$('.table tbody').empty();
-				$(JSON.parse(date)).each(function () {
+				$(pageData).each(function () {
 					$('.table tbody').append($('<tr> <th scope="row">' + this.id + '</th> <td>' + this.phone + '</td> ' +
-					'<td>' + (this.freeze ? "Freeze" : "notFreeze") + '</td> <td> <button ' + (this.freeze ? "disabled" : "" + '') +
+						'<td>' + (this.freeze ? "Freeze" : "notFreeze") + '</td> <td> <button ' + (this.freeze ? "disabled" : "" + '') +
 						' class="btn freeze btn-outline-dark">冻结</button> <button ' + (this.freeze ? "" : "disabled") + ' class="btn ' +
 						'unfreeze btn-outline-dark">解冻</button> </td> </tr>'));
 				})
 			},
 			error: () => myError()
 		})
-	});
+	}
+
+	initPageNo();
+
 
 	$('.table tbody').on('click', '.freeze', function () {
 		$.ajax({
@@ -135,17 +133,5 @@
 			error: myError()
 		});
 	});
-	function mySuccess(data) {
-		data = JSON.parse(data);
-		$('.hint-box .hint-value').text(data.value);
-		$('.hint-title .title-name').text(data.title);
-		$('.hint-box').slideDown(500);
-	}
-
-	function myError() {
-		$('.hint-title .title-name').text("系统提示");
-		$('.hint-box .hint-value').text("网络异常");
-		$('.hint-box').slideDown(500);
-	}
 </script>
 </html>

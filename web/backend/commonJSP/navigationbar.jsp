@@ -10,9 +10,10 @@
 <html>
 <head>
 	<title>Title</title>
-	<link rel="stylesheet" href="../css/bootstrap.min.css">
-	<script src="../js/jquery.min.js"></script>
 	<base href="<%=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/"%>">
+	<script src="js/jquery.min.js"></script>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 	<style>
 		.row {
 			max-width: 100%;
@@ -87,15 +88,9 @@
 			padding-top: 17px;
 		}
 
-		.navigation .row form button {
-			background: none;
-			border: none;
-			color: #fff;
-			padding: .5rem 1rem;
-		}
-
-		.navigation .row form {
-			margin-bottom: 0;
+		tbody a,
+		tbody a:hover {
+			color: #212529;
 		}
 	</style>
 </head>
@@ -117,12 +112,8 @@
 				</div>
 				<div class="col">用户管理</div>
 			</div>
-
 			<div class="nav flex-column">
-				<form action="${pageContext.request.contextPath}/back/user">
-					<input type="hidden" name="${ContentConstant.CONTENT_METHOD_NAME}" value="getAllByIdList">
-					<button type="submit" class="nav-link">冻结 / 解冻</button>
-				</form>
+				<a href="backend/user/freezemanage.jsp" class="nav-link">冻结 / 解冻</a>
 			</div>
 		</div>
 
@@ -138,7 +129,7 @@
 			</div>
 
 			<div class="nav flex-column">
-				<a class="nav-link">轮播图</a>
+				<a href="backend/activity/slideshow.jsp" class="nav-link">轮播图</a>
 			</div>
 		</div>
 
@@ -154,7 +145,7 @@
 			</div>
 
 			<div class="nav flex-column">
-				<a class="nav-link">订单状态</a>
+				<a class="nav-link" href="backend/indent/indentstatus.jsp">订单状态</a>
 				<a class="nav-link">订单详情</a>
 			</div>
 		</div>

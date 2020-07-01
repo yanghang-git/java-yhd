@@ -3,6 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+	
+	<context-param>
+		<param-name>pagingNumberEachPage</param-name>
+		<param-value>10</param-value>
+	</context-param>
+	<context-param>
+		<param-name>pagingMaxPagination</param-name>
+		<param-value>5</param-value>
+	</context-param>
+	
 
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
@@ -64,9 +74,24 @@
 		<url-pattern>/back/user</url-pattern>
 	</servlet-mapping>
 	
-	
+	<servlet>
+		<servlet-name>ActivitySlideshowServlet</servlet-name>
+		<servlet-class>com.yhd.controller.backend.ActivitySlideshowServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ActivitySlideshowServlet</servlet-name>
+		<url-pattern>/back/activity/slideshow</url-pattern>
+	</servlet-mapping>
 
 
+	<servlet>
+		<servlet-name>IndentStatusServlet</servlet-name>
+		<servlet-class>com.yhd.controller.backend.IndentStatusServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>IndentStatusServlet</servlet-name>
+		<url-pattern>/back/indent/status</url-pattern>
+	</servlet-mapping>
 
 	<listener>
 		<listener-class>com.yhd.util.webutil.SessionListener</listener-class>
