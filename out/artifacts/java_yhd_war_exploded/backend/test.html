@@ -194,82 +194,88 @@
 
 
 			<div class="container">
-	<style>
-		.catalog .cValue  button {
-			padding: 4px 10px !important;
-		}
-		.catalog .cValue  .oper {
-			position: absolute;
-			right: 6%;
-		}
-		.catalog .cValue .statusName {
-			padding: 8px 0;
-		}
-		.catalog .cValue>ul {
-			padding-bottom: 20px;
-		}
-	</style>
 
-				<blockquote class="blockquote">
-					<p class="mb-0">对用户可选地址进行管理。</p>
-					<footer class="blockquote-footer">manage the user's optional address</footer>
-				</blockquote>
 
-				<div class="catalog">
-
-					<table class="table">
-						<thead class="thead-light">
-						<tr>
-							<th scope="col">地址目录</th>
-							<th scope="col" class="text-right" >操作</th>
-						</tr>
-					</table>
-					<div class="cValue">
-						<ul>
-							<li>
-								<div class="row statusName">
-									<div class="msg"> target.msg1 </div>
-									<div class="oper">
-										<button class="btn update btn-outline-dark" data-toggle="modal" data-target="#updateStatus">修改</button>
-										<button class="btn remove btn-outline-dark">删除</button>
-									</div>
-								</div>
-							</li>
-							<ul>
-								<li>
-									<div class="row statusName">
-										<div class="msg"> target.msg2 </div>
-										<div class="oper">
-											<button class="btn update btn-outline-dark" data-toggle="modal" data-target="#updateStatus">修改</button>
-											<button class="btn remove btn-outline-dark">删除</button>
-										</div>
-									</div>
-								</li>
-								<ul>
-									<li>
-										<div class="row statusName">
-											<div class="msg"> target.msg3 </div>
-											<div class="oper">
-												<button class="btn update btn-outline-dark" data-toggle="modal" data-target="#updateStatus">修改</button>
-												<button class="btn remove btn-outline-dark">删除</button>
-											</div>
-										</div>
-									</li>
-								</ul>
-							</ul>
-							<ul>
-								<li>
-									<div class="row statusName">
-										<div class="msg"> target.msg2-2 </div>
-										<div class="oper">
-											<button class="btn update btn-outline-dark" data-toggle="modal" data-target="#updateStatus">修改</button>
-											<button class="btn remove btn-outline-dark">删除</button>
-										</div>
-									</div>
-								</li>
-							</ul>
-						</ul>
+				<div class="row">
+					<div class="col">
+						<blockquote class="blockquote">
+							<p class="mb-0">对主页的轮播图进行管理。</p>
+							<footer class="blockquote-footer">manage the rotations of the home page</footer>
+						</blockquote>
 					</div>
+					<div class="col-1" style="margin-top: 30px">
+						<button class="btn btn-outline-dark add" data-toggle="modal"  data-target="#updateSlideShow">添加</button>
+					</div>
+				</div>
+
+
+
+
+				<table class="table">
+					<thead class="thead-light">
+					<tr>
+						<th scope="col">顺序</th>
+						<th scope="col">图片</th>
+						<th scope="col">文字</th>
+						<th scope="col">URL</th>
+						<th scope="col">操作</th>
+					</tr>
+					</thead>
+					<tbody>
+
+					<tr>
+						<th scope="row" class="slideShowId">1</th>
+						<td><a class="slideShowImageUrl" href="https://www.processon.com/assets/images/tour/flow4.png" target="_blank" >查看</a></td>
+						<td class="slideShowFont">Otto</td>
+						<td><a class="slideShowUrl" href="https://www.processon.com/assets/images/tour/flow4.png" target="_blank" >打开</a></td>
+						<td>
+							<button class="btn update btn-outline-dark" data-toggle="modal"  data-target="#updateSlideShow" >修改</button>
+							<button class="btn remove btn-outline-dark">删除</button>
+						</td>
+					</tr>
+				</table>
+
+				<div class="row  justify-content-end">
+					<footer class="blockquote-footer">轮播图数量不可过多</footer>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- update box -->
+	<div class="modal fade" id="updateSlideShow">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Update Slide Show</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label class="col-form-label" for="slideShowId">顺序:</label>
+							<input type="text" required class="form-control id" id="slideShowId">
+						</div>
+						<div class="form-group">
+							<label for="slideShowImageUrl" class="col-form-label">图片路径：</label>
+							<input type="url" required  class="form-control" id="slideShowImageUrl" >
+						</div>
+						<div class="form-group">
+							<label for="slideShowFont" class="col-form-label">文字：</label>
+							<input type="text" required  class="form-control" id="slideShowFont" >
+						</div>
+						<div class="form-group">
+							<label for="slideShowUrl" class="col-form-label">网址路径：</label>
+							<input type="url" required  class="form-control" id="slideShowUrl" >
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn save btn-primary">Save changes</button>
 				</div>
 			</div>
 		</div>
@@ -277,69 +283,48 @@
 
 
 	<script>
-		$('body').on('click', '.update', (function () {
-			console.log($(this).parent().parent().parent().parent().parent().children('div').children()[0])
-		}));
 
 
-		function Obj (msg) {
-			this.msg = msg;
-			this.obj = [];
-		}
-		let one1 = new Obj('one1');
+		$('tbody .remove').click(function () {
+			console.log($(this).parent().parent().children('th').text());
+		});
 
-		let two1 = new Obj('two1');
-		let two2 = new Obj('two2');
-		one1.obj.push(two1, two2);
-		let three1 = new Obj('three1');
-		let three2 = new Obj('three2');
-		two1.obj.push(three1, three2);
-		let three3 = new Obj('three3');
-		let three4 = new Obj('three4');
-		two2.obj.push(three3, three4);
+		$('tbody .update').click(function () {
+			let $parent = $(this).parent().parent();
+			$('#slideShowId').val($parent.children('.slideShowId').text()).attr('disabled', 'disabled');
+			$('#slideShowImageUrl').val($parent.children().children('.slideShowImageUrl').attr('href'));
+			$('#slideShowFont').val($parent.children('.slideShowFont').text());
+			$('#slideShowUrl').val($parent.children().children('.slideShowUrl').attr('href'));
+		});
 
-
-		let one11 = new Obj('one1-1');
-
-		let two12 = new Obj('two1-1');
-		let two22 = new Obj('two2-2');
-		one11.obj.push(two12, two22);
-		let three12 = new Obj('three1-1');
-		let three22 = new Obj('three2-2');
-		two12.obj.push(three12, three22);
-		let three32 = new Obj('three3-3');
-		let three42 = new Obj('three4-4');
-		two22.obj.push(three32, three42);
-
-		// two1.obj.push(one11);
-		// one1.obj.push(one11);
-
-		// console.log(one1);
-
-		let arr = [one1, one11];
-
-		$('.cValue').append($(loadIndentCatalog(arr)));
+		$('.add').click(function () {
+			$('#slideShowId').removeAttr('disabled').val('');
+			$('#slideShowImageUrl').val('');
+			$('#slideShowFont').val('');
+			$('#slideShowUrl').val('');
+		});
 
 
-		function loadIndentCatalog(target) {
-			let result = "";
-			for (let i = 0; i < target.length; i++) {
-				result += `<ul>
-				<li>
-				<div class="row statusName">
-				<div class="msg">` + target[i].msg + `</div>
-				<div class="oper ">
-				<button class="btn update btn-outline-dark" data-toggle="modal" data-target="#updateStatus">修改</button>
-				<button class="btn remove btn-outline-dark">删除</button>
-				</div>
-				</div>
-				` + (target[i].obj.length > 0 ?  loadIndentCatalog(target[i].obj)  : "") + `
-				</li>
-				</ul>`;
-			}
-			return result;
+		$('.save').click(function () {
+			let val = $('#slideShowId').val();
+			console.log();
+			$('#slideShowId').attr('disabled') === 'disabled' ? add() : update();
+			$(this).prev().click();
+		});
+
+		function add() {
+			$('#slideShowId').val();
+			$('#slideShowImageUrl').val();
+			$('#slideShowFont').val();
+			$('#slideShowUrl').val();
 		}
 
+		function update() {
+			$('#slideShowId').removeAttr('disabled').val();
+			$('#slideShowImageUrl').val();
+			$('#slideShowFont').val();
+			$('#slideShowUrl').val();
+		}
 
 		$('.navigation>.row>.title').click(function () {
 			$(this).next().slideToggle();
