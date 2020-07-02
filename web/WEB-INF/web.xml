@@ -93,6 +93,24 @@
 		<url-pattern>/back/indent/status</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>AddressCatalogServlet</servlet-name>
+		<servlet-class>com.yhd.controller.backend.AddressCatalogServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddressCatalogServlet</servlet-name>
+		<url-pattern>/back/address/catalog</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>GoodsCatalogServlet</servlet-name>
+		<servlet-class>com.yhd.controller.backend.GoodsCatalogServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GoodsCatalogServlet</servlet-name>
+		<url-pattern>/back/goods/catalog</url-pattern>
+	</servlet-mapping>
+
 	<listener>
 		<listener-class>com.yhd.util.webutil.SessionListener</listener-class>
 	</listener>

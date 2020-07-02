@@ -9,7 +9,7 @@
 <%@ page import="com.yhd.util.ContentConstant" %>
 <html>
 <head>
-	<title>Title</title>
+	<title>YHD BackEnd</title>
 	<link rel="stylesheet" href="./css/bootstrap.min.css">
 	<script src="./js/jquery.min.js"></script>
 	<style>

@@ -262,7 +262,7 @@
 									<div class="row statusName">
 										<div class="msg"> target.msg2-2 </div>
 										<div class="oper">
-											<button class="btn update btn-outline-dark" data-toggle="modal" data-target="#updateStatus">修改</button>
+											<button class="btn update btn-outline-dark" data-toggle="modal" data-target="#updateCatalog">修改</button>
 											<button class="btn remove btn-outline-dark">删除</button>
 										</div>
 									</div>
@@ -275,12 +275,105 @@
 		</div>
 	</div>
 
+	<div class="modal" id="updateCatalog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Update Slide Show</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+
+						<div class="form-group">
+							<span>请选择插入即别:</span>
+						</div>
+						<div class="form-group row">
+							<div class="col">
+								<label class="col-form-label" for="levelOne">一级目录：</label>
+								<input name="level" checked type="radio" class="custom-radio" id="levelOne">
+							</div>
+							<div class="col">
+								<label class="col-form-label" for="levelTwo">二级目录：</label>
+								<input name="level" type="radio" class="custom-radio" id="levelTwo">
+							</div>
+							<div class="col">
+								<label class="col-form-label" for="levelThree">三级目录：</label>
+								<input name="level" type="radio" class="custom-radio" id="levelThree">
+							</div>
+
+						</div>
+
+						<div class="form-group selectOne">
+							<select class="custom-select" name="oneLevel">
+								<option value="0">一级目录</option>
+							</select>
+						</div>
+						<div class="form-group selectTwo">
+							<select class="custom-select" name="oneLevel">
+								<option value="0">一级目录</option>
+							</select>
+						</div>
+
+
+						<div class="form-group">
+							<label for="statusName" class="col-form-label">地址名称：</label>
+							<input type="url" class="form-control" id="statusName" >
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn save btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script>
+
+
 		$('body').on('click', '.update', (function () {
-			console.log($(this).parent().parent().parent().parent().parent().children('div').children()[0])
+			console.log(getCatalogDepth(this));
 		}));
 
+
+
+		function getCatalogUpId(element) {
+			return $(element).parent().parent().parent().parent().parent().children('div').children('.msg').text();
+		}
+		function getCatalogUp(element) {
+			return $(element).parent().parent().parent().children('div');
+		}
+
+		function getCatalogDepth (element) {
+			let depth = 1;
+			let temp = $(element).parent().parent();
+			let tempUp = getCatalogUp(temp);
+			while (typeof tempUp[0] !== 'undefined') {
+				depth++;
+				tempUp = getCatalogUp(tempUp);
+			}
+			return depth;
+		}
+
+		$('.selectTwo').hide();
+		$('.selectOne').hide();
+
+		$('#levelOne').change(function () {
+			$('.selectOne').hide();
+			$('.selectTwo').hide();
+		});
+		$('#levelTwo').change(function () {
+			$('.selectOne').show();
+			$('.selectTwo').hide();
+		});
+		$('#levelThree').change(function () {
+			$('.selectOne').show();
+			$('.selectTwo').show();
+		});
 
 		function Obj (msg) {
 			this.msg = msg;
@@ -297,8 +390,8 @@
 		let three3 = new Obj('three3');
 		let three4 = new Obj('three4');
 		two2.obj.push(three3, three4);
-
-
+		//
+		//
 		let one11 = new Obj('one1-1');
 
 		let two12 = new Obj('two1-1');
@@ -318,9 +411,8 @@
 
 		let arr = [one1, one11];
 
+
 		$('.cValue').append($(loadIndentCatalog(arr)));
-
-
 		function loadIndentCatalog(target) {
 			let result = "";
 			for (let i = 0; i < target.length; i++) {
@@ -337,8 +429,12 @@
 				</li>
 				</ul>`;
 			}
+			// $('.cValue').append($(result));
+
 			return result;
 		}
+
+		// loadIndentCatalog(arr)
 
 
 		$('.navigation>.row>.title').click(function () {

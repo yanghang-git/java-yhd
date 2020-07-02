@@ -77,7 +77,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Update Slide Show</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Indent Status</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -131,7 +131,6 @@
 
 	$('tbody').on('click', '.update', function () {
 		isAdd = false;
-		console.log(isAdd)
 		let $parent = $(this).parent().parent();
 		$('#statusId').val($parent.children('.statusId').attr('disabled', 'disabled').text());
 		$('#statusName').val($parent.children('.statusName').text());
@@ -139,7 +138,6 @@
 
 	$('body').on('click', '.add', function () {
 		isAdd = true;
-		console.log(isAdd);
 		$('#statusId').attr('disabled', 'disabled').val('');
 		$('#statusName').val('');
 	});
@@ -195,7 +193,6 @@
 				'${ContentConstant.CONTENT_METHOD_NAME}' : 'getAll'
 			},
 			success : (data) => {
-				console.log(data);
 				$('.table tbody').empty();
 				$(JSON.parse(data)).each(function () {
 					$('.table tbody').append($(`<tr>

@@ -20,8 +20,9 @@ public class Test {
 	public static void main(String[] args) throws UnknownHostException {
 		AddressCatalogService service = new AddressCatalogServiceImpl(ConnectionFactory.INSTANCE.create(),
 				new AddressCatalogDaoImpl());
-		List<AddressCatalog> listByUpId = service.getListByUpId(1);
-
-		System.out.println(listByUpId);
+		List<AddressCatalog> listByUpId = service.getListByCatalogName("区");
+		for (AddressCatalog catalog : listByUpId) {
+			System.out.println(catalog);
+		}
 	}
 }

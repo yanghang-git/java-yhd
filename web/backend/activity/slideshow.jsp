@@ -68,7 +68,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Update Slide Show</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Slide Show</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -98,13 +98,6 @@
 					<button type="button" class="btn save btn-primary">Save changes</button>
 				</div>
 			</div>
-		</div>
-	</div>
-
-	<div class="modal-dialog modal-xl" id="checkRemove">
-		<div class="modal-footer">
-			<button type="button" class="btn yes btn-secondary" data-dismiss="modal">取消</button>
-			<button type="button" class="btn no btn-primary">确定</button>
 		</div>
 	</div>
 

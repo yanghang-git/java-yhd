@@ -5,6 +5,8 @@ import com.yhd.pojo.AddressCatalog;
 import com.yhd.service.backend.AddressCatalogService;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,18 +25,56 @@ public class AddressCatalogServiceImpl implements AddressCatalogService {
 	}
 
 	/**
+	 * get AddressCatalog By up_id. if up_id is 0,get all level all AddressCatalog
+	 * @param upId up level AddressCatalog id
+	 * @return AddressCatalog gather List
+	 */
+	@Override
+	public List<AddressCatalog> getAllListByUpId(int upId) {
+		List<AddressCatalog> parentList = dao.getListByUpId(conn, upId);
+		for (AddressCatalog catalog : parentList) {
+			catalog.setCatalogs(this.getAllListByUpId(catalog.getId()));
+		}
+		return parentList;
+	}
+
+	/**
 	 * get AddressCatalog By up_id. if up_id is 0,get one level all AddressCatalog
 	 * @param upId up level AddressCatalog id
 	 * @return AddressCatalog gather List
 	 */
 	@Override
 	public List<AddressCatalog> getListByUpId(int upId) {
-		List<AddressCatalog> parentList = dao.getListByUpId(conn, upId);
-		for (AddressCatalog catalog : parentList) {
-			List<AddressCatalog> sonList = this.getListByUpId(catalog.getId());
-			catalog.setCatalogs(sonList);
+		return dao.getListByUpId(conn, upId);
+	}
+
+	/**
+	 * get AddressCatalog by catalog of name
+	 * @param name catalog of name
+	 * @return AddressCatalog gather List
+	 */
+	@Override
+	public List<AddressCatalog> getListByCatalogName(String name) {
+		List<AddressCatalog> sonList = dao.getUpIdByCatalogName(conn, name);
+		List<AddressCatalog> resultList = new ArrayList<>(sonList.size());
+		for (AddressCatalog catalog : sonList) {
+			resultList.add(getSuperCatalog(catalog));
 		}
-		return parentList;
+		return resultList;
+	}
+
+	/**
+	 * get one rank catalog, it of son catalog is transmit of parameter of all parent rank and son catalog only have one
+	 * @param catalog son catalog
+	 * @return one rank catalog
+	 */
+	private AddressCatalog getSuperCatalog(AddressCatalog catalog) {
+		if(catalog.getUpId() == 0) {
+			return catalog;
+		}
+		AddressCatalog tempParentCatalog = dao.getCatalogById(conn, catalog.getUpId());
+		tempParentCatalog.setCatalogs(Collections.singletonList(catalog));
+		return getSuperCatalog(tempParentCatalog);
 	}
 
 
@@ -59,12 +99,14 @@ public class AddressCatalogServiceImpl implements AddressCatalogService {
 	}
 
 	/**
-	 * update AddressCatalog
-	 * @param catalog instance
+	 * update AddressCatalog name by catalogId
+	 * @param id          catalog of id
+	 * @param catalogName new catalog name
 	 * @return true: add success or false: add fail
 	 */
 	@Override
-	public boolean updateCatalog(AddressCatalog catalog) {
-		return dao.updateCatalog(conn, catalog);
+	public boolean updateCatalogNameById(int id, String catalogName) {
+		return dao.updateCatalogNameById(conn, id, catalogName);
 	}
+
 }

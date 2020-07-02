@@ -1,5 +1,6 @@
 package com.yhd.dao.impl;
 
+import com.mysql.jdbc.StringUtils;
 import com.yhd.dao.BaseDao;
 import com.yhd.dao.GoodsCatalogDao;
 import com.yhd.pojo.GoodsCatalog;
@@ -23,6 +24,31 @@ public class GoodsCatalogDaoImpl extends BaseDao<GoodsCatalog> implements GoodsC
 	public List<GoodsCatalog> getListByUpId(Connection conn, int upId) {
 		String sql = "select id, name, up_id from goods_catalog where up_id = ?";
 		return super.getInstances(conn, sql, upId);
+	}
+
+	/**
+	 * 根据id查询对应的商品目录。
+	 * @param conn 数据库连接
+	 * @param id   上一级商品目录
+	 * @return 商品目录
+	 */
+	@Override
+	public GoodsCatalog getCatalogById(Connection conn, int id) {
+		String sql = "select id, name, up_id from goods_catalog where id = ?";
+		return super.getInstance(conn, sql, id);
+	}
+
+	/**
+	 * 根据商品目录名字查询它上级的id
+	 *
+	 * @param conn 数据连接
+	 * @param name 地址名字
+	 * @return 上级id
+	 */
+	@Override
+	public List<GoodsCatalog> getUpIdByCatalogName(Connection conn, String name) {
+		String sql = "select id, name, up_id from goods_catalog where name like ?";
+		return super.getInstances(conn, sql, (StringUtils.isNullOrEmpty(name) ? "%%" : "%" + name + "%"));
 	}
 
 	/**
@@ -52,12 +78,13 @@ public class GoodsCatalogDaoImpl extends BaseDao<GoodsCatalog> implements GoodsC
 	/**
 	 * 修改目录
 	 * @param conn    连接
-	 * @param catalog 记录对象
+	 * @param id          地址id
+	 * @param catalogName 地址名称
 	 * @return 是否修改成功
 	 */
 	@Override
-	public boolean updateCatalog(Connection conn, GoodsCatalog catalog) {
-		String sql = "update goods_catalog set name = ?, up_id = ? where id = ?";
-		return super.update(conn, sql, catalog.getName(), catalog.getUpId(), catalog.getId()) == 1;
+	public boolean updateCatalog(Connection conn, int id, String catalogName) {
+		String sql = "update goods_catalog set name = ? where id = ?";
+		return super.update(conn, sql, catalogName, id) == 1;
 	}
 }

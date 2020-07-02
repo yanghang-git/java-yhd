@@ -162,7 +162,7 @@
 			</div>
 
 			<div class="nav flex-column">
-				<a class="nav-link">商品目录</a>
+				<a class="nav-link" href="backend/goods/catalog.jsp">商品目录</a>
 				<a class="nav-link">商品详情</a>
 			</div>
 		</div>
@@ -178,7 +178,7 @@
 			</div>
 
 			<div class="nav flex-column">
-				<a class="nav-link">地址目录</a>
+				<a class="nav-link" href="backend/address/catalog.jsp">地址目录</a>
 			</div>
 		</div>
 
