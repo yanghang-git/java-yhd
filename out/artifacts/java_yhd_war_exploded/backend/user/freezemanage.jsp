@@ -36,6 +36,7 @@
 				<p class="mb-0">对用户进行冻结 / 解冻。</p>
 				<footer class="blockquote-footer">to user proceed freeze / unfreeze.</footer>
 			</blockquote>
+
 			<div class="row  justify-content-end">
 				<form class="form-inline">
 					<div class="form-group mb-2">
@@ -47,6 +48,7 @@
 					<button type="button" class="btn btn-primary mb-2">Search</button>
 				</form>
 			</div>
+
 			<table class="table">
 				<thead class="thead-light">
 				<tr>
@@ -82,8 +84,8 @@
 				account: $('#account').val(),
 				currPageNo:pageNo
 			},
-			success: (date) => {
-				let pageData = loadPaging(JSON.parse(date));
+			success: (data) => {
+				let pageData = loadPaging(JSON.parse(data));
 				$('.table tbody').empty();
 				$(pageData).each(function () {
 					$('.table tbody').append($('<tr> <th scope="row">' + this.id + '</th> <td>' + this.phone + '</td> ' +

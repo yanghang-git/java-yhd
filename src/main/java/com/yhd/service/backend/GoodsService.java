@@ -12,11 +12,12 @@ import java.util.List;
  */
 public interface GoodsService {
 	/**
-	 * get goods all by catalog of id
+	 * get goods all by catalog of id and goods name
 	 * @param catalogId catalog id
+	 * @param goodsName goods name
 	 * @return goods all list gather
 	 */
-	List<Goods> getGoodsByCatalogId(int catalogId);
+	List<Goods> getGoodsByCatalogIdAndGoodsName(int catalogId, String goodsName);
 
 	/**
 	 * add Goods arrive record
@@ -30,14 +31,13 @@ public interface GoodsService {
 	 * @param id goods id
 	 * @return true: remove success or false: remove fail
 	 */
-	boolean removeById(String id);
+	boolean removeById(int id);
 
 	/**
 	 * update Goods by id
-	 * @param id Goods id
 	 * @param goods Goods instance
 	 * @return true: update success or false: update fail
 	 */
-	boolean updateById(String id, Goods goods);
+	boolean updateById(Goods goods);
 
 }

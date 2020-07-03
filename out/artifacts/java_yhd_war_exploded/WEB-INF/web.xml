@@ -111,6 +111,15 @@
 		<url-pattern>/back/goods/catalog</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>GoodsServlet</servlet-name>
+		<servlet-class>com.yhd.controller.backend.GoodsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GoodsServlet</servlet-name>
+		<url-pattern>/back/goods/goods</url-pattern>
+	</servlet-mapping>
+
 	<listener>
 		<listener-class>com.yhd.util.webutil.SessionListener</listener-class>
 	</listener>

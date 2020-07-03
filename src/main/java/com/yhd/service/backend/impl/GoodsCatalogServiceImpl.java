@@ -48,6 +48,17 @@ public class GoodsCatalogServiceImpl implements GoodsCatalogService {
 	}
 
 	/**
+	 * get GoodsCatalog By id
+	 *
+	 * @param id GoodsCatalog id
+	 * @return GoodsCatalog instance
+	 */
+	@Override
+	public GoodsCatalog getGoodsById(int id) {
+		return dao.getCatalogById(conn, id);
+	}
+
+	/**
 	 * get GoodsCatalog by catalog of name
 	 * @param name catalog of name
 	 * @return GoodsCatalog gather List
@@ -79,7 +90,6 @@ public class GoodsCatalogServiceImpl implements GoodsCatalogService {
 
 	/**
 	 * remove GoodsCatalog By id
-	 *
 	 * @param id id
 	 * @return true: remove success or false: remove fail
 	 */
@@ -90,7 +100,6 @@ public class GoodsCatalogServiceImpl implements GoodsCatalogService {
 
 	/**
 	 * add GoodsCatalog
-	 *
 	 * @param catalog instance
 	 * @return true: add success or false: add fail
 	 */

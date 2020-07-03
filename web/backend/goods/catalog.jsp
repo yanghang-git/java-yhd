@@ -44,24 +44,28 @@
 
 		<div class="container">
 
+			<blockquote class="blockquote">
+				<p class="mb-0">对商品目录进行管理。</p>
+				<footer class="blockquote-footer">To manage the catalogue of goods</footer>
+			</blockquote>
 
 
-			<div class="row">
-				<div class="col">
-					<blockquote class="blockquote">
-						<p class="mb-0">对商品目录进行管理。</p>
-						<footer class="blockquote-footer">To manage the catalogue of goods</footer>
-					</blockquote>
-				</div>
-				<div class="col-3" style="margin-top: 30px; margin-right: -27px;">
-					<input type="text" class="form-control catalogName">
-				</div>
-				<div  class="col-1" style="margin-top: 30px">
-					<button class="btn btn-outline-dark search">查询</button>
-				</div>
-				<div class="col-1" style="margin-top: 30px">
-					<button class="btn btn-outline-dark add" data-toggle="modal"  data-target="#updateCatalog">添加</button>
-				</div>
+
+			<div class="row  justify-content-end">
+				<form class="form-inline">
+					<div class="form-group mb-2">
+						<label for="catalog">目录名称：</label>
+					</div>
+					<div class="form-group mx-sm-3 mb-2">
+						<input type="text" id="catalog" placeholder="目录名称"  class="form-control catalogName">
+					</div>
+					<div class="form-group mb-2">
+						<button type="button" class="btn search btn-primary">Search</button>
+					</div>
+					<div class="form-group mx-sm-3 mb-2" >
+						<button class="btn btn-outline-dark add" type="button" data-toggle="modal"  data-target="#updateCatalog">添加</button>
+					</div>
+				</form>
 			</div>
 
 			<div class="catalog">
@@ -107,19 +111,10 @@
 								<label class="col-form-label" for="levelTwo">二级目录：</label>
 								<input name="level" type="radio" class="custom-radio" id="levelTwo">
 							</div>
-							<div class="col">
-								<label class="col-form-label" for="levelThree">三级目录：</label>
-								<input name="level" type="radio" class="custom-radio" id="levelThree">
-							</div>
-
 						</div>
 
 						<div class="form-group selectOne">
 							<select class="custom-select" name="oneLevel">
-							</select>
-						</div>
-						<div class="form-group selectTwo">
-							<select class="custom-select" name="twoLevel">
 							</select>
 						</div>
 					</div>
@@ -249,16 +244,7 @@
 		$('.selectTwo').hide();
 		loadLevelOne();
 	});
-	$('#levelThree').change(function () {
-		$('.selectOne').show();
-		$('.selectTwo').show();
-		loadLevelOne();
-		loadLevelTwo();
-	});
 
-	$('.selectOne select').change(function () {
-		loadLevelTwo();
-	});
 	function loadLevelOne() {
 		$.ajax({
 			url: urlPath,
@@ -278,23 +264,6 @@
 		})
 	}
 
-	function loadLevelTwo() {
-		$.ajax({
-			url: urlPath,
-			method: 'post',
-			data: {
-				'${ContentConstant.CONTENT_METHOD_NAME}' : "getCatalogByUpId",
-				upId: $('.selectOne select').val()
-			},
-			success: (data) => {
-				$('.selectTwo select').empty();
-				$(JSON.parse(data)).each(function(){
-					$('.selectTwo select').append($(`<option value="` + this.id + `">` + this.name + `</option>`));
-				})
-			},
-			error: () => myError()
-		})
-	}
 
 	$('.search').click(() => {
 		loadGoodsCatalogByNameOrUpId();

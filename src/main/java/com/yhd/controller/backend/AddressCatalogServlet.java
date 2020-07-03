@@ -96,6 +96,9 @@ public class AddressCatalogServlet extends HttpServlet {
 		WebUtils.sendValue(resp, JsonUtils.getJson(hint));
 	}
 
+	/**
+	 * get all addressCatalog by upId, if upId is null, be result all addressCatalog
+	 */
 	private void getCatalogAllByName(HttpServletRequest req, HttpServletResponse resp) {
 		String catalogName = req.getParameter("catalogName");
 		boolean catalogNameIsNullOrEmpty = StringUtils.isNullOrEmpty(catalogName);

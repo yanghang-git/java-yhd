@@ -163,7 +163,7 @@
 
 			<div class="nav flex-column">
 				<a class="nav-link" href="backend/goods/catalog.jsp">商品目录</a>
-				<a class="nav-link">商品详情</a>
+				<a class="nav-link" href="backend/goods/goods.jsp">商品详情</a>
 			</div>
 		</div>
 		<div class="row">

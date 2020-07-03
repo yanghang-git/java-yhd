@@ -20,10 +20,17 @@ public interface GoodsCatalogService {
 
 	/**
 	 * get GoodsCatalog By up_id. if up_id is 0,get one level all GoodsCatalog
-	 * @param upId up level AddressCatalog id
-	 * @return AddressCatalog gather List
+	 * @param upId up level AddressCaGoodsCatalogtalog id
+	 * @return GoodsCatalog gather List
 	 */
 	List<GoodsCatalog> getListByUpId(int upId);
+
+	/**
+	 * get GoodsCatalog By id
+	 * @param id GoodsCatalog id
+	 * @return GoodsCatalog instance
+	 */
+	GoodsCatalog getGoodsById(int id);
 
 	/**
 	 * get GoodsCatalog by catalog of name

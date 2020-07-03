@@ -1,5 +1,6 @@
 package com.yhd.dao.impl;
 
+import com.mysql.jdbc.StringUtils;
 import com.yhd.dao.BaseDao;
 import com.yhd.dao.GoodsDao;
 import com.yhd.pojo.Goods;
@@ -13,16 +14,21 @@ import java.util.List;
  * @Since 1.8
  */
 public class GoodsDaoImpl extends BaseDao<Goods> implements GoodsDao {
+
+
+
 	/**
-	 * 根据商品目录Id查询下所有的商品
+	 * 根据商品目录Id查询和商品名字下所有的商品
 	 * @param conn      连接
 	 * @param catalogId 目录Id
+	 * @param goodsName 商品名称
 	 * @return 商品集合
 	 */
 	@Override
-	public List<Goods> getListByCatalogId(Connection conn, int catalogId) {
-		String sql = "select id, name, price, style, kind, content, image_primary, image_details, number, catalog_id from goods where catalog_id = ?";
-		return super.getInstances(conn, sql, catalogId);
+	public List<Goods> getListByCatalogIdAndGoodsName(Connection conn, int catalogId, String goodsName) {
+		String sql = "select id, name, price, style, kind, content, image_primary, image_details, number, catalog_id from goods where name like ? ";
+		sql += (catalogId == 0 ? "" : " and catalog_id = " + catalogId);
+		return super.getInstances(conn, sql, StringUtils.isNullOrEmpty(goodsName) ? "%%" : "%" + goodsName + "%");
 	}
 
 	/**

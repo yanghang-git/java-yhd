@@ -4,7 +4,6 @@
 	<meta charset="UTF-8">
 	<title>Title</title>
 	<link rel="stylesheet" href="../css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/index.css">
 	<script src="../js/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 	<style>
@@ -194,83 +193,114 @@
 
 
 			<div class="container">
-	<style>
-		.catalog .cValue  button {
-			padding: 4px 10px !important;
-		}
-		.catalog .cValue  .oper {
-			position: absolute;
-			right: 6%;
-		}
-		.catalog .cValue .statusName {
-			padding: 8px 0;
-		}
-		.catalog .cValue>ul {
-			padding-bottom: 20px;
-		}
-	</style>
 
 				<blockquote class="blockquote">
-					<p class="mb-0">对用户可选地址进行管理。</p>
-					<footer class="blockquote-footer">manage the user's optional address</footer>
+					<p class="mb-0">对商品进行管理。</p>
+					<footer class="blockquote-footer">manage the merchandise</footer>
 				</blockquote>
 
-				<div class="catalog">
+				<div class="row  justify-content-end">
+					<form class="form-inline">
+						<div class="form-group mb-2">
+							<label for="account">一级目录：</label>
+						</div>
+						<div class="form-group mx-sm-3 mb-2">
+							<select class="custom-select">
+								<option>1</option>
+							</select>
+						</div>
+						<div class="form-group mb-2">
+							<label for="account">二级目录：</label>
+						</div>
 
-					<table class="table">
-						<thead class="thead-light">
-						<tr>
-							<th scope="col">地址目录</th>
-							<th scope="col" class="text-right" >操作</th>
-						</tr>
-					</table>
-					<div class="cValue">
-						<ul>
-							<li>
-								<div class="row statusName">
-									<div class="msg"> target.msg1 </div>
-									<div class="oper">
-										<button class="btn update btn-outline-dark" data-toggle="modal" data-target="#updateStatus">修改</button>
-										<button class="btn remove btn-outline-dark">删除</button>
-									</div>
-								</div>
-							</li>
-							<ul>
-								<li>
-									<div class="row statusName">
-										<div class="msg"> target.msg2 </div>
-										<div class="oper">
-											<button class="btn update btn-outline-dark" data-toggle="modal" data-target="#updateStatus">修改</button>
-											<button class="btn remove btn-outline-dark">删除</button>
-										</div>
-									</div>
-								</li>
-								<ul>
-									<li>
-										<div class="row statusName">
-											<div class="msg"> target.msg3 </div>
-											<div class="oper">
-												<button class="btn update btn-outline-dark" data-toggle="modal" data-target="#updateStatus">修改</button>
-												<button class="btn remove btn-outline-dark">删除</button>
-											</div>
-										</div>
-									</li>
-								</ul>
-							</ul>
-							<ul>
-								<li>
-									<div class="row statusName">
-										<div class="msg"> target.msg2-2 </div>
-										<div class="oper">
-											<button class="btn update btn-outline-dark" data-toggle="modal" data-target="#updateCatalog">修改</button>
-											<button class="btn remove btn-outline-dark">删除</button>
-										</div>
-									</div>
-								</li>
-							</ul>
-						</ul>
-					</div>
+						<div class="form-group mx-sm-3 mb-2">
+							<select class="custom-select">
+								<option>11111</option>
+							</select>
+						</div>
+						<div class="form-group mb-2">
+							<label for="account">商品名称：</label>
+						</div>
+						<div class="form-group mx-sm-3 mb-2">
+							<input type="text" class="form-control" id="account" placeholder="Account">
+						</div>
+						<div class="form-group mb-2">
+							<button type="button" class="btn search btn-primary">Search</button>
+						</div>
+						<div class="form-group mx-sm-3 mb-2" >
+							<button class="btn btn-outline-dark add" type="button" data-toggle="modal"  data-target="#updateCatalog">添加</button>
+						</div>
+					</form>
 				</div>
+
+				<table class="table">
+					<thead class="thead-light">
+					<tr>
+						<th scope="col">主图</th>
+						<th scope="col">名称</th>
+						<th scope="col">价格</th>
+						<th scope="col">款式</th>
+						<th scope="col">种类</th>
+						<th scope="col">数量</th>
+						<th scope="col">目录</th>
+						<th scope="col">操作</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td scope="row">
+								<img src="https://tse1-mm.cn.bing.net/th/id/OET.537a3df426cd49679cbdaf884c0c9b0f?w=272&h=272&c=7&rs=1&o=5&dpr=1.25&pid=1.9" alt="">
+							</td>
+							<td>名字</td>
+							<td>价格</td>
+							<td class="style">
+								<select class="custom-select">
+									<option>11</option>
+									<option>22</option>
+								</select>
+							</td>
+							<td class="kind">
+								<select class="custom-select">
+									<option>11</option>
+									<option>22</option>
+								</select>
+							</td>
+							<td>10</td>
+							<td>目录名称</td>
+							<td class="oper">
+								<button class="btn btn-outline-dark update">修改</button>
+								<button class="btn btn-outline-dark remove">删除</button>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<img src="https://tse1-mm.cn.bing.net/th/id/OET.537a3df426cd49679cbdaf884c0c9b0f?w=272&h=272&c=7&rs=1&o=5&dpr=1.25&pid=1.9" alt="">
+							</td>
+							<td>名字</td>
+							<td>价格</td>
+							<td class="style">
+								<select class="custom-select">
+									<option>11</option>
+									<option>22</option>
+								</select>
+							</td>
+							<td class="kind">
+								<select class="custom-select">
+									<option>11</option>
+									<option>22</option>
+								</select>
+							</td>
+							<td>10</td>
+							<td>目录名称</td>
+							<td class="oper">
+								<button class="btn btn-outline-dark update">修改</button>
+								<button class="btn btn-outline-dark remove">删除</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
 			</div>
 		</div>
 	</div>
@@ -334,107 +364,6 @@
 
 	<script>
 
-
-		$('body').on('click', '.update', (function () {
-			console.log(getCatalogDepth(this));
-		}));
-
-
-
-		function getCatalogUpId(element) {
-			return $(element).parent().parent().parent().parent().parent().children('div').children('.msg').text();
-		}
-		function getCatalogUp(element) {
-			return $(element).parent().parent().parent().children('div');
-		}
-
-		function getCatalogDepth (element) {
-			let depth = 1;
-			let temp = $(element).parent().parent();
-			let tempUp = getCatalogUp(temp);
-			while (typeof tempUp[0] !== 'undefined') {
-				depth++;
-				tempUp = getCatalogUp(tempUp);
-			}
-			return depth;
-		}
-
-		$('.selectTwo').hide();
-		$('.selectOne').hide();
-
-		$('#levelOne').change(function () {
-			$('.selectOne').hide();
-			$('.selectTwo').hide();
-		});
-		$('#levelTwo').change(function () {
-			$('.selectOne').show();
-			$('.selectTwo').hide();
-		});
-		$('#levelThree').change(function () {
-			$('.selectOne').show();
-			$('.selectTwo').show();
-		});
-
-		function Obj (msg) {
-			this.msg = msg;
-			this.obj = [];
-		}
-		let one1 = new Obj('one1');
-
-		let two1 = new Obj('two1');
-		let two2 = new Obj('two2');
-		one1.obj.push(two1, two2);
-		let three1 = new Obj('three1');
-		let three2 = new Obj('three2');
-		two1.obj.push(three1, three2);
-		let three3 = new Obj('three3');
-		let three4 = new Obj('three4');
-		two2.obj.push(three3, three4);
-		//
-		//
-		let one11 = new Obj('one1-1');
-
-		let two12 = new Obj('two1-1');
-		let two22 = new Obj('two2-2');
-		one11.obj.push(two12, two22);
-		let three12 = new Obj('three1-1');
-		let three22 = new Obj('three2-2');
-		two12.obj.push(three12, three22);
-		let three32 = new Obj('three3-3');
-		let three42 = new Obj('three4-4');
-		two22.obj.push(three32, three42);
-
-		// two1.obj.push(one11);
-		// one1.obj.push(one11);
-
-		// console.log(one1);
-
-		let arr = [one1, one11];
-
-
-		$('.cValue').append($(loadIndentCatalog(arr)));
-		function loadIndentCatalog(target) {
-			let result = "";
-			for (let i = 0; i < target.length; i++) {
-				result += `<ul>
-				<li>
-				<div class="row statusName">
-				<div class="msg">` + target[i].msg + `</div>
-				<div class="oper ">
-				<button class="btn update btn-outline-dark" data-toggle="modal" data-target="#updateStatus">修改</button>
-				<button class="btn remove btn-outline-dark">删除</button>
-				</div>
-				</div>
-				` + (target[i].obj.length > 0 ?  loadIndentCatalog(target[i].obj)  : "") + `
-				</li>
-				</ul>`;
-			}
-			// $('.cValue').append($(result));
-
-			return result;
-		}
-
-		// loadIndentCatalog(arr)
 
 
 		$('.navigation>.row>.title').click(function () {

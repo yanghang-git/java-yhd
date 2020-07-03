@@ -24,7 +24,7 @@ public class GoodsDaoImplTest {
 
 	@Test
 	public void getListByCatalogId() {
-		List<Goods> list = dao.getListByCatalogId(conn, 2);
+		List<Goods> list = dao.getListByCatalogIdAndGoodsName(conn, 0, "");
 		assertNotNull(list);
 		System.out.println(list);
 	}

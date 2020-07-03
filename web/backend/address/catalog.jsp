@@ -45,23 +45,26 @@
 		<div class="container">
 
 
+			<blockquote class="blockquote">
+				<p class="mb-0">对用户可选地址进行管理。</p>
+				<footer class="blockquote-footer">manage the user's optional address</footer>
+			</blockquote>
 
-			<div class="row">
-				<div class="col">
-					<blockquote class="blockquote">
-						<p class="mb-0">对用户可选地址进行管理。</p>
-						<footer class="blockquote-footer">manage the user's optional address</footer>
-					</blockquote>
-				</div>
-				<div class="col-3" style="margin-top: 30px; margin-right: -27px;">
-					<input type="text" class="form-control catalogName">
-				</div>
-				<div  class="col-1" style="margin-top: 30px">
-					<button class="btn btn-outline-dark search">查询</button>
-				</div>
-				<div class="col-1" style="margin-top: 30px">
-					<button class="btn btn-outline-dark add" data-toggle="modal"  data-target="#updateCatalog">添加</button>
-				</div>
+			<div class="row  justify-content-end">
+				<form class="form-inline">
+					<div class="form-group mb-2">
+						<label for="catalog">目录名称：</label>
+					</div>
+					<div class="form-group mx-sm-3 mb-2">
+						<input type="text" id="catalog" placeholder="目录名称" class="form-control catalogName">
+					</div>
+					<div class="form-group mb-2">
+						<button type="button" class="btn search btn-primary">Search</button>
+					</div>
+					<div class="form-group mx-sm-3 mb-2" >
+						<button class="btn btn-outline-dark add" type="button" data-toggle="modal"  data-target="#updateCatalog">添加</button>
+					</div>
+				</form>
 			</div>
 
 			<div class="catalog">
@@ -115,12 +118,10 @@
 						</div>
 
 						<div class="form-group selectOne">
-							<select class="custom-select" name="oneLevel">
-							</select>
+							<select class="custom-select" name="oneLevel"></select>
 						</div>
 						<div class="form-group selectTwo">
-							<select class="custom-select" name="twoLevel">
-							</select>
+							<select class="custom-select" name="twoLevel"></select>
 						</div>
 					</div>
 
@@ -335,7 +336,7 @@
 				$('.catalog .cValue').empty().append($(loadAddressCatalogHtmlOfText(JSON.parse(data))));
 			},
 			error: () => myError()
-		})
+		});
 	}
 
 	loadAddressCatalog();

@@ -10,7 +10,7 @@
 		<div class="title-name"  style="position: absolute;left: 10px;font-size: 15px;"></div>
 		<div style="position: absolute;right: 10px;font-size: 12px;">WebHint</div>
 	</div>
-	<div class="hint-value" style="text-indent: 2em;border-top: 1px solid #999;font-size: 14px; padding: 9px 0;"></div>
+	<div class="hint-value" style="text-indent: 2em;border-top: 1px solid #999;font-size: 14px; padding: 9px 20px;"></div>
 	<button class="btn btn-primary" style="float: left;margin:7px;padding:2px 10px;margin-top: 0;">OK</button>
 </div>
 <script>

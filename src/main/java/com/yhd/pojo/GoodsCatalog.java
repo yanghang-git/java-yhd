@@ -34,6 +34,8 @@ public class GoodsCatalog implements Serializable {
 				+ name + '\"'
 				+ ",\"upId\":"
 				+ upId
+				+ ",\"catalogs\":"
+				+ catalogs
 				+ "}";
 	}
 
