@@ -3,8 +3,11 @@ package com.yhd.service.backend.impl;
 import com.yhd.dao.ActivitySlideshowDao;
 import com.yhd.pojo.ActivitySlideshow;
 import com.yhd.service.backend.ActivitySlideshowService;
+import com.yhd.util.ConnectionFactory;
+import com.yhd.util.JDBCUtils;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -13,10 +16,8 @@ import java.util.List;
  * @Since 1.8
  */
 public class ActivitySlideshowServiceImpl implements ActivitySlideshowService {
-
 	private Connection conn;
 	private ActivitySlideshowDao dao;
-
 
 	public ActivitySlideshowServiceImpl(Connection conn, ActivitySlideshowDao dao) {
 		this.conn = conn;

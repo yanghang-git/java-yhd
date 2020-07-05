@@ -10,6 +10,7 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -24,29 +25,16 @@ public class IndentDaoImplTest {
 	private Connection conn = ConnectionFactory.INSTANCE.create();
 	private IndentDao dao = DaoFlyweightPatternFactory.getInstance().getDaoImpl("indent");
 	@Test
-	public void getListByUserId() {
-		List<Indent> list = dao.getListByUserId(conn, "Tom");
+	public void getListByStatusAndGoodsIdAndUserIdAndId() {
+		List<Indent> list = dao.getListByStatusAndGoodsIdAndUserIdAndId(conn, 0,null, null, null, 0, 1);
 		System.out.println(list);
 		assertNotNull(list);
 	}
 
-	@Test
-	public void getListAll() {
-		List<Indent> list = dao.getListAll(conn);
-		System.out.println(list);
-		assertNotNull(list);
-	}
 
 	@Test
-	public void getIndentById() {
-		Indent indent = dao.getIndentById(conn, "2922e1650ff34196bb2faab7262571f9");
-		System.out.println(indent);
-		assertNotNull(indent);
-	}
-
-	@Test
-	public void updateIndent() {
-		boolean result = dao.updateIndent(conn, new Indent("2922e1650ff34196bb2faab7262571f9", "Tom", 1, 1, 2, "12/12", new BigDecimal(22), 1, new Timestamp(System.currentTimeMillis())));
+	public void updateIndentGoodsTypeAndBuyNumberAndTotalPriceById() {
+		boolean result = dao.updateIndentGoodsTypeAndBuyNumberAndTotalPriceById(conn,"12/12", 2, new BigDecimal(500), "2922e1650ff34196bb2faab7262571f9");
 		assertTrue(result);
 	}
 

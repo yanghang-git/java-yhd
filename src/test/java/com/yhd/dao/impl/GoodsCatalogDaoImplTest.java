@@ -2,6 +2,7 @@ package com.yhd.dao.impl;
 
 import com.yhd.dao.DaoFlyweightPatternFactory;
 import com.yhd.dao.GoodsCatalogDao;
+import com.yhd.pojo.AddressCatalog;
 import com.yhd.pojo.GoodsCatalog;
 import com.yhd.util.ConnectionFactory;
 import org.junit.Test;
@@ -26,7 +27,18 @@ public class GoodsCatalogDaoImplTest {
 		assertNotNull(list);
 		System.out.println(list);
 	}
-
+	@Test
+	public void getUpIdByCatalogName() {
+		List<GoodsCatalog> list = dao.getUpIdByCatalogName(conn, "");
+		System.out.println(list);
+		assertNotNull(list);
+	}
+	@Test
+	public void getCatalogById() {
+		GoodsCatalog catalog = dao.getCatalogById(conn, 5);
+		System.out.println(catalog);
+		assertNotNull(catalog);
+	}
 	@Test
 	public void removeById() {
 		boolean result = dao.removeById(conn, 3);
@@ -41,7 +53,7 @@ public class GoodsCatalogDaoImplTest {
 
 	@Test
 	public void updateCatalog() {
-		boolean result = dao.updateCatalog(conn, new GoodsCatalog(2, "母婴/玩具/童装 ", 1));
+		boolean result = dao.updateCatalog(conn, 2, "母婴/玩具/童装 ");
 		assertTrue(result);
 	}
 }

@@ -20,6 +20,13 @@ public interface AddressDao {
 	List<Address> getByUserIdList(Connection conn, String userId);
 
 	/**
+	 * 获取地址详细信息根据id
+	 * @param conn 连接
+	 * @param id id
+	 * @return 详细地址
+	 */
+	String getAddressDetailById(Connection conn, int id);
+	/**
 	 * 根据自己的id删除记录
 	 * @param conn 连接
 	 * @param id 自己的id

@@ -1,6 +1,7 @@
 package com.yhd.pojo;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @Author 杨航
@@ -14,6 +15,7 @@ public class GoodsCatalog implements Serializable {
 	private Integer id;
 	private String name;
 	private Integer upId;
+	private List<GoodsCatalog> catalogs;
 
 	public GoodsCatalog() {}
 	public GoodsCatalog(Integer id, String name, Integer upId) {
@@ -32,7 +34,17 @@ public class GoodsCatalog implements Serializable {
 				+ name + '\"'
 				+ ",\"upId\":"
 				+ upId
+				+ ",\"catalogs\":"
+				+ catalogs
 				+ "}";
+	}
+
+	public List<GoodsCatalog> getCatalogs() {
+		return catalogs;
+	}
+
+	public void setCatalogs(List<GoodsCatalog> catalogs) {
+		this.catalogs = catalogs;
 	}
 
 	public static long getSerialVersionUID() {

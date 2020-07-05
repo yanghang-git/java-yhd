@@ -20,6 +20,22 @@ public interface AddressCatalogDao {
 	List<AddressCatalog> getListByUpId(Connection conn, int upId);
 
 	/**
+	 * 根据id查询对应的地址。
+	 * @param conn  数据库连接
+	 * @param id 上一级地址
+	 * @return 地址目录
+	 */
+	AddressCatalog getCatalogById(Connection conn, int id);
+
+	/**
+	 * 根据地址目录名字查询它上级的id
+	 * @param conn 数据连接
+	 * @param name 地址名字
+	 * @return 上级id
+	 */
+	List<AddressCatalog> getUpIdByCatalogName(Connection conn, String name);
+
+	/**
 	 * 删除记录。 根据id删除
 	 * @param conn 连接
 	 * @param id 唯一标识
@@ -36,10 +52,11 @@ public interface AddressCatalogDao {
 	boolean addAddressCatalog(Connection conn, AddressCatalog catalog);
 
 	/**
-	 * 修改记录。
+	 * 修改地址名称、根据id。
 	 * @param conn 连接
-	 * @param catalog 记录对象
+	 * @param id 地址id
+	 * @param catalogName 地址名称
 	 * @return 是否修改成功
 	 */
-	boolean updateCatalog(Connection conn, AddressCatalog catalog);
+	boolean updateCatalogNameById(Connection conn, int id, String catalogName);
 }

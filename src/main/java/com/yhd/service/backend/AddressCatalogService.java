@@ -11,11 +11,25 @@ import java.util.List;
  */
 public interface AddressCatalogService {
 	/**
+	 * get AddressCatalog By up_id. if up_id is 0,get all AddressCatalog
+	 * @param upId up level AddressCatalog id
+	 * @return AddressCatalog gather List
+	 */
+	List<AddressCatalog> getAllListByUpId(int upId);
+
+	/**
 	 * get AddressCatalog By up_id. if up_id is 0,get one level all AddressCatalog
 	 * @param upId up level AddressCatalog id
 	 * @return AddressCatalog gather List
 	 */
 	List<AddressCatalog> getListByUpId(int upId);
+
+	/**
+	 * get AddressCatalog by catalog of name
+	 * @param name catalog of name
+	 * @return AddressCatalog gather List
+	 */
+	List<AddressCatalog> getListByCatalogName(String name);
 
 	/**
 	 * remove AddressCatalog By id
@@ -32,9 +46,10 @@ public interface AddressCatalogService {
 	boolean addAddressCatalog(AddressCatalog catalog);
 
 	/**
-	 * update AddressCatalog
-	 * @param catalog instance
+	 * update AddressCatalog name by catalogId
+	 * @param id catalog of id
+	 * @param catalogName new catalog name
 	 * @return true: add success or false: add fail
 	 */
-	boolean updateCatalog(AddressCatalog catalog);
+	boolean updateCatalogNameById(int id, String catalogName);
 }

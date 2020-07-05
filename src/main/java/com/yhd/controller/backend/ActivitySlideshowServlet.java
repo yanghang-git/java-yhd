@@ -6,16 +6,15 @@ import com.yhd.pojo.ActivitySlideshow;
 import com.yhd.pojo.Admin;
 import com.yhd.service.backend.ActivitySlideshowService;
 import com.yhd.service.backend.impl.ActivitySlideshowServiceImpl;
-import com.yhd.util.ConnectionFactory;
 import com.yhd.util.ContentConstant;
 import com.yhd.util.JsonUtils;
 import com.yhd.util.WebUtils;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import javax.servlet.http.HttpSession;
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -25,16 +24,15 @@ import java.util.List;
  */
 public class ActivitySlideshowServlet extends HttpServlet {
 	private ActivitySlideshowService service;
+	private void initService(HttpSession sess) {
+		service = new ActivitySlideshowServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
+				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("activity_slideshow"));
 
-	@Override
-	public void init() throws ServletException {
-		super.init();
-		service = new ActivitySlideshowServiceImpl(ConnectionFactory.INSTANCE.create(ConnectionFactory.MYSQL_TOMCAT_CONN)
-			, DaoFlyweightPatternFactory.getInstance().getDaoImpl("activity_slideshow"));
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+		if(service == null) initService(req.getSession());
 		String methodName = req.getParameter(ContentConstant.CONTENT_METHOD_NAME);
 		try {
 			this.getClass().getDeclaredMethod(methodName, HttpServletRequest.class, HttpServletResponse.class).invoke(this, req, resp);

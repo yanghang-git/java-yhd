@@ -2,22 +2,19 @@ package com.yhd.controller.backend;
 
 import com.yhd.bean.Hint;
 import com.yhd.dao.DaoFlyweightPatternFactory;
-import com.yhd.pojo.ActivitySlideshow;
 import com.yhd.pojo.Admin;
 import com.yhd.pojo.IndentStatus;
-import com.yhd.service.backend.ActivitySlideshowService;
 import com.yhd.service.backend.IndentStatusService;
-import com.yhd.service.backend.impl.ActivitySlideshowServiceImpl;
 import com.yhd.service.backend.impl.IndentStatusServiceImpl;
-import com.yhd.util.ConnectionFactory;
 import com.yhd.util.ContentConstant;
 import com.yhd.util.JsonUtils;
 import com.yhd.util.WebUtils;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -28,15 +25,15 @@ import java.util.List;
 public class IndentStatusServlet extends HttpServlet {
 	private IndentStatusService service;
 
-	@Override
-	public void init() throws ServletException {
-		super.init();
-		service = new IndentStatusServiceImpl(ConnectionFactory.INSTANCE.create(ConnectionFactory.MYSQL_TOMCAT_CONN)
-			, DaoFlyweightPatternFactory.getInstance().getDaoImpl("indent_status"));
+	private void initService(HttpSession sess) {
+		service = new IndentStatusServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
+				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("indent_status"));
 	}
+
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+		if (service == null) initService(req.getSession());
 		String methodName = req.getParameter(ContentConstant.CONTENT_METHOD_NAME);
 		try {
 			this.getClass().getDeclaredMethod(methodName, HttpServletRequest.class, HttpServletResponse.class).invoke(this, req, resp);

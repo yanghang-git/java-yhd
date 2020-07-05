@@ -28,9 +28,25 @@ public class AddressCatalogDaoImplTest {
 	}
 
 	@Test
+	public void getUpIdByCatalogName() {
+		List<AddressCatalog> list = dao.getUpIdByCatalogName(conn, "区");
+		System.out.println(list);
+		assertNotNull(list);
+	}
+
+	@Test
+	public void getCatalogById() {
+		AddressCatalog catalog = dao.getCatalogById(conn, 5);
+		System.out.println(catalog);
+		assertNotNull(catalog);
+	}
+
+	@Test
 	public void removeById() {
 		boolean result = dao.removeById(conn, 1);
 	}
+
+
 
 	@Test
 	public void addAddressCatalog() {
@@ -40,7 +56,7 @@ public class AddressCatalogDaoImplTest {
 
 	@Test
 	public void updateCatalog() {
-		boolean result = dao.updateCatalog(conn, new AddressCatalog(1, "河北", 0));
+		boolean result = dao.updateCatalogNameById(conn,1, "河北");
 
 	}
 }
