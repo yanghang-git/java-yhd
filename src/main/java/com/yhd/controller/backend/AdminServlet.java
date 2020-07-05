@@ -5,7 +5,6 @@ import com.yhd.pojo.Admin;
 import com.yhd.bean.Hint;
 import com.yhd.service.backend.AdminService;
 import com.yhd.service.backend.impl.AdminServiceImpl;
-import com.yhd.util.ConnectionFactory;
 import com.yhd.util.ContentConstant;
 import com.yhd.util.WebUtils;
 
@@ -15,6 +14,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.sql.Connection;
 
 /**
  * @Author 杨航
@@ -26,17 +26,20 @@ public class AdminServlet extends HttpServlet {
 	private int maxFailTimes;		// max may number of fail
 	private int failFreezeDay;		// max fail later freeze of day
 
+	private void initService(HttpSession sess) {
+		service = new AdminServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
+				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("admin"));
+	}
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		service  = new AdminServiceImpl(ConnectionFactory.INSTANCE.create(ConnectionFactory.MYSQL_TOMCAT_CONN)
-				, DaoFlyweightPatternFactory.getInstance().getDaoImpl("admin"));
 		maxFailTimes = Integer.parseInt(config.getInitParameter("maxFailTimes")) - 1;
 		failFreezeDay = Integer.parseInt(config.getInitParameter("failFreezeDay"));
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+		if (service == null) initService(req.getSession());
 		String methodName = req.getParameter(ContentConstant.CONTENT_METHOD_NAME);
 		try {
 			this.getClass().getDeclaredMethod(methodName, HttpServletRequest.class, HttpServletResponse.class).invoke(this, req, resp);
@@ -87,7 +90,7 @@ public class AdminServlet extends HttpServlet {
 		} else {
 			session.removeAttribute(localhost);
 			Cookie cookie = new Cookie(localhost, (WebUtils.getDayMillisecond(this.failFreezeDay) + System.currentTimeMillis()) + "");
-			cookie.setMaxAge(60 * 60 * 12);
+			cookie.setMaxAge((int) WebUtils.getDayMillisecond(this.failFreezeDay));
 			resp.addCookie(cookie);
 			WebUtils.sendValue(resp, "<h1>您在" + this.failFreezeDay + "天内无法进行登入</h1>");
 			return true;

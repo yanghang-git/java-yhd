@@ -30,7 +30,7 @@ public interface GoodsCatalogService {
 	 * @param id GoodsCatalog id
 	 * @return GoodsCatalog instance
 	 */
-	GoodsCatalog getGoodsById(int id);
+	GoodsCatalog getCatalogById(int id);
 
 	/**
 	 * get GoodsCatalog by catalog of name

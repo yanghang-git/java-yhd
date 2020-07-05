@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 北方
@@ -9,7 +10,7 @@
 <%@ page import="com.yhd.util.ContentConstant" %>
 <html>
 <head>
-	<title>Title</title>
+	<title>YHD BackEnd</title>
 </head>
 <body>
 <style>
@@ -83,7 +84,8 @@
 	<div class="col">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item active" aria-current="page">Home</li>
+				<li class="breadcrumb-item"><a href="backend/index.jsp">Home</a></li>
+				<li class="breadcrumb-item active">goods</li>
 			</ol>
 		</nav>
 
@@ -170,6 +172,7 @@
 				</div>
 
 				<form>
+					<input id="goods-id" type="hidden">
 					<div class="row">
 						<label for="goods-primary-image">主图：</label>
 						<input type="text" class="form-group form-control col" id="goods-primary-image">
@@ -289,10 +292,29 @@
 	});
 
 
+	$('.table tbody').on('click', '.remove', function () {
+		if (!window.confirm("您确定要删除吗?")) {
+			return;
+		}
+		$.ajax({
+			url: urlGoodsPath,
+			method: 'post',
+			data: {
+				'${ContentConstant.CONTENT_METHOD_NAME}': 'removeGoodsById',
+				goodsId: $(this).parent().parent().attr('goodsId')
+			},
+			success: (data) => {
+				mySuccess(data);
+				pagingAjax();
+			},
+			error: () => myError()
+		});
+	});
 
 	$('.add').click(function () {
 		$('.import-value').hide();
 		$('#goods-primary-image').val('');
+		$('#goods-id').val('');
 		$('#goods-name').val('');
 		$('#goods-number').val('');
 		$('#goods-price').val('');
@@ -304,6 +326,36 @@
 
 	});
 
+	$('.table tbody').on('click', '.update', function () {
+		$.ajax({
+			url: urlGoodsPath,
+			method: 'post',
+			data: {
+				'${ContentConstant.CONTENT_METHOD_NAME}': 'getGoodsAndCatalogById',
+				goodsId:$(this).parent().parent().attr('goodsId')
+			},
+			success: (data) => {
+				data = JSON.parse(data);
+				$('.import-value').hide();
+				$('#goods-id').val(data[0].id);
+				$('#goods-primary-image').val(data[0].imagePrimary);
+				$('#goods-name').val(data[0].name);
+				$('#goods-number').val(data[0].number);
+				$('#goods-price').val(data[0].price);
+				$('#goods-detail-text').val(data[0].content);
+				$('#goods-style').empty().append(getOptionText(data[0].style));
+				$('#goods-kind').empty().append(getOptionText(data[0].kind));
+				$('#goods-detail-image').append(getOptionText(data[0].imageDetails));
+				let temp = "#goods-level-one option[value=" + data[1].id + "]";
+				$(temp).attr("selected", "selected");
+				temp = "#goods-level-two option[value=" + data[1].upId + "]";
+				$(temp).attr("selected", "selected");
+
+			},
+			error: () => myError()
+		});
+	});
+
 
 	$('.save').click(function () {
 		if ($('#goods-detail-image').val() === '' || $('#goods-kind').val() === '' || $('#goods-style').val() === '' || $('#goods-detail-text').val() === ''
@@ -311,9 +363,38 @@
 			showHint("系统提示", "请输入完整的信息");
 			return;
 		}
-		addGoods();
+		if (!/^\d+$/.test($('#goods-number').val())) {
+			showHint("系统提示", "商品数量必须是整数");
+			return;
+		}
+		$('#goods-id').val() === '' ? addGoods() : updateGoods();
 		$(this).prev().click();
 	});
+
+	function updateGoods() {
+		$.ajax({
+			url: urlGoodsPath,
+			method: 'post',
+			data: {
+				'${ContentConstant.CONTENT_METHOD_NAME}': 'updateGoods',
+				goodsId:$('#goods-id').val(),
+				primaryImage: $('#goods-primary-image').val(),
+				name: $('#goods-name').val(),
+				catalogId: $('#goods-level-two').val(),
+				number: parseInt($('#goods-number').val()),
+				price: $('#goods-price').val(),
+				style: getOptionTextBySelect($('#goods-style option')),
+				kind: getOptionTextBySelect($('#goods-kind option')),
+				detailImage: getOptionTextBySelect($('#goods-detail-image option')),
+				detailText: $('#goods-detail-text').val()
+			},
+			success: (data) => {
+				mySuccess(data);
+				pagingAjax();
+			},
+			error: () => myError()
+		});
+	}
 
 	function addGoods() {
 		$.ajax({
@@ -333,7 +414,7 @@
 			},
 			success: (data) => {
 				mySuccess(data);
-				loadGoodsData();
+				pagingAjax();
 			},
 			error: () => myError()
 		});
@@ -396,7 +477,7 @@
 		else if (target === 'goods-kind-add') $('#goods-kind').prepend(`<option>` + value + `</option>`).val(value);
 		else if (target === 'goods-detail-image-add') $('#goods-detail-image').prepend(`<option>` + value + `</option>`).val(value);
 		else if (target === 'goods-style-update') $('#goods-style option:selected').text(value);
-		else if (target === 'goods-style-update') $('#goods-kind option:selected').text(value);
+		else if (target === 'goods-kind-update') $('#goods-kind option:selected').text(value);
 		else if (target === 'goods-detail-image-update') $('#goods-detail-image option:selected').text(value);
 		$('.import-value').hide();
 	});
@@ -421,7 +502,6 @@
 
 
 	function pagingAjax() {
-		pageNo = 1;
 		let upId = $('#catalogTwoLevel').val();
 		if (upId === '-1') upId = $('#catalogOneLevel').val();
 		$.ajax({
@@ -443,8 +523,9 @@
 	}
 
 	function loadGoodsDataValueOfPage(arr) {
+		pageNo = 1;
 		$(arr).each(function () {
-			$('.table tbody').append(`<tr>
+			$('.table tbody').append(`<tr goodsId='` + this.id + `'>
 				<td scope="row">
 					<img src="` + this.imagePrimary + `" alt="">
 				</td>
@@ -463,7 +544,7 @@
 				<td>` + this.number + `</td>
 				<td>` + goodsCatalogMap.get(parseInt(this.catalogId)).name + `</td>
 				<td class="oper">
-					<button class="btn btn-outline-dark update">修改</button>
+					<button class="btn btn-outline-dark update"  data-toggle="modal"  data-target="#updateCatalog">修改</button>
 					<button class="btn btn-outline-dark remove">删除</button>
 				</td>
 			</tr>`);

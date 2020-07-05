@@ -2,6 +2,7 @@ package com.yhd.service.backend;
 
 import com.yhd.pojo.ActivitySlideshow;
 
+import java.sql.Connection;
 import java.util.List;
 
 /**

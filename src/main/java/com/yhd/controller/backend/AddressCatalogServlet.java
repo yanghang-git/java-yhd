@@ -7,15 +7,15 @@ import com.yhd.pojo.AddressCatalog;
 import com.yhd.pojo.Admin;
 import com.yhd.service.backend.AddressCatalogService;
 import com.yhd.service.backend.impl.AddressCatalogServiceImpl;
-import com.yhd.util.ConnectionFactory;
 import com.yhd.util.ContentConstant;
 import com.yhd.util.JsonUtils;
 import com.yhd.util.WebUtils;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -25,14 +25,15 @@ import java.util.List;
  */
 public class AddressCatalogServlet extends HttpServlet {
 	private AddressCatalogService service;
-	@Override
-	public void init() throws ServletException {
-		super.init();
-		service = new AddressCatalogServiceImpl(ConnectionFactory.INSTANCE.create(ConnectionFactory.MYSQL_TOMCAT_CONN)
-			, DaoFlyweightPatternFactory.getInstance().getDaoImpl("address_catalog"));
+
+	private void initService(HttpSession sess) {
+		service = new AddressCatalogServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
+				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("address_catalog"));
 	}
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+		if(service == null) initService(req.getSession());
 		String methodName = req.getParameter(ContentConstant.CONTENT_METHOD_NAME);
 		try {
 			this.getClass().getDeclaredMethod(methodName, HttpServletRequest.class, HttpServletResponse.class).invoke(this, req, resp);

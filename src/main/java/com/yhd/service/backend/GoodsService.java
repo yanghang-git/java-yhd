@@ -20,6 +20,13 @@ public interface GoodsService {
 	List<Goods> getGoodsByCatalogIdAndGoodsName(int catalogId, String goodsName);
 
 	/**
+	 * get single goods instance by goods of id
+	 * @param id goods of id
+	 * @return single goods instance
+	 */
+	Goods getGoodsById(int id);
+
+	/**
 	 * add Goods arrive record
 	 * @param goods instance
 	 * @return true: add success  or  false: add fail

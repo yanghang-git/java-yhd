@@ -2,6 +2,7 @@ package com.yhd.service.backend;
 
 import com.yhd.pojo.Indent;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.List;
 
@@ -13,46 +14,26 @@ import java.util.List;
 public interface IndentService {
 
 	/**
-	 * get Indent all by User of id and Goods of id
-	 * @param userId User id
-	 * @param goodsId Goods id
-	 * @return Indent instance gather List
+	 * get Indents By StatusId、GoodsName、UserId、Id。 if is null be not join check queue
+	 * @param statusId status of id
+	 * @param goodsName goods of name
+	 * @param userId user of id
+	 * @param id my id
+	 * @return indent instance gather List
 	 */
-	List<Indent> getListByUserIdAndId(String userId, String goodsId);
+	List<Indent> getListByStatusAndGoodsIdAndUserIdAndId(int statusId, String goodsName, String userId, String id, int pageSize, int pageCount);
 
 	/**
-	 * get Indent all by User of id
-	 * @param userId User id
-	 * @return Indent instance gather List
-	 */
-	List<Indent> getListByUserId(String userId);
-
-	/**
-	 * get Indent all
-	 * @return Indent instance gather List
-	 */
-	List<Indent> getListAll();
-
-	/**
-	 * get Indent all by id
-	 * @param id id
-	 * @return Indent instance
-	 */
-	Indent getIndentById(String id);
-
-	/**
-	 * update Indent
-	 * @param indent instance
+	 *  update indent of goodsType, buyNumber, totalPrice by indent of id
+	 * @param goodsType goods of style and kind
+	 * @param buyNumber goods of buy number
+	 * @param totalPrice total price
+	 * @param indentId indent of id
 	 * @return  true: update success or false: update fail
-	 */
-	boolean updateIndent(Indent indent);
 
-	/**
-	 * add Indent
-	 * @param indent instance
-	 * @return true: add success or false: add fail
 	 */
-	boolean addIndent(Indent indent);
+	boolean updateIndentGoodsTypeAndBuyNumberAndTotalPriceById(String goodsType, int buyNumber, BigDecimal totalPrice, String indentId);
+
 
 	/**
 	 * remove Indent by id

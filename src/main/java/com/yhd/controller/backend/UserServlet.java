@@ -6,6 +6,7 @@ import com.yhd.pojo.Admin;
 import com.yhd.bean.Hint;
 import com.yhd.pojo.User;
 import com.yhd.service.backend.UserService;
+import com.yhd.service.backend.impl.IndentStatusServiceImpl;
 import com.yhd.service.backend.impl.UserServiceImpl;
 import com.yhd.util.ConnectionFactory;
 import com.yhd.util.ContentConstant;
@@ -17,7 +18,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -31,11 +34,13 @@ public class UserServlet extends HttpServlet {
 	private int eachPageNumber;
 	private int maxPagination;
 
+	private void initService(HttpSession sess) {
+		service = new UserServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
+				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("user"));
+	}
 	@Override
 	public void init() throws ServletException {
 		super.init();
-		service = new UserServiceImpl(ConnectionFactory.INSTANCE.create(ConnectionFactory.MYSQL_TOMCAT_CONN)
-				, DaoFlyweightPatternFactory.getInstance().getDaoImpl("user"));
 		ServletContext context = this.getServletContext();
 		eachPageNumber = Integer.parseInt(context.getInitParameter("pagingNumberEachPage"));
 		maxPagination = Integer.parseInt(context.getInitParameter("pagingMaxPagination"));
@@ -44,6 +49,7 @@ public class UserServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+		if (service == null) initService(req.getSession());
 		String methodName = req.getParameter(ContentConstant.CONTENT_METHOD_NAME);
 		try {
 			this.getClass().getDeclaredMethod(methodName, HttpServletRequest.class, HttpServletResponse.class).invoke(this, req, resp);
@@ -65,9 +71,8 @@ public class UserServlet extends HttpServlet {
 	private void getAllByIdList(HttpServletRequest req, HttpServletResponse resp) {
 		String account = req.getParameter("account");
 		int currPageNo = Integer.parseInt(req.getParameter("currPageNo"));  // 显示第几页
-		long userCount = service.getUserCount(account); // 用户个数
 		List<User> list = service.getAllByIdList(account, currPageNo, eachPageNumber);
-		Page<User> pages =new Page<>(userCount, currPageNo, eachPageNumber, maxPagination, list);
+		Page<User> pages =new Page<>(list.size(), currPageNo, eachPageNumber, maxPagination, list);
 		WebUtils.sendValue(resp, JsonUtils.getJson(pages));
 	}
 

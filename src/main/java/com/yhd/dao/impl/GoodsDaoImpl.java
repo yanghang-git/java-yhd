@@ -32,6 +32,19 @@ public class GoodsDaoImpl extends BaseDao<Goods> implements GoodsDao {
 	}
 
 	/**
+	 * 根据商品id查询
+	 *
+	 * @param conn 连接
+	 * @param id   商品id
+	 * @return 商品实例
+	 */
+	@Override
+	public Goods getGoodsById(Connection conn, int id) {
+		String sql = "select id, name, price, style, kind, content, image_primary, image_details, number, catalog_id from goods where id = ? ";
+		return super.getInstance(conn, sql, id);
+	}
+
+	/**
 	 * 添加一个商品
 	 * @param conn  连接
 	 * @param goods 商品实例

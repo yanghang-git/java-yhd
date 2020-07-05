@@ -26,6 +26,18 @@ public class AddressDaoImpl extends BaseDao<Address> implements AddressDao {
 	}
 
 	/**
+	 * 获取地址详细信息根据id
+	 * @param conn 连接
+	 * @param id   id
+	 * @return 详细地址
+	 */
+	@Override
+	public String getAddressDetailById(Connection conn, int id) {
+		String sql = "SELECT CONCAT(c1.name, c2.name, c3.name, a.detail) adderss FROM address a INNER JOIN address_catalog c1 ON a.city = c1.id INNER JOIN address_catalog c2 ON a.county = c2.id inner JOIN address_catalog c3 ON a.street = c3.id   WHERE a.id = ?";
+		return super.getSimple(conn, sql, id);
+	}
+
+	/**
 	 * 根据自己的id删除记录
 	 * @param conn 连接
 	 * @param id   自己的id

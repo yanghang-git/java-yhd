@@ -22,7 +22,7 @@
 	<div class="col bar">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="../index.jsp">Home</a></li>
+				<li class="breadcrumb-item"><a href="backend/index.jsp">Home</a></li>
 				<li class="breadcrumb-item active">activity - slide show</li>
 			</ol>
 		</nav>
@@ -194,6 +194,7 @@
 		});
 		$('.save').prev().click();
 	}
+
 
 	function loadAllSlideShowData() {
 		$.ajax({

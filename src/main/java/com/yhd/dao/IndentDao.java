@@ -2,6 +2,7 @@ package com.yhd.dao;
 
 import com.yhd.pojo.Indent;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.List;
 
@@ -13,44 +14,28 @@ import java.util.List;
 public interface IndentDao {
 
 	/**
-	 * 根据用户的id查询出对应的订单
+	 * 根据订单的状态、商品的Id、用户的id、自身的id查询出对应的订单
 	 * @param conn 连接
-	 * @param userId 用户id
+	 * @param statusId 状态id
 	 * @param goodsId 商品id
-	 * @return 订单集合
-	 */
-	List<Indent> getListByUserId(Connection conn, String userId, String goodsId);
-
-	/**
-	 * 根据用户的id查询出对应的订单
-	 * @param conn 连接
 	 * @param userId 用户id
+	 * @param id 自己的id
+	 * @param pageSize 第几页
+	 * @param pageCount 一页显示多少
 	 * @return 订单集合
 	 */
-	List<Indent> getListByUserId(Connection conn, String userId);
+	List<Indent> getListByStatusAndGoodsIdAndUserIdAndId(Connection conn, int statusId, List<Integer> goodsId, String userId, String id, int pageSize, int pageCount);
 
 	/**
-	 * 查询出全部的订单
+	 * 	 * 修改订单的类型、数量、价格。 根据Id
 	 * @param conn 连接
-	 * @return 订单集合
-	 */
-	List<Indent> getListAll(Connection conn);
-
-	/**
-	 * 根据订单的id查询出对应的订单
-	 * @param conn 连接
-	 * @param id id
-	 * @return 单个订单
-	 */
-	Indent getIndentById(Connection conn, String id);
-
-	/**
-	 * 修改订单的信息
-	 * @param conn 连接
-	 * @param indent 订单实例
+	 * @param goodsType 商品类型
+	 * @param buyNumber 数量
+	 * @param totalPrice 价格
+	 * @param indentId id
 	 * @return 是否修改成功
 	 */
-	boolean updateIndent(Connection conn, Indent indent);
+	boolean updateIndentGoodsTypeAndBuyNumberAndTotalPriceById(Connection conn, String goodsType, int buyNumber, BigDecimal totalPrice, String indentId);
 
 	/**
 	 * 添加订单的信息

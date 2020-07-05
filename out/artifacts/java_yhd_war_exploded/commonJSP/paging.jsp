@@ -28,7 +28,6 @@
 		function loadPaging(page) {
 			if (page.newsList === null) {
 				initPageNo();
-				pagingAjax();
 			}
 			$('.paging ul').empty();
 			$('.paging ul').append($(`<li class="page-item"><a class="page-link" href="#" style="font-size: 11px;">Previous</a></li>
@@ -47,7 +46,7 @@
 			if(page.currPageNo === page.totalPageCount) {
 				$('.paging .page-item :contains("Next")').parent().addClass('disabled');
 			}
-			if (page.newsList.length === 0) {
+			if (page.newsList != null && page.newsList.length === 0) {
 				$('.paging .page-item :contains("Previous")').parent().addClass('disabled');
 				$('.paging .page-item :contains("Next")').parent().addClass('disabled');
 			}

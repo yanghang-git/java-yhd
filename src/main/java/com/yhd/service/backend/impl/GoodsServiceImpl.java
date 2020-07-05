@@ -34,6 +34,16 @@ public class GoodsServiceImpl implements GoodsService {
 	}
 
 	/**
+	 * get single goods instance by goods of id
+	 * @param id goods of id
+	 * @return single goods instance
+	 */
+	@Override
+	public Goods getGoodsById(int id) {
+		return dao.getGoodsById(conn, id);
+	}
+
+	/**
 	 * add Goods arrive record
 	 * @param goods instance
 	 * @return true: add success  or  false: add fail

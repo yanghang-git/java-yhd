@@ -22,6 +22,14 @@ public interface GoodsDao {
 	List<Goods> getListByCatalogIdAndGoodsName(Connection conn, int catalogId, String goodsName);
 
 	/**
+	 * 根据商品id查询
+	 * @param conn 连接
+	 * @param id 商品id
+	 * @return 商品实例
+	 */
+	Goods getGoodsById(Connection conn, int id);
+
+	/**
 	 * 添加一个商品
 	 * @param conn 连接
 	 * @param goods 商品实例

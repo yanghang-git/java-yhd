@@ -27,6 +27,12 @@ public class AddressDaoImplTest {
 		System.out.println(list);
 		assertNotNull(list);
 	}
+	@Test
+	public void getAddressDetailById() {
+		String address = dao.getAddressDetailById(conn, 1);
+		System.out.println(address);
+		assertNotNull(address);
+	}
 
 	@Test
 	public void removeById() {

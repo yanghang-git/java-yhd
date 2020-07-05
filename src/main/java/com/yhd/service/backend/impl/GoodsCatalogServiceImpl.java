@@ -54,7 +54,7 @@ public class GoodsCatalogServiceImpl implements GoodsCatalogService {
 	 * @return GoodsCatalog instance
 	 */
 	@Override
-	public GoodsCatalog getGoodsById(int id) {
+	public GoodsCatalog getCatalogById(int id) {
 		return dao.getCatalogById(conn, id);
 	}
 

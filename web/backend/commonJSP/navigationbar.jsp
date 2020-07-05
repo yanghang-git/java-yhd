@@ -146,7 +146,7 @@
 
 			<div class="nav flex-column">
 				<a class="nav-link" href="backend/indent/indentstatus.jsp">订单状态</a>
-				<a class="nav-link">订单详情</a>
+				<a class="nav-link" href="backend/indent/indent.jsp">订单详情</a>
 			</div>
 		</div>
 

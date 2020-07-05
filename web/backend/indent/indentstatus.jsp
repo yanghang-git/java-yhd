@@ -22,7 +22,7 @@
 	<div class="col bar">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="../index.jsp">Home</a></li>
+				<li class="breadcrumb-item"><a href="backend/index.jsp"">Home</a></li>
 				<li class="breadcrumb-item active">indent - status</li>
 			</ol>
 		</nav>
@@ -52,14 +52,6 @@
 				</thead>
 				<tbody>
 
-				<tr>
-					<th scope="row" class="statusId">1</th>
-					<td class="statusName">Otto</td>
-					<td>
-						<button class="btn update btn-outline-dark" data-toggle="modal"  data-target="#updateStatus" >修改</button>
-						<button class="btn remove btn-outline-dark">删除</button>
-					</td>
-				</tr>
 
 				</tbody>
 			</table>

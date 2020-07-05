@@ -120,13 +120,22 @@
 		<url-pattern>/back/goods/goods</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>IndentServlet</servlet-name>
+		<servlet-class>com.yhd.controller.backend.IndentServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>IndentServlet</servlet-name>
+		<url-pattern>/back/indent/indent</url-pattern>
+	</servlet-mapping>
+
 	<listener>
 		<listener-class>com.yhd.util.webutil.SessionListener</listener-class>
 	</listener>
 
 
 	<session-config>
-		<session-timeout>30</session-timeout>
+		<session-timeout>60</session-timeout>
 	</session-config>
 
 </web-app>
