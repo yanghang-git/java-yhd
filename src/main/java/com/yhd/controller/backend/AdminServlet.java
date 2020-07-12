@@ -6,15 +6,20 @@ import com.yhd.bean.Hint;
 import com.yhd.service.backend.AdminService;
 import com.yhd.service.backend.impl.AdminServiceImpl;
 import com.yhd.util.ContentConstant;
+import com.yhd.util.JDBCUtils;
+import com.yhd.util.JsonUtils;
 import com.yhd.util.WebUtils;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.Connection;
+import java.util.Arrays;
 
 /**
  * @Author 杨航
@@ -55,7 +60,7 @@ public class AdminServlet extends HttpServlet {
 
 	/**
 	 *  Admin login of Method
-	 *  	if login fail exceed three times, one day within will cannot login
+	 *  	if login fail exceed maxFailTimes, failFreezeDay within will cannot login
 	 */
 	private void login(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String username = req.getParameter("username");
@@ -70,6 +75,38 @@ public class AdminServlet extends HttpServlet {
 			req.getSession().removeAttribute(String.valueOf(InetAddress.getLocalHost()));
 		}
 		req.getRequestDispatcher(req.getContextPath() + url).forward(req, resp);
+	}
+
+	/**
+	 * add Admin of method
+	 */
+	private void addAdmin(HttpServletRequest req, HttpServletResponse resp) {
+		String id = req.getParameter("id");
+		String password = req.getParameter("password");
+		String[] powers = req.getParameterValues("power");
+		Admin admin = new Admin();
+		admin.setId(id);
+		admin.setPassword(password);
+		Class<? extends Admin> adminClass = admin.getClass();
+		for (String power : powers) {
+			try {
+				Method method = adminClass.getMethod(JDBCUtils.firstAddSet(power + "Power"), boolean.class);
+				method.invoke(admin, true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		boolean flag = service.addAdmin(admin);
+		Hint hint = new Hint(((Admin)req.getSession().getAttribute(ContentConstant.SESSION_ADMIN)).getId(), flag ? "添加成功，账号为：" + admin.getId() : "添加失败");
+		WebUtils.sendValue(resp, JsonUtils.getJson(hint));
+	}
+
+	private void containsId(HttpServletRequest req, HttpServletResponse resp) {
+		String id = req.getParameter("id");
+		if (service.containsId(id)) {
+			WebUtils.sendValue(resp, JsonUtils.getJson(new Hint(((Admin)req.getSession().getAttribute(ContentConstant.SESSION_ADMIN)).getId()
+					, "账号已存在")));
+		}
 	}
 
 	/**

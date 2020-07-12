@@ -22,7 +22,34 @@ public class AdminDaoImpl extends BaseDao<Admin> implements AdminDao {
 	 */
 	@Override
 	public Admin getAdminByIdAndPassword(Connection conn, String id, String password) {
-		String sql = "select id, `password`, money from admin where id = ? and password = ?";
+		String sql = "select id, `password`, admin_power, user_power, activity_power, indent_power, goods_power, address_power from admin where id = ? and password = ?";
 		return super.getInstance(conn, sql, id, password);
 	}
+
+	/**
+	 * 添加一个管理员
+	 * @param conn  连接
+	 * @param admin 管理员
+	 * @return 是否添加成功
+	 */
+	@Override
+	public boolean addAdmin(Connection conn, Admin admin) {
+		String sql = "insert into admin(id, `password`, user_power, activity_power, indent_power, goods_power, address_power) values(?, ?, ?, ?, ?, ?, ?)";
+		return super.update(conn, sql, admin.getId(), admin.getPassword(), admin.getUserPower(), admin.getActivityPower()
+				, admin.getIndentPower(), admin.getGoodsPower(), admin.getAddressPower()) == 1;
+	}
+
+	/**
+	 * 查询id是否存在
+	 *
+	 * @param conn 连接
+	 * @param id   id
+	 * @return 是否存在
+	 */
+	@Override
+	public boolean containsId(Connection conn, String id) {
+		String sql = "SELECT COUNT(*) FROM `admin` WHERE id = ?";
+		return ((long)super.getSimple(conn, sql, id) >= 1);
+	}
+
 }

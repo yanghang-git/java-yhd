@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import java.sql.Connection;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * @Author 杨航
@@ -18,12 +18,25 @@ import static org.junit.Assert.assertNotNull;
  */
 public class AdminDaoImplTest {
 
+	private	Connection conn = ConnectionFactory.INSTANCE.create();
+	private	AdminDao dao = DaoFlyweightPatternFactory.getInstance().getDaoImpl("admin");
 	@Test
 	public void getAdminByIdAndPassword() {
-		Connection conn = ConnectionFactory.INSTANCE.create();
-		AdminDao dao = DaoFlyweightPatternFactory.getInstance().getDaoImpl("admin");
 		Admin admin = dao.getAdminByIdAndPassword(conn, "Yoyo", "yoyo123");
+		System.out.println(admin);
 		assertNotNull(admin);
 	}
 
+
+	@Test
+	public void addAdmin() {
+		boolean flag = dao.addAdmin(conn, new Admin("Tom1", "tom123", false, true, true, true, true, true));
+		assertTrue(flag);
+	}
+
+	@Test
+	public void containsId() {
+		boolean flag = dao.containsId(conn, "Yoyo");
+		assertTrue(flag);
+	}
 }
