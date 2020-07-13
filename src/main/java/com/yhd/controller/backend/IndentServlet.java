@@ -4,6 +4,7 @@ import com.yhd.bean.Hint;
 import com.yhd.bean.Page;
 import com.yhd.dao.AddressDao;
 import com.yhd.dao.DaoFlyweightPatternFactory;
+import com.yhd.logger.LoggerServiceProxy;
 import com.yhd.pojo.Admin;
 import com.yhd.pojo.Indent;
 import com.yhd.pojo.User;
@@ -34,8 +35,8 @@ public class IndentServlet extends HttpServlet {
 	private int maxPagination;
 
 	private void initService(HttpSession session) {
-		service = new IndentServiceImpl((Connection) session.getAttribute(ContentConstant.SESSION_CONNECTION)
-				, DaoFlyweightPatternFactory.getInstance().getDaoImpl("indent"));
+		service = new LoggerServiceProxy<>(new IndentServiceImpl((Connection) session.getAttribute(ContentConstant.SESSION_CONNECTION)
+				, DaoFlyweightPatternFactory.getInstance().getDaoImpl("indent"))).getProxyInstance();
 	}
 	@Override
 	public void init() throws ServletException {

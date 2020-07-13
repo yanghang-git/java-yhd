@@ -3,6 +3,7 @@ package com.yhd.controller.backend;
 import com.mysql.jdbc.StringUtils;
 import com.yhd.bean.Hint;
 import com.yhd.dao.DaoFlyweightPatternFactory;
+import com.yhd.logger.LoggerServiceProxy;
 import com.yhd.pojo.Admin;
 import com.yhd.pojo.GoodsCatalog;
 import com.yhd.service.backend.GoodsCatalogService;
@@ -27,8 +28,8 @@ public class GoodsCatalogServlet extends HttpServlet {
 	private GoodsCatalogService service;
 
 	private void initService(HttpSession sess) {
-		service = new GoodsCatalogServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
-				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("goods_catalog"));
+		service = new LoggerServiceProxy<>(new GoodsCatalogServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
+				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("goods_catalog"))).getProxyInstance();
 	}
 
 	@Override
@@ -71,7 +72,7 @@ public class GoodsCatalogServlet extends HttpServlet {
 	private void removeCatalogById(HttpServletRequest req, HttpServletResponse resp) {
 		int id = Integer.parseInt(req.getParameter("catalogId"));
 		boolean flag = service.removeById(id);
-		Hint hint = new Hint(((Admin) req.getSession().getAttribute(ContentConstant.SESSION_ADMIN)).getId(), flag ? "删除成功" : "删除失败");
+		Hint hint = new Hint(((Admin) req.getSession().getAttribute(ContentConstant.SESSION_ADMIN)).getId(), flag ? "删除成功" : "目录下存有正在出售的商品。无法删除");
 		WebUtils.sendValue(resp, JsonUtils.getJson(hint));
 	}
 

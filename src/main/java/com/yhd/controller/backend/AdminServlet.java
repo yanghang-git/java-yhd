@@ -1,14 +1,12 @@
 package com.yhd.controller.backend;
 
 import com.yhd.dao.DaoFlyweightPatternFactory;
+import com.yhd.logger.LoggerServiceProxy;
 import com.yhd.pojo.Admin;
 import com.yhd.bean.Hint;
 import com.yhd.service.backend.AdminService;
 import com.yhd.service.backend.impl.AdminServiceImpl;
-import com.yhd.util.ContentConstant;
-import com.yhd.util.JDBCUtils;
-import com.yhd.util.JsonUtils;
-import com.yhd.util.WebUtils;
+import com.yhd.util.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -32,8 +30,8 @@ public class AdminServlet extends HttpServlet {
 	private int failFreezeDay;		// max fail later freeze of day
 
 	private void initService(HttpSession sess) {
-		service = new AdminServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
-				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("admin"));
+		service = new LoggerServiceProxy<>(new AdminServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
+				, DaoFlyweightPatternFactory.getInstance().getDaoImpl("admin"))).getProxyInstance();
 	}
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -74,7 +72,16 @@ public class AdminServlet extends HttpServlet {
 			req.getSession().setAttribute(ContentConstant.SESSION_ADMIN, admin);
 			req.getSession().removeAttribute(String.valueOf(InetAddress.getLocalHost()));
 		}
-		req.getRequestDispatcher(req.getContextPath() + url).forward(req, resp);
+		resp.sendRedirect(req.getContextPath() + url);
+	}
+
+	/**
+	 * Admin log out of method
+	 */
+	private void logOut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		service.logOut(((Admin)req.getSession().getAttribute(ContentConstant.SESSION_ADMIN)).getId());
+		req.getSession().removeAttribute(ContentConstant.SESSION_ADMIN);
+		resp.sendRedirect(req.getContextPath() + "/backendlogin.jsp");
 	}
 
 	/**

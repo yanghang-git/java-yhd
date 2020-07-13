@@ -2,6 +2,7 @@ package com.yhd.controller.backend;
 
 import com.yhd.bean.Hint;
 import com.yhd.dao.DaoFlyweightPatternFactory;
+import com.yhd.logger.LoggerServiceProxy;
 import com.yhd.pojo.ActivitySlideshow;
 import com.yhd.pojo.Admin;
 import com.yhd.service.backend.ActivitySlideshowService;
@@ -25,8 +26,8 @@ import java.util.List;
 public class ActivitySlideshowServlet extends HttpServlet {
 	private ActivitySlideshowService service;
 	private void initService(HttpSession sess) {
-		service = new ActivitySlideshowServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
-				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("activity_slideshow"));
+		service = new LoggerServiceProxy<>(new ActivitySlideshowServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
+				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("activity_slideshow"))).getProxyInstance();
 
 	}
 

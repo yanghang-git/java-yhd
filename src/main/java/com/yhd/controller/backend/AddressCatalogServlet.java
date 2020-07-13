@@ -3,6 +3,7 @@ package com.yhd.controller.backend;
 import com.mysql.jdbc.StringUtils;
 import com.yhd.bean.Hint;
 import com.yhd.dao.DaoFlyweightPatternFactory;
+import com.yhd.logger.LoggerServiceProxy;
 import com.yhd.pojo.AddressCatalog;
 import com.yhd.pojo.Admin;
 import com.yhd.service.backend.AddressCatalogService;
@@ -27,8 +28,8 @@ public class AddressCatalogServlet extends HttpServlet {
 	private AddressCatalogService service;
 
 	private void initService(HttpSession sess) {
-		service = new AddressCatalogServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
-				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("address_catalog"));
+		service = new LoggerServiceProxy<>(new AddressCatalogServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
+				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("address_catalog"))).getProxyInstance();
 	}
 
 	@Override

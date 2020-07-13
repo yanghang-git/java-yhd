@@ -124,7 +124,7 @@
 	$('tbody').on('click', '.update', function () {
 		isAdd = false;
 		let $parent = $(this).parent().parent();
-		$('#statusId').val($parent.children('.statusId').attr('disabled', 'disabled').text());
+		$('#statusId').val($parent.children('.statusId').text()).attr('disabled', 'disabled');
 		$('#statusName').val($parent.children('.statusName').text());
 	});
 

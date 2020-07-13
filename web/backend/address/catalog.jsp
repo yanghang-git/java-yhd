@@ -211,6 +211,10 @@
 	}));
 
 	$('body').on('click', '.remove', (function () {
+		if ($(this).parent().parent().parent().children('ul')[0] !== undefined) {
+			showHint("系统提示", $(this).parent().prev('.catalog-name').text() + "下还有地址无法进行删除");
+			return;
+		}
 		if (!window.confirm("你确定要删除" + getCatalogName(this) + "地址吗?")) return;
 		$.ajax({
 			url: urlPath,

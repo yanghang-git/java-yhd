@@ -52,5 +52,12 @@ public class AdminServiceImpl implements AdminService {
 		return dao.containsId(conn, id);
 	}
 
+	/**
+	 * log outv
+	 * @param id log out of admin id
+	 */
+	@Override
+	public void logOut(String id) { }
+
 
 }

@@ -3,6 +3,7 @@ package com.yhd.controller.backend;
 import com.yhd.bean.Hint;
 import com.yhd.bean.Page;
 import com.yhd.dao.DaoFlyweightPatternFactory;
+import com.yhd.logger.LoggerServiceProxy;
 import com.yhd.pojo.Admin;
 import com.yhd.pojo.Goods;
 import com.yhd.pojo.GoodsCatalog;
@@ -35,8 +36,8 @@ public class GoodsServlet extends HttpServlet {
 	private int maxPagination;
 
 	private void initService(HttpSession sess) {
-		service = new GoodsServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
-				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("goods"));
+		service = new LoggerServiceProxy<>(new GoodsServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
+				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("goods"))).getProxyInstance();
 	}
 
 	@Override

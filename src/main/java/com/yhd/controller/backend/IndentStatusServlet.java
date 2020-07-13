@@ -2,6 +2,7 @@ package com.yhd.controller.backend;
 
 import com.yhd.bean.Hint;
 import com.yhd.dao.DaoFlyweightPatternFactory;
+import com.yhd.logger.LoggerServiceProxy;
 import com.yhd.pojo.Admin;
 import com.yhd.pojo.IndentStatus;
 import com.yhd.service.backend.IndentStatusService;
@@ -26,8 +27,8 @@ public class IndentStatusServlet extends HttpServlet {
 	private IndentStatusService service;
 
 	private void initService(HttpSession sess) {
-		service = new IndentStatusServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
-				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("indent_status"));
+		service = new LoggerServiceProxy<>(new IndentStatusServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
+				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("indent_status"))).getProxyInstance();
 	}
 
 

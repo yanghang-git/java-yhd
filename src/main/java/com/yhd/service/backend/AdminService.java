@@ -29,4 +29,10 @@ public interface AdminService {
 	 * @return true: contains or false: not contains
 	 */
 	boolean containsId(String id);
+
+	/**
+	 * log out
+	 * @param id log out of admin id
+	 */
+	void logOut(String id);
 }
