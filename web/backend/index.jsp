@@ -34,6 +34,11 @@
 			<p>这里是一号店后台，在此可以管理整个一号店的数据。比如活动/商品/目录等等...</p>
 			<p>相信你会爱上这个后台。</p>
 		</div>
+
+		<form action="${pageContext.request.contextPath}/admin" method="post" style="margin-right: 43px;">
+			<input type="hidden" name="${ContentConstant.CONTENT_METHOD_NAME}" value="logOut"/>
+			<button class="btn btn-outline-dark float-right" type="submit">退出登入</button>
+		</form>
 	</div>
 </div>
 

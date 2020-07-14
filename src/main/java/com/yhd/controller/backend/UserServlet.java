@@ -2,6 +2,7 @@ package com.yhd.controller.backend;
 
 import com.yhd.bean.Page;
 import com.yhd.dao.DaoFlyweightPatternFactory;
+import com.yhd.logger.LoggerServiceProxy;
 import com.yhd.pojo.Admin;
 import com.yhd.bean.Hint;
 import com.yhd.pojo.User;
@@ -35,8 +36,8 @@ public class UserServlet extends HttpServlet {
 	private int maxPagination;
 
 	private void initService(HttpSession sess) {
-		service = new UserServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
-				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("user"));
+		service = new LoggerServiceProxy<>(new UserServiceImpl((Connection) sess.getAttribute(ContentConstant.SESSION_CONNECTION)
+				,DaoFlyweightPatternFactory.getInstance().getDaoImpl("user"))).getProxyInstance();
 	}
 	@Override
 	public void init() throws ServletException {
@@ -44,7 +45,6 @@ public class UserServlet extends HttpServlet {
 		ServletContext context = this.getServletContext();
 		eachPageNumber = Integer.parseInt(context.getInitParameter("pagingNumberEachPage"));
 		maxPagination = Integer.parseInt(context.getInitParameter("pagingMaxPagination"));
-
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class UserServlet extends HttpServlet {
 		String account = req.getParameter("account");
 		int currPageNo = Integer.parseInt(req.getParameter("currPageNo"));  // 显示第几页
 		List<User> list = service.getAllByIdList(account, currPageNo, eachPageNumber);
-		Page<User> pages =new Page<>(list.size(), currPageNo, eachPageNumber, maxPagination, list);
+		Page<User> pages = new Page<>(service.getUserCount(account), currPageNo, eachPageNumber, maxPagination, list);
 		WebUtils.sendValue(resp, JsonUtils.getJson(pages));
 	}
 

@@ -31,6 +31,7 @@
 		</nav>
 
 
+
 		<div class="container">
 			<blockquote class="blockquote">
 				<p class="mb-0">对用户进行冻结 / 解冻。</p>
@@ -72,7 +73,8 @@
 
 
 	$('button[type="button"]').on('click', () => {
-		initPageNo();
+		pageNo = 1;
+		pagingAjax();
 	});
 
 	function pagingAjax() {
@@ -88,17 +90,19 @@
 				let pageData = loadPaging(JSON.parse(data));
 				$('.table tbody').empty();
 				$(pageData).each(function () {
+
 					$('.table tbody').append($('<tr> <th scope="row">' + this.id + '</th> <td>' + this.phone + '</td> ' +
 						'<td>' + (this.freeze ? "Freeze" : "notFreeze") + '</td> <td> <button ' + (this.freeze ? "disabled" : "" + '') +
 						' class="btn freeze btn-outline-dark">冻结</button> <button ' + (this.freeze ? "" : "disabled") + ' class="btn ' +
 						'unfreeze btn-outline-dark">解冻</button> </td> </tr>'));
-				})
+				});
+
 			},
 			error: () => myError()
 		})
 	}
 
-	initPageNo();
+	pagingAjax();
 
 
 	$('.table tbody').on('click', '.freeze', function () {

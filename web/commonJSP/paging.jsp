@@ -20,11 +20,6 @@
 
 		let pageNo = 1;
 
-		function initPageNo() {
-			pageNo = 1;
-			pagingAjax();
-		}
-
 		function loadPaging(page) {
 			if (page.newsList === null) {
 				initPageNo();

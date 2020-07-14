@@ -1,7 +1,6 @@
 package com.yhd.pojo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
  * @Author 杨航
@@ -13,25 +12,55 @@ public class Admin implements Serializable {
 
 	private String id;
 	private String password;
-	private BigDecimal money;
+	private boolean adminPower;
+	private boolean userPower;
+	private boolean activityPower;
+	private boolean indentPower;
+	private boolean goodsPower;
+	private boolean addressPower;
+
 
 	public Admin() {}
-	public Admin(String id, String password, BigDecimal money) {
+
+	public Admin(String id, String password, boolean adminPower, boolean userPower, boolean activityPower, boolean indentPower, boolean goodsPower, boolean addressPower) {
 		this.id = id;
 		this.password = password;
-		this.money = money;
+		this.adminPower = adminPower;
+		this.userPower = userPower;
+		this.activityPower = activityPower;
+		this.indentPower = indentPower;
+		this.goodsPower = goodsPower;
+		this.addressPower = addressPower;
 	}
 
 	@Override
 	public String toString() {
 		return "{"
-				+ "\"id\":"
-				+ id
+				+ "\"id\":\""
+				+ id + '\"'
 				+ ",\"password\":\""
 				+ password + '\"'
-				+ ",\"money\":"
-				+ money
+				+ ",\"adminPower\":\""
+				+ adminPower + '\"'
+				+ ",\"userPower\":"
+				+ userPower
+				+ ",\"activityPower\":"
+				+ activityPower
+				+ ",\"indentPower\":"
+				+ indentPower
+				+ ",\"goodsPower\":"
+				+ goodsPower
+				+ ",\"addressPower\":"
+				+ addressPower
 				+ "}";
+	}
+
+	public boolean getAdminPower() {
+		return adminPower;
+	}
+
+	public void setAdminPower(boolean adminPower) {
+		this.adminPower = adminPower;
 	}
 
 	public String getId() {
@@ -50,11 +79,43 @@ public class Admin implements Serializable {
 		this.password = password;
 	}
 
-	public BigDecimal getMoney() {
-		return money;
+	public boolean getUserPower() {
+		return userPower;
 	}
 
-	public void setMoney(BigDecimal money) {
-		this.money = money;
+	public void setUserPower(boolean userPower) {
+		this.userPower = userPower;
+	}
+
+	public boolean getActivityPower() {
+		return activityPower;
+	}
+
+	public void setActivityPower(boolean activityPower) {
+		this.activityPower = activityPower;
+	}
+
+	public boolean getIndentPower() {
+		return indentPower;
+	}
+
+	public void setIndentPower(boolean indentPower) {
+		this.indentPower = indentPower;
+	}
+
+	public boolean getGoodsPower() {
+		return goodsPower;
+	}
+
+	public void setGoodsPower(boolean goodsPower) {
+		this.goodsPower = goodsPower;
+	}
+
+	public boolean getAddressPower() {
+		return addressPower;
+	}
+
+	public void setAddressPower(boolean addressPower) {
+		this.addressPower = addressPower;
 	}
 }

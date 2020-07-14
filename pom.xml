@@ -65,5 +65,14 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.47</version>
 		</dependency>
+
+		<!-- logback 日志
+		 	内部支持 slf4j 所以不需要再导入slf4j 依赖 -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.2.3</version>
+		</dependency>
+
 	</dependencies>
 </project>

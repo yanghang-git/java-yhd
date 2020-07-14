@@ -11,6 +11,7 @@ import com.yhd.service.backend.impl.AddressCatalogServiceImpl;
 import com.yhd.service.backend.impl.GoodsCatalogServiceImpl;
 import com.yhd.service.backend.impl.IndentServiceImpl;
 import com.yhd.util.ConnectionFactory;
+import com.yhd.util.JsonUtils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -26,8 +27,5 @@ import java.util.concurrent.TimeUnit;
  */
 public class Test {
 	public static void main(String[] args) throws UnknownHostException {
-		IndentService service = new IndentServiceImpl(ConnectionFactory.INSTANCE.create(), DaoFlyweightPatternFactory.getInstance().getDaoImpl("indent"));
-		List<Indent> list = service.getListByStatusAndGoodsIdAndUserIdAndId(2, null, null, "2922e1650ff34196bb2faab7262571f9",1,1);
-		list.forEach(System.out::println);
 	}
 }

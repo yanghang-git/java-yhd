@@ -32,5 +32,32 @@ public class AdminServiceImpl implements AdminService {
 		return dao.getAdminByIdAndPassword(conn, username, password);
 	}
 
+	/**
+	 * add Admin
+	 * @param admin Admin of instance
+	 * @return true add success or false add fail
+	 */
+	@Override
+	public boolean addAdmin(Admin admin) {
+		return dao.addAdmin(conn, admin);
+	}
+
+	/**
+	 * check admin record of if contain this id
+	 * @param id admin of id
+	 * @return true: contains or false: not contains
+	 */
+	@Override
+	public boolean containsId(String id) {
+		return dao.containsId(conn, id);
+	}
+
+	/**
+	 * log outv
+	 * @param id log out of admin id
+	 */
+	@Override
+	public void logOut(String id) { }
+
 
 }

@@ -3,7 +3,6 @@ package com.yhd.service.backend;
 import com.yhd.pojo.Indent;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -22,6 +21,15 @@ public interface IndentService {
 	 * @return indent instance gather List
 	 */
 	List<Indent> getListByStatusAndGoodsIdAndUserIdAndId(int statusId, String goodsName, String userId, String id, int pageSize, int pageCount);
+	/**
+	 * get Indents count By StatusId、GoodsName、UserId、Id。 if is null be not join check queue
+	 * @param statusId status of id
+	 * @param goodsName goods of name
+	 * @param userId user of id
+	 * @param id my id
+	 * @return indent count
+	 */
+	long getCountByStatusAndGoodsIdAndUserIdAndId(int statusId, String goodsName, String userId, String id);
 
 	/**
 	 *  update indent of goodsType, buyNumber, totalPrice by indent of id

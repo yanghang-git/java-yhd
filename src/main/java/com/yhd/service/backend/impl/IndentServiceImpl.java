@@ -46,6 +46,23 @@ public class IndentServiceImpl implements IndentService {
 	}
 
 	/**
+	 * get Indents count By StatusId、GoodsName、UserId、Id。 if is null be not join check queue
+	 * @param statusId  status of id
+	 * @param goodsName goods of name
+	 * @param userId    user of id
+	 * @param id        my id
+	 * @return indent count
+	 */
+	@Override
+	public long getCountByStatusAndGoodsIdAndUserIdAndId(int statusId, String goodsName, String userId, String id) {
+		GoodsDao goods = DaoFlyweightPatternFactory.getInstance().getDaoImpl("goods");
+		List<Goods> goodsList = goods.getListByCatalogIdAndGoodsName(conn, 0, goodsName);
+		List<Integer> goodsId = new ArrayList(goodsList.size());
+		goodsList.forEach((value) -> goodsId.add(value.getId()));
+		return dao.getCountByStatusAndGoodsIdAndUserIdAndId(conn, statusId, goodsId, userId, id);
+	}
+
+	/**
 	 * update indent of goodsType, buyNumber, totalPrice by indent of id
 	 * @param goodsType  goods of style and kind
 	 * @param buyNumber  goods of buy number
