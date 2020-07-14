@@ -72,7 +72,8 @@ public class IndentServlet extends HttpServlet {
 		String id = req.getParameter("indentId");
 		int currPageNo = Integer.parseInt(req.getParameter("currPageNo"));  // 显示第几页
 		List<Indent> list = service.getListByStatusAndGoodsIdAndUserIdAndId(statusId, goodsName, userId, id, currPageNo, eachPageNumber);
-		Page<Indent> pages =new Page<>(list.size(), currPageNo, eachPageNumber, maxPagination, list);
+		Page<Indent> pages = new Page<>(service.getCountByStatusAndGoodsIdAndUserIdAndId(statusId, goodsName, userId, id)
+				, currPageNo, eachPageNumber, maxPagination, list);
 		WebUtils.sendValue(resp, JsonUtils.getJson(pages));
 	}
 

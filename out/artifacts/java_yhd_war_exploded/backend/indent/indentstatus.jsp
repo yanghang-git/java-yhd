@@ -195,7 +195,6 @@
 								<button class="btn remove btn-outline-dark">删除</button>
 							</td>
 						</tr>`));
-
 				});
 
 			},

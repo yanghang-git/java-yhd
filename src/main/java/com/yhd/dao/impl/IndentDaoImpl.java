@@ -49,6 +49,28 @@ public class IndentDaoImpl extends BaseDao<Indent> implements IndentDao {
 		return super.getInstances(conn, sql.toString(), (pageSize - 1) * pageCount, pageCount);
 	}
 
+	@Override
+	public long getCountByStatusAndGoodsIdAndUserIdAndId(Connection conn, int statusId, List<Integer> goodsId, String userId, String id) {
+		StringBuilder sql = new StringBuilder("select count(*) from indent where 1 = 1");
+		if (!StringUtils.isNullOrEmpty(id)) {
+			sql.append(" and id = '").append(id).append("'");
+		}
+		if (!StringUtils.isNullOrEmpty(userId)) {
+			sql.append(" and user_id = '").append(userId).append("'");
+		}
+		if (statusId > 0) {
+			sql.append(" and status_id = ").append(statusId);
+		}
+		if (goodsId != null && goodsId.size() > 0) {
+			sql.append(" and goods_id in( ");
+			for (int i = 0; i < goodsId.size(); i++) {
+				sql.append(goodsId.get(i)).append(i == goodsId.size() -1 ? "" :",");
+			}
+			sql.append(")");
+		}
+		return super.getSimple(conn, sql.toString());
+	}
+
 	/**
 	 * 修改订单的类型、数量、价格、收货地址。 根据Id
 	 * @param conn       连接

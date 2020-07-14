@@ -111,7 +111,9 @@ public class AdminServlet extends HttpServlet {
 	private void containsId(HttpServletRequest req, HttpServletResponse resp) {
 		String id = req.getParameter("id");
 		if (service.containsId(id)) {
-			WebUtils.sendValue(resp, JsonUtils.getJson(new Hint(((Admin)req.getSession().getAttribute(ContentConstant.SESSION_ADMIN)).getId()
+			WebUtils.sendValue(resp, JsonUtils.getJson(
+					new Hint(((Admin)req.getSession()
+							.getAttribute(ContentConstant.SESSION_ADMIN)).getId()
 					, "账号已存在")));
 		}
 	}

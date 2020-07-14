@@ -27,7 +27,18 @@ public interface IndentDao {
 	List<Indent> getListByStatusAndGoodsIdAndUserIdAndId(Connection conn, int statusId, List<Integer> goodsId, String userId, String id, int pageSize, int pageCount);
 
 	/**
-	 * 	 * 修改订单的类型、数量、价格。 根据Id
+	 * 根据订单的状态、商品的Id、用户的id、自身的id查询出对应的订单数量
+	 * @param conn 连接
+	 * @param statusId 状态id
+	 * @param goodsId 商品id
+	 * @param userId 用户id
+	 * @param id 自己的id
+	 * @return 订单集合
+	 */
+	long getCountByStatusAndGoodsIdAndUserIdAndId(Connection conn, int statusId, List<Integer> goodsId, String userId, String id);
+
+	/**
+	 * 修改订单的类型、数量、价格。 根据Id
 	 * @param conn 连接
 	 * @param goodsType 商品类型
 	 * @param buyNumber 数量
@@ -36,6 +47,7 @@ public interface IndentDao {
 	 * @return 是否修改成功
 	 */
 	boolean updateIndentGoodsTypeAndBuyNumberAndTotalPriceById(Connection conn, String goodsType, int buyNumber, BigDecimal totalPrice, String indentId);
+
 
 	/**
 	 * 添加订单的信息
