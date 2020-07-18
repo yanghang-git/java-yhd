@@ -29,10 +29,12 @@ public class DaoFlyweightPatternFactory {
 			 	比如 MySql ： 表名+DaoImpl
 		 */
 		public static String getSuffix(Type type) {
-			if (type == MYSQL) {
-				return "DaoImpl";
+			switch(type) {
+				case MYSQL:
+					return "DaoImpl";
+				default:
+					return null;
 			}
-			return null;
 		}
 	}
 
