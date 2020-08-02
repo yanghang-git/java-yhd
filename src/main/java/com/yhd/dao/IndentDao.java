@@ -38,6 +38,14 @@ public interface IndentDao {
 	long getCountByStatusAndGoodsIdAndUserIdAndId(Connection conn, int statusId, List<Integer> goodsId, String userId, String id);
 
 	/**
+	 * 根据订单编号获取订单全部信息
+	 * @param conn 连接
+	 * @param id 订单编号
+	 * @return 订单
+	 */
+	Indent getIndentById(Connection conn, String id);
+
+	/**
 	 * 修改订单的类型、数量、价格。 根据Id
 	 * @param conn 连接
 	 * @param goodsType 商品类型
@@ -48,6 +56,14 @@ public interface IndentDao {
 	 */
 	boolean updateIndentGoodsTypeAndBuyNumberAndTotalPriceById(Connection conn, String goodsType, int buyNumber, BigDecimal totalPrice, String indentId);
 
+	/**
+	 * 根据订单编号修改订单状态
+	 * @param conn 连接
+	 * @param statusId 订单状态Id
+	 * @param id 订单id
+	 * @return
+	 */
+	boolean updateIndentStatusById(Connection conn, int statusId, String id);
 
 	/**
 	 * 添加订单的信息

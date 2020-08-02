@@ -42,6 +42,19 @@ public interface IndentService {
 	 */
 	boolean updateIndentGoodsTypeAndBuyNumberAndTotalPriceById(String goodsType, int buyNumber, BigDecimal totalPrice, String indentId);
 
+	/**
+	 * Indent shipment from 确认订单 to 已发货
+	 * @param id Indent of id
+	 * @return true: shipment success or false: shipment fail
+	 */
+	boolean shipments(String id);
+
+	/**
+	 * get Indent by id
+	 * @param id indent of id
+	 * @return indent instance
+	 */
+	Indent getIndentById(String id);
 
 	/**
 	 * remove Indent by id
