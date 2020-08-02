@@ -140,62 +140,6 @@
 		</div>
 	</div>
 </div>
-<div class="import-value">
-	<div class="form-group">
-		<label>请输入密令：</label>
-		<input type="password" class=" pwd form-group form-control col" >
-	</div>
-	<div class="form-group">
-		<button type="button" class="btn btn-primary import-save float-right">Save</button>
-	</div>
-	<div class="form-group">
-		<button type="button" class="btn btn-secondary import-close float-right">Close</button>
-	</div>
-</div>
-
-<!-- hidden of box -->
-<div class="modal" id="updateIndent">
-	<button class="btn btn-outline-dark updateIndent"  data-toggle="modal" style="display: none" data-target="#updateIndent"></button>
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Indent</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<form>
-					<input type="hidden" id="indent-id">
-					<div class="row">
-						<div class="col form-group" style="margin-right: 5px">
-							<label for="indent-style" class="col-form-label">款式：</label>
-							<select class="custom-select" id="indent-style"></select>
-						</div>
-						<div class="col form-group" style="margin-left: 5px">
-							<label for="indent-kind" class="col-form-label">种类：</label>
-							<select class="custom-select" id="indent-kind"></select>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col form-group" style="margin-right: 5px">
-							<label for="indent-number" class="col-form-label">数量：</label>
-							<input type="number" class="form-control" id="indent-number">
-						</div>
-						<div class="col form-group" style="margin-left: 5px">
-							<label for="indent-price" class="col-form-label">价格：</label>
-							<input type="number" class="form-control" id="indent-price">
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn closeBox btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn save btn-primary">Save changes</button>
-			</div>
-		</div>
-	</div>
-</div>
 
 <%@include file="../../commonJSP/hint.jsp"%>
 
@@ -214,83 +158,6 @@
 				$('#statusName').append($(`<option value="` + this.id + `">` + this.statusName + `</option>`));
 			});
 		}
-	});
-	$('body').on('click', '.update', function () {
-		let statusName = indentStatusCache.get(parseInt($(this).parent().parent().attr('statusId')));
-		if (statusName !== '确认订单' && statusName !== '未发货') {
-			showHint("系统提示",statusName === undefined ? "订单状态异常" :  "当前订单状态为：" + statusName + "，不可进行更改");
-			return;
-		}
-		indentStatusCache.get();
-		let goods = goodsCache.get(parseInt($(this).parent().parent().attr('goodsId')));
-		$('#indent-style').append($(getOptionText(goods.style)));
-		$('#indent-kind').append($(getOptionText(goods.kind)));
-		$('#indent-number').val($(this).parent().parent().children('.number').text());
-		$('#indent-price').val($(this).parent().parent().children('.price').text());
-		$('#indent-id').val($(this).parent().parent().children('td').children('.font-exceed').children('.id').text());
-		$('.updateIndent').click();
-	});
-
-	$('body').on('click', '.remove', function () {
-		$('.import-value .pwd').val('');
-		$('.import-value').attr('indentId', $(this).parent().parent().children('td').children('.font-exceed').children('.id').text()).show();
-	});
-	
-	$('.import-save').click(function () {
-		if($('.import-value .pwd').val() === '') {
-			showHint('系统提示', "密令错误");
-			$('.import-value').hide();
-			return;
-		}
-		$.ajax({
-			url: urlPath,
-			method: 'post',
-			data: {
-				'${ContentConstant.CONTENT_METHOD_NAME}': 'removeIndentById',
-				indentId: $('.import-value').attr('indentId')
-			},
-			success: (data) => {
-				mySuccess(data);
-				pagingAjax();
-			},
-			error:() => myError()
-		});
-		$('.import-value').hide();
-	});
-
-	$('.import-close').click(function () {
-		$('.import-value').hide();
-	});
-
-	$('.save').click(function () {
-		let indentNumber = $('#indent-number').val();
-		console.log(/^\d+$/.test(indentNumber))
-		let indentPrice = $('#indent-price').val();
-		if (indentNumber === '' || indentPrice === '') {
-			showHint('系统提示', '请输入完整的信息');
-			return;
-		}
-		if (!/^\d+$/.test(indentNumber)) {
-			showHint('系统提示', '购买数量必须为整数');
-			return;
-		}
-		$.ajax({
-			url: urlPath,
-			method: 'post',
-			data: {
-				'${ContentConstant.CONTENT_METHOD_NAME}': 'updateIndentGoodsTypeAndBuyNumberAndTotalPriceById',
-				goodsType: $('#indent-style').val() + "/" + $('#indent-kind').val(),
-				buyNumber: indentNumber,
-				totalPrice: indentPrice,
-				indentId: $('#indent-id').val()
-			},
-			success: (data) => {
-				mySuccess(data);
-				pagingAjax();
-			},
-			error: myError()
-		});
-		$('.closeBox').click();
 	});
 
 	function getOptionText(str) {
@@ -361,14 +228,42 @@
 					</div>
 				</td>
 				<td>
-					<button class="btn btn-outline-dark update">修改</button>
-					<button class="btn btn-outline-dark remove">删除</button>
+					<button class="btn btn-outline-dark ` + (isShipment(this.statusId) ? "" : "disabled") + ` shipments">发货</button>
 				</td>
 			</tr>`);
 		});
+
+
 	}
+	<%--	<form action="` + urlPath + `" method="post" style="display: inline-block">--%>
+	<%--			<input type="hidden" name="` + '${ContentConstant.CONTENT_METHOD_NAME}' + `" value="showIndentInfo"/>--%>
+	<%--		<input type="hidden" value="`+ this.id + `" name="id"/>--%>
+	<%--		<button type="submit" class="btn btn-outline-dark show-info">详情</button>--%>
+	<%--		</form>--%>
 
+	$('body').on("click", ".table tbody button", function () {
+		if($(this).hasClass('disabled')) {
+			return;
+		}
+		$.ajax({
+			url: urlPath,
+			method: 'post',
+			data: {
+				'${ContentConstant.CONTENT_METHOD_NAME}' : "shipments",
+				id: $(this).parent().parent().children().eq(0).children().children('.font').text()
+			},
+			success: (data) => {
+				mySuccess(data);
+				pagingAjax();
+			},
+			error: () => myError()
+		});
+	});
 
+	function isShipment (status) {
+		let contains = indentStatusCache.get(parseInt(status));
+		return contains === "已付款";
+	}
 	let goodsCache = new Map();
 	function getGoodsNameByGoodsId(goodsId) {
 		goodsId = parseInt(goodsId);

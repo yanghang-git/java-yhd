@@ -1,5 +1,6 @@
 package com.yhd.cache;
 
+import com.yhd.dao.BaseDao;
 import com.yhd.dao.DaoFlyweightPatternFactory;
 
 /**
@@ -14,5 +15,6 @@ public enum CacheFactory {
 			return (E) new IndentStatusCacheProxy(DaoFlyweightPatternFactory.getInstance().getDaoImpl("indent_status"));
 		}
 	};
+
 	public abstract <E> E create();
 }

@@ -72,6 +72,18 @@ public class IndentDaoImpl extends BaseDao<Indent> implements IndentDao {
 	}
 
 	/**
+	 * 根据订单编号获取订单全部信息
+	 * @param conn 连接
+	 * @param id   订单编号
+	 * @return 订单
+	 */
+	@Override
+	public Indent getIndentById(Connection conn, String id) {
+		String sql = "select id, user_id, goods_id, status_id, buy_number, type, total_prices, address_id,order_time from indent where id = ?";
+		return getInstance(conn, sql, id);
+	}
+
+	/**
 	 * 修改订单的类型、数量、价格、收货地址。 根据Id
 	 * @param conn       连接
 	 * @param goodsType  商品类型
@@ -84,6 +96,20 @@ public class IndentDaoImpl extends BaseDao<Indent> implements IndentDao {
 	public boolean updateIndentGoodsTypeAndBuyNumberAndTotalPriceById(Connection conn, String goodsType, int buyNumber, BigDecimal totalPrice, String indentId) {
 		String sql = "update indent set buy_number = ?, type = ?, total_prices = ? where id = ?";
 		return super.update(conn, sql, buyNumber, goodsType, totalPrice, indentId) == 1;
+	}
+
+	/**
+	 * 根据订单编号修改订单状态
+	 *
+	 * @param conn     连接
+	 * @param statusId 订单状态Id
+	 * @param id       订单id
+	 * @return
+	 */
+	@Override
+	public boolean updateIndentStatusById(Connection conn, int statusId, String id) {
+		String sql = "update indent set status_id = ? where id = ?";
+		return super.update(conn, sql, statusId, id) == 1;
 	}
 
 	/**

@@ -72,7 +72,7 @@ public class AdminServlet extends HttpServlet {
 			req.getSession().setAttribute(ContentConstant.SESSION_ADMIN, admin);
 			req.getSession().removeAttribute(String.valueOf(InetAddress.getLocalHost()));
 		}
-		resp.sendRedirect(req.getContextPath() + url);
+		req.getRequestDispatcher(req.getContextPath() + url).forward(req, resp);
 	}
 
 	/**

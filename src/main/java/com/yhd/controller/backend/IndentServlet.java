@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.List;
@@ -77,29 +78,19 @@ public class IndentServlet extends HttpServlet {
 		WebUtils.sendValue(resp, JsonUtils.getJson(pages));
 	}
 
-	/**
-	 * update indent of goodsType, buyNumber, totalPrice by indent of id
-	 */
-	private void updateIndentGoodsTypeAndBuyNumberAndTotalPriceById(HttpServletRequest req, HttpServletResponse resp) {
-		String goodsType = req.getParameter("goodsType");
-		int buyNumber = Integer.parseInt(req.getParameter("buyNumber"));
-		BigDecimal totalPrice = new BigDecimal(req.getParameter("totalPrice"));
-		String indentId = req.getParameter("indentId");
-		boolean flag = service.updateIndentGoodsTypeAndBuyNumberAndTotalPriceById(goodsType, buyNumber, totalPrice, indentId);
-		Hint hint = new Hint(((Admin)req.getSession().getAttribute(ContentConstant.SESSION_ADMIN)).getId(), flag ? "修改成功" : "修改失败");
+	private void shipments(HttpServletRequest req, HttpServletResponse resp) {
+		String id = req.getParameter("id");
+		boolean flag = service.shipments(id);
+		Hint hint = new Hint(((Admin) req.getSession().getAttribute(ContentConstant.SESSION_ADMIN)).getId()
+				, flag ? "发货成功" : "发货失败");
 		WebUtils.sendValue(resp, JsonUtils.getJson(hint));
 	}
 
-	/**
-	 * remove indent by indent of id
-	 */
-	private void removeIndentById(HttpServletRequest req, HttpServletResponse resp) {
-		String indentId = req.getParameter("indentId");
-		boolean flag = service.removeById(indentId);
-		Hint hint = new Hint(((Admin)req.getSession().getAttribute(ContentConstant.SESSION_ADMIN)).getId(), flag ? "删除成功" : "删除失败");
-		WebUtils.sendValue(resp, JsonUtils.getJson(hint));
+	private void showIndentInfo(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		String id = req.getParameter("id");
+		req.setAttribute("indent", service.getIndentById(id));
+		req.getRequestDispatcher(req.getContextPath() + "/backend/indent/showinfo.jsp").forward(req, resp);
 	}
-
 
 	private AddressDao dao;
 	private void initAddressDao() {

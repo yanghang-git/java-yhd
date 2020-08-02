@@ -2,7 +2,6 @@ package com.yhd.controller.backend;
 
 import com.yhd.bean.Hint;
 import com.yhd.cache.CacheFactory;
-import com.yhd.dao.DaoFlyweightPatternFactory;
 import com.yhd.logger.LoggerServiceProxy;
 import com.yhd.pojo.Admin;
 import com.yhd.pojo.IndentStatus;
