@@ -40,7 +40,7 @@ public class IndentDaoImplTest {
 
 	@Test
 	public void addIndent() {
-		boolean result = dao.addIndent(conn, new Indent(JDBCUtils.randomCreateIndentId(), "Tom", 1, 1, 2, "12/12", new BigDecimal(20), 1, new Timestamp(System.currentTimeMillis())));
+		boolean result = dao.addIndent(conn, new Indent(JDBCUtils.randomCreateIndentId(), "Tom", "1", 1, "2", "12/12", new BigDecimal(20), 1, new Timestamp(System.currentTimeMillis())));
 		assertTrue(result);
 	}
 
@@ -49,4 +49,6 @@ public class IndentDaoImplTest {
 		boolean result = dao.removeById(conn, "2922e1650ff34196bb2faab7262571f9");
 		assertTrue(result);
 	}
+
+
 }

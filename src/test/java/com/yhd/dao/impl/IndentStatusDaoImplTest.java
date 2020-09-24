@@ -43,4 +43,9 @@ public class IndentStatusDaoImplTest {
 		boolean result = dao.removeById(conn, 1);
 		assertTrue(result);
 	}
+
+	@Test
+	public void getIndentStatusById() {
+		System.out.println(dao.getStatusById(conn, 4));
+	}
 }

@@ -19,6 +19,14 @@ public interface IndentStatusDao {
 	List<IndentStatus> getAllList(Connection conn);
 
 	/**
+	 * 根据订单状态Id 获取订单状态
+	 * @param conn 连接
+	 * @param id 订单状态id
+	 * @return 订单状态示例
+	 */
+	IndentStatus getStatusById(Connection conn, int id);
+
+	/**
 	 * 添加一个订单状态
 	 * @param conn 连接
 	 * @param status 状态实例

@@ -14,9 +14,9 @@ public class Indent implements Serializable {
 	private static final long serialVersionUID = -7174382118398765022L;
 	private String id;
 	private String userId;
-	private Integer goodsId;
+	private String goodsId;
 	private Integer statusId;
-	private Integer buyNumber;
+	private String buyNumber;
 	private String type;
 	private BigDecimal totalPrices;
 	private Integer addressId;
@@ -24,7 +24,7 @@ public class Indent implements Serializable {
 
 	public Indent() {}
 
-	public Indent(String id, String userId, Integer goodsId, Integer statusId, Integer buyNumber, String type, BigDecimal totalPrices, Integer addressId, Timestamp orderTime) {
+	public Indent(String id, String userId, String goodsId, Integer statusId, String buyNumber, String type, BigDecimal totalPrices, Integer addressId, Timestamp orderTime) {
 		this.id = id;
 		this.userId = userId;
 		this.goodsId = goodsId;
@@ -76,11 +76,11 @@ public class Indent implements Serializable {
 		this.userId = userId;
 	}
 
-	public Integer getGoodsId() {
+	public String getGoodsId() {
 		return goodsId;
 	}
 
-	public void setGoodsId(Integer goodsId) {
+	public void setGoodsId(String goodsId) {
 		this.goodsId = goodsId;
 	}
 
@@ -92,11 +92,11 @@ public class Indent implements Serializable {
 		this.statusId = statusId;
 	}
 
-	public Integer getBuyNumber() {
+	public String getBuyNumber() {
 		return buyNumber;
 	}
 
-	public void setBuyNumber(Integer buyNumber) {
+	public void setBuyNumber(String buyNumber) {
 		this.buyNumber = buyNumber;
 	}
 
