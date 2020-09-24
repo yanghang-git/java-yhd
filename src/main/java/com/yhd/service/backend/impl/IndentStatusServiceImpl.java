@@ -32,6 +32,16 @@ public class IndentStatusServiceImpl implements IndentStatusService {
 	}
 
 	/**
+	 * get indentStatus by id
+	 * @param id indentStatus id
+	 * @return indentStatus
+	 */
+	@Override
+	public IndentStatus getStatusById(int id) {
+		return dao.getStatusById(conn, id);
+	}
+
+	/**
 	 * add one new of Indent Status
 	 * @param status status instance
 	 * @return true: add success or false : add fail

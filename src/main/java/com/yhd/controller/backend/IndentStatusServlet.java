@@ -56,6 +56,12 @@ public class IndentStatusServlet extends HttpServlet {
 		WebUtils.sendValue(resp, JsonUtils.getJson(allList));
 	}
 
+	private void getIndentStatusById(HttpServletRequest req, HttpServletResponse resp) {
+		int statusId = Integer.parseInt(req.getParameter("statusId"));
+		IndentStatus status = service.getStatusById(statusId);
+		WebUtils.sendValue(resp, JsonUtils.getJson(status));
+	}
+
 	private void addIndentStatus(HttpServletRequest req, HttpServletResponse resp) {
 		String name = req.getParameter("name");
 		boolean flag = service.addStatues(new IndentStatus(0, name));

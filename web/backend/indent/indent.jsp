@@ -122,14 +122,10 @@
 			<table class="table">
 				<thead class="thead-light">
 				<tr>
-					<th scope="col">编号</th>
-					<th scope="col">用户</th>
-					<th scope="col">商品</th>
-					<th scope="col">款式</th>
-					<th scope="col">数量</th>
-					<th scope="col">总价</th>
-					<th scope="col">地址</th>
-					<th scope="col">时间</th>
+					<th scope="col" style="width: 20%">编号</th>
+					<th scope="col" style="width: 10%">用户</th>
+					<th scope="col" style="width: 20%">地址</th>
+					<th scope="col" style="width: 20%">时间</th>
 					<th scope="col">操作</th>
 				</tr>
 				</thead><tbody>
@@ -195,51 +191,30 @@
 		$(data).each(function(){
 			$(".table tbody").append(`<tr statusId="` + this.statusId + `" goodsId="` + this.goodsId + `">
 				<td>
-					<div class="font-exceed">
-						<div class="font">` + this.id + `</div>
-						<div class="show id">` + this.id + `</div>
-					</div>
+					<div class="show id">` + this.id + `</div>
 				</td>
 				<td>` + this.userId + `</td>
 				<td>
-					<div class="font-exceed">
-						<div class="font">` + getGoodsNameByGoodsId(this.goodsId) + `</div>
-						<div class="show">` + getGoodsNameByGoodsId(this.goodsId) + `</div>
-					</div>
+					<div">` + getAddressDetailByAddressId(this.addressId) + `</div>
 				</td>
 				<td>
-					<div class="font-exceed">
-						<div class="font">` + this.type + `</div>
-						<div class="show">` + this.type + `</div>
-					</div>
-				  </td>
-				<td class="number">` + this.buyNumber + `</td>
-				<td class="price">` + this.totalPrices + `</td>
-				<td>
-					<div class="font-exceed">
-						<div class="font">` + getAddressDetailByAddressId(this.addressId) + `</div>
-						<div class="show address">` + getAddressDetailByAddressId(this.addressId) + `</div>
-					</div>
-				</td>
-				<td>
-					<div class="font-exceed">
-						<div class="font">` + strTransformMM_dd(this.orderTime)  + `</div>
 						<div class="show">` + this.orderTime + `</div>
-					</div>
 				</td>
 				<td>
+					<form action="` + urlPath + `" method="post" style="display: inline-block">
+						<input type="hidden" name="` + '${ContentConstant.CONTENT_METHOD_NAME}' + `" value="showIndentInfo"/>
+						<input type="hidden" value="`+ this.id + `" name="id"/>
+						<button type="submit" class="btn btn-outline-dark show-info">详情</button>
+					</form>
 					<button class="btn btn-outline-dark ` + (isShipment(this.statusId) ? "" : "disabled") + ` shipments">发货</button>
+
 				</td>
 			</tr>`);
 		});
 
 
 	}
-	<%--	<form action="` + urlPath + `" method="post" style="display: inline-block">--%>
-	<%--			<input type="hidden" name="` + '${ContentConstant.CONTENT_METHOD_NAME}' + `" value="showIndentInfo"/>--%>
-	<%--		<input type="hidden" value="`+ this.id + `" name="id"/>--%>
-	<%--		<button type="submit" class="btn btn-outline-dark show-info">详情</button>--%>
-	<%--		</form>--%>
+
 
 	$('body').on("click", ".table tbody button", function () {
 		if($(this).hasClass('disabled')) {
@@ -264,29 +239,9 @@
 		let contains = indentStatusCache.get(parseInt(status));
 		return contains === "已付款";
 	}
-	let goodsCache = new Map();
-	function getGoodsNameByGoodsId(goodsId) {
-		goodsId = parseInt(goodsId);
-		if (goodsCache.has(goodsId)) return goodsCache.get(goodsId).name;
-		let parse;
-		$.ajax({
-			url: '${pageContext.request.contextPath}/back/goods/goods',
-			method: 'post',
-			async: false,
-			data: {
-				'${ContentConstant.CONTENT_METHOD_NAME}' : "getGoodsById",
-				goodsId: goodsId
-			},
-			success: (data) => {
-				parse = JSON.parse(data);
-			},
-			error: () => myError()
-		});
-		goodsCache.set(goodsId, parse);
-		return parse.name;
-	}
+
 	let addressCache = new Map();
-	function getAddressDetailByAddressId(addressId) {
+	function getAddressDetailByAddressId(addressId) { // 1
 		addressId = parseInt(addressId);
 		if (addressCache.has(addressId)) return addressCache.get(addressId);
 		let address;
@@ -305,11 +260,6 @@
 		});
 		addressCache.set(addressId, address);
 		return address;
-	}
-
-	function strTransformMM_dd(str) {
-		str = str.split(' ')[0];
-		return  str.substring(str.indexOf('-') + 1);
 	}
 
 </script>

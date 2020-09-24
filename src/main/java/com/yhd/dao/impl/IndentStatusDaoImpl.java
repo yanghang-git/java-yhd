@@ -25,6 +25,18 @@ public class IndentStatusDaoImpl extends BaseDao<IndentStatus> implements Indent
 	}
 
 	/**
+	 * 根据订单状态Id 获取订单状态
+	 * @param conn 连接
+	 * @param id   订单状态id
+	 * @return 订单状态示例
+	 */
+	@Override
+	public IndentStatus getStatusById(Connection conn, int id) {
+		String sql = "select id, status_name from indent_status where id = ?";
+		return super.getInstance(conn, sql, id);
+	}
+
+	/**
 	 * 添加一个订单状态
 	 * @param conn   连接
 	 * @param status 状态实例

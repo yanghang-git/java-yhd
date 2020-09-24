@@ -17,6 +17,13 @@ public interface IndentStatusService {
 	List<IndentStatus> getAllList();
 
 	/**
+	 * get indentStatus by id
+	 * @param id indentStatus id
+	 * @return indentStatus
+	 */
+	IndentStatus getStatusById(int id);
+
+	/**
 	 * add one new of Indent Status
 	 * @param status status instance
 	 * @return true: add success or false : add fail

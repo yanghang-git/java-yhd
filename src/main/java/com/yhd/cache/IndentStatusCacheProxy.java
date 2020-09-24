@@ -39,6 +39,30 @@ public class IndentStatusCacheProxy extends IndentStatusAdapter {
 		return statusCache;
 	}
 
+	/**
+	 * 根据订单状态Id 获取订单状态
+	 *
+	 * @param conn 连接
+	 * @param id   订单状态id
+	 * @return 订单状态示例
+	 */
+	@Override
+	public IndentStatus getStatusById(Connection conn, int id) {
+
+		for (int i = 0; i < statusCache.size(); i++) {
+			if (statusCache.get(i).getId() == id) {
+				return statusCache.get(i);
+			}
+		}
+		reloadCache(conn);
+		for (int i = 0; i < statusCache.size(); i++) {
+			if (statusCache.get(i).getId() == id) {
+				return statusCache.get(i);
+			}
+		}
+		return null;
+	}
+
 
 	/**
 	 * add one status and reload cache
