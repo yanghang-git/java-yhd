@@ -216,7 +216,7 @@
 	}
 
 
-	$('body').on("click", ".table tbody button", function () {
+	$('body').on("click", ".table tbody .shipments", function () {
 		if($(this).hasClass('disabled')) {
 			return;
 		}
@@ -225,7 +225,7 @@
 			method: 'post',
 			data: {
 				'${ContentConstant.CONTENT_METHOD_NAME}' : "shipments",
-				id: $(this).parent().parent().children().eq(0).children().children('.font').text()
+				id: $(this).parent().parent().children().eq(0).children('div.id').text()
 			},
 			success: (data) => {
 				mySuccess(data);
