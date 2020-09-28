@@ -198,7 +198,7 @@
 					<div">` + getAddressDetailByAddressId(this.addressId) + `</div>
 				</td>
 				<td>
-						<div class="show">` + this.orderTime + `</div>
+						<div class="show">` + (this.orderTime == null ? "未付款" : this.orderTime) + `</div>
 				</td>
 				<td>
 					<form action="` + urlPath + `" method="post" style="display: inline-block">
@@ -242,6 +242,7 @@
 
 	let addressCache = new Map();
 	function getAddressDetailByAddressId(addressId) { // 1
+		if (addressId === null || addressId === '') return '未付款';
 		addressId = parseInt(addressId);
 		if (addressCache.has(addressId)) return addressCache.get(addressId);
 		let address;

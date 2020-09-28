@@ -91,36 +91,37 @@
 		<div class="goods-msg-main row"></div>
 		<div>
 			<span>总价：${requestScope.indent.totalPrices}元</span>
-			<span class="address"></span>
-			<span class="date">时间：${requestScope.indent.orderTime}</span>
+			<span class="address">地址：未付款</span>
+			<span class="date">时间：未付款${requestScope.indent.orderTime}</span>
 			<span class="status">状态：${requestScope.indent.statusId}</span>
 			<button class="btn btn-outline-dark goback">返回</button>
 		</div>
 	</div>
 </body>
 <script>
-	$.ajax({
-		url: '${pageContext.request.contextPath}/back/indent/indent',
-		method: 'post',
-		async: false,
-		data: {
-			'${ContentConstant.CONTENT_METHOD_NAME}' : "getAddressDetailByAddressId",
-			addressId: ${requestScope.indent.addressId}
-		},
-		success: (data) => {
-			$('.address').text("地址:    " + data);
-		},
-		error: () => myError()
-	});
-	console.log('${requestScope.indent.statusId}');
+	let addressId = '${requestScope.indent.addressId}';
+	if (addressId !== '') {
+		$.ajax({
+			url: '${pageContext.request.contextPath}/back/indent/indent',
+			method: 'post',
+			data: {
+				'${ContentConstant.CONTENT_METHOD_NAME}' : "getAddressDetailByAddressId",
+				addressId: addressId
+			},
+			success: (data) => {
+				$('.address').text("地址: " + data);
+			},
+			error: () => myError()
+		});
+	}
 	$.ajax({
 		url: '${pageContext.request.contextPath}/back/indent/status',
 		method: 'post',
 		data: {
 			'${ContentConstant.CONTENT_METHOD_NAME}' : "getIndentStatusById",
-			statusId: ${requestScope.indent.statusId}
+			statusId: '${requestScope.indent.statusId}'
 		},
-		success: (data) => {
+		success: function(data) {
 			$('.status').text("状态:    " + JSON.parse(data).statusName);
 		},
 		error: () => myError()
