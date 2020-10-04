@@ -46,6 +46,14 @@ public interface IndentDao {
 	Indent getIndentById(Connection conn, String id);
 
 	/**
+	 * 根据用户姓名查询订单
+	 * @param conn 连接
+	 * @param username 用户的姓名
+	 * @return 订单List
+	 */
+	List<Indent> getIndentByUsername(Connection conn, String username);
+
+	/**
 	 * 修改订单的类型、数量、价格。 根据Id
 	 * @param conn 连接
 	 * @param goodsType 商品类型
@@ -80,4 +88,25 @@ public interface IndentDao {
 	 * @return 是否删除成功
 	 */
 	boolean removeById(Connection conn, String id);
+
+	/**
+	 * 根据订单状态查询信息
+	 * @param conn 连接
+	 * @param statusId 订单状态id
+	 * @param username 用户名称
+	 * @return 订单信息
+	 */
+	List<Indent> getIndentByStatusIdAndUsername(Connection conn, int statusId, String username);
+
+	/**
+	 * 修改订单状态
+	 * @param conn 连接
+	 * @param indentId 订单Id
+	 * @param statusId 状态id
+	 * @return 是否修改成功
+	 */
+	boolean alterIndentStatusById(Connection conn, String indentId, int statusId);
+
+	Indent getRecentlyIndentByUserName(Connection conn, String username);
+
 }

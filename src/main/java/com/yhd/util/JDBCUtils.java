@@ -45,7 +45,22 @@ public class JDBCUtils {
 	 */
 	public static String firstAddSet(String field) {
 		// abc   setAbc
-		return "set" + field.substring(0, 1).toUpperCase() + field.substring(1);
+		return "set" + firstInitialUp(field);
+	}
+
+	/**
+	 * 将传递进来的字符串。首字母大写 在其前方加上get
+	 * @param field 属性
+	 * @return 属性对应的set方法的名字
+	 */
+	public static String firstAddGet(String field) {
+		// abc   setAbc
+		return "get" + firstInitialUp(field);
+	}
+
+
+	private static String firstInitialUp(String field) {
+		return field.substring(0, 1).toUpperCase() + field.substring(1);
 	}
 
 	/**
@@ -68,6 +83,19 @@ public class JDBCUtils {
 			result = replace_FirstToUpper(result);
 		}
 		return result;
+	}
+
+	public static String replaceFirstToUpper_(String str) {
+		char[] chars = str.toCharArray();
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < chars.length; i++) {
+			if (chars[i] >= 'A' && chars[i] <= 'Z') {
+				sb.append("_").append((char)(chars[i] + 32));
+			} else {
+				sb.append(chars[i]);
+			}
+		}
+		return sb.toString();
 	}
 
 	/**

@@ -1,0 +1,183 @@
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/data/changePhone.css">
+</head>
+<body>
+<div class="title">
+    <h5>修改密码</h5>
+</div>
+
+<div class="box">
+    <div class="box-title row">
+        <div class="col pitch">1.验证身份</div>
+        <div class="col">2.更改手机号</div>
+    </div>
+
+    <div class="box-value-one">
+        <div class="phone">
+            <input type="text" maxlength="11" disabled>
+            <div class="auth">
+                <input type="text" maxlength="4" disabled placeholder="请输入验证码">
+                <button>获取验证码</button>
+            </div>
+        </div>
+        <button  disabled="disabled">下一步</button>
+    </div>
+
+    <div class="box-value-two">
+        <div class="phone">
+            <input type="text" maxlength="11" placeholder="请输入您的新手机号">
+            <span></span>
+            <div class="auth">
+                <input type="text" maxlength="4" disabled placeholder="请输入验证码">
+                <button>获取验证码</button>
+            </div>
+        </div>
+        <div class="save">
+            <button disabled>保存设置</button>
+        </div>
+    </div>
+</div>
+<div class="hint-box"
+	 style="background: #fff;width: 300px;position: fixed;right: 0;bottom: 0;border-radius: 6px;box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);display: none">
+	<div class="hint-title row" style="height: 30px; padding: 5px;">
+		<div class="title-name" style="position: absolute;left: 10px;font-size: 15px;">系统提示</div>
+		<div style="position: absolute;right: 10px;font-size: 12px;">WebHint</div>
+	</div>
+	<div class="hint-value"
+		 style="text-indent: 2em;border-top: 1px solid #999;font-size: 14px; padding: 9px 20px;"></div>
+	<button class="btn btn-primary" style="float: left;margin:7px;padding:2px 10px;margin-top: 0;">OK</button>
+</div>
+</body>
+<script src="../../js/jquery.min.js"></script>
+<script src="../js/util.js"></script>
+<script>
+    $(function () {
+
+		let user;
+		let param = getHrefParam(window.location.href);
+		$.ajax({
+			url: "/personalCenter/user",
+			method: "post",
+			async: false,
+			data: {
+				"CONTENT_METHOD_NAME": "getUserById",
+				'name': param.get("username")[0]
+			},
+			success: function (data) {
+				user = JSON.parse(data);
+				$('.box-value-one .phone>input').val(user.phone.replace(/(\d{3})\d{4}(\d{4})/, "$1****$2"));
+			}
+		});
+
+		$('.box-value-one .phone .auth button').click(function() {
+			$(this).prev().removeAttr("disabled");
+		});
+		$('.box-value-two .phone .auth button').click(function() {
+			let val = $(".box-value-two .phone input").val();
+			if(/13[6-9]\d{8}/.test(val) && !checkPhoneIsExist(val)) {
+				$(this).prev().removeAttr("disabled");
+			} else {
+				if(val === ''){
+					$(".box-value-two .phone span").text('手机号不能为空');
+				} else if(checkPhoneIsExist(val)){
+					$(".box-value-two .phone span").text('手机号已被注册');
+				} else {
+					$(".box-value-two .phone span").text('格式错误，请输入正确的手机号码');
+				}
+			}
+
+		});
+
+		function checkPhoneIsExist(phone) {
+			let result = false;
+			$.ajax({
+				url: "/personalCenter/user",
+				method: "post",
+				async: false,
+				data: {
+					CONTENT_METHOD_NAME: "checkUserPhoneIsExist",
+					name: param.get("username")[0],
+					phone: phone
+				},
+				success: function (data) {
+					console.log(data);
+					result = (data === "true");
+				}
+			});
+			return result;
+		}
+        // 判断验证码
+        $('.box-value-one .phone .auth input').bind("input propertychange",function () {
+            if($(this).val().length === 4) {
+                $('.box-value-one>button').removeAttr('disabled');
+            } else {
+                $('.box-value-one>button').attr('disabled', 'disabled');
+            }
+        });
+
+        // 点击下一步
+        $('.box-value-one>button').click(function () {
+            $(this).parent().css('display','none').next().css('display','block');
+			$('.box .box-title div:eq(0)').removeClass("pitch");
+			$('.box .box-title div:eq(1)').addClass("pitch");
+        });
+
+        // 手机号
+        $('.box-value-two .phone>input').blur(function () {
+            if(/13[6-9]\d{8}/.test($(this).val()) && !checkPhoneIsExist($(this).val())) {
+                $(this).next().text('');
+            } else {
+                if($(this).val() === ''){
+                    $(this).next().text('手机号不能为空');
+                } else if(checkPhoneIsExist($(this).val())){
+                    $(this).next().text('手机号已被注册');
+                } else {
+                    $(this).next().text('格式错误，请输入正确的手机号码');
+                }
+            }
+        });
+
+        // 判断验证码
+        $('.box-value-two .phone .auth input').bind("input propertychange",function () {
+            if($(this).val().length === 4) {
+                $('.box-value-two .save button').removeAttr('disabled');
+            } else {
+                $('.box-value-two .save button').attr('disabled', 'disabled');
+            }
+        });
+
+        // 修改成功
+        $('.box-value-two .save').click(function () {
+            if($('.box-value-two .phone>span').text() === ''){
+				$.ajax({
+					url: "/personalCenter/user",
+					method: "post",
+					data: {
+						CONTENT_METHOD_NAME: "updateUserPhone",
+						userId: param.get("username")[0],
+						phone: $(".box-value-two .phone input").val()
+					},
+					success: function () {
+						$('.hint-box .hint-value').text("修改完成");
+						$('.hint-box').slideDown();
+					}
+
+				});
+            }
+        });
+
+		$(".hint-box button").click(function () {
+			$('.hint-box').slideUp(500);
+		});
+    })
+</script>
+</html>

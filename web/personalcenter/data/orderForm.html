@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/data/orderForm.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="top">
+        <div class="total">
+            <span class="title pitch">所有订单</span>
+        </div><span>|</span>
+    </div>
+
+
+    <div class="value">
+    </div>
+
+    <div class="empty">
+        <img src="http://img.yihaodianimg.com/myyhd/member/images/my_order/ordersEmpty.jpg?2809438" alt="">
+        <p>最近暂无订单</p>
+    </div>
+</body>
+<script src="../js/util.js"></script>
+<script src="../../js/jquery.min.js"></script>
+<script>
+    $(function() {
+
+		let param = getHrefParam(window.location.href);
+
+		function loadAll() {
+			$.ajax({
+				url: "/personalCenter/indent",
+				method: "post",
+				data: {
+					'CONTENT_METHOD_NAME': "getIndentByUserIdList",
+					'username': param.get('username')[0]
+				},
+				success: function(data) {
+					let json = JSON.parse(data);
+					if (json.length === 0) {
+						$('.value').css('display', 'none');
+						$('.empty').css('display', 'block');
+						return;
+					}
+					$('.value').css('display', 'block');
+					$('.empty').css('display', 'none');
+					$('.value').empty();
+					$(json).each(function() {
+						$('.value').append(orderFromDom(this));
+					});
+				}
+			});
+		}
+		loadAll();
+		$('.top .total').click(function() {
+			loadAll();
+		});
+		$.ajax({
+			url: '/personalCenter/indentstatus',
+			method: 'post',
+			data: {
+				"CONTENT_METHOD_NAME" : "getAllList"
+			},
+			success: (data) => {
+				$(JSON.parse(data)).each(function() {
+					$('.top').append(`
+						<div statusId="${this.id}">
+							<span class="title">${this.statusName}</span>
+						</div><span>|</span>
+					`);
+				});
+
+			}
+		});
+
+
+		function orderFromDom(orderFrom){
+			return $(`<div class="item row">
+                        <div class="col-4">
+                            <p>配送方式</p>
+                            <p class="box">第三方配送</p>
+                            <p class="font-color">时间：${orderFrom.orderTime}</p>
+                            <p>工作日、双休日与节假日均可发货</p>
+                        </div>
+                        <div class="col">
+                            <p class="title" style="padding-top: 13px;">商家：yhd</p>
+                            <div class="row">
+                                <div class="col-2 img"><img src="#" alt=""></div>
+                                <div class="col main">
+                                    <div class="main-value">订单: ${orderFrom.id}</div>
+                                    <p>支持7天无理由退货</p>
+                                </div>
+                                <div class="col-2 money">总价:${orderFrom.totalPrices}</div>
+                                <div class="col-2 state">${getStatusNameById(orderFrom.statusId)}</div>
+                                <div class="show-indent-info" style="padding-left: 471px;"><a href="../indentinfo.html?indentid=${orderFrom.id}">查看详情</a></div>
+                            </div>
+                        </div>
+                    </div>`);
+		}
+
+
+		function getStatusNameById(id) {
+			let temp;
+			$.ajax({
+				url: '/personalCenter/indentstatus',
+				method: 'post',
+				async: false,
+				data: {
+					"CONTENT_METHOD_NAME" : "getIndentStatusById",
+					statusId: id
+				},
+				success: (data) => {
+					temp = data;
+				}
+			});
+			return temp;
+		}
+
+        $('.top').on('click', 'div', function() {
+            $('.top div .title').removeClass('pitch');
+            $(this).children('.title').addClass('pitch');
+			$.ajax({
+				url: "/personalCenter/indent",
+				method: "post",
+				data: {
+					'CONTENT_METHOD_NAME': "getAllByStatusIdAndUsername",
+					'statusId': $(this).attr('statusId'),
+					'username': param.get('username')[0]
+				},
+				success: function(data) {
+					let json = JSON.parse(data);
+					if (json.length === 0) {
+						$('.value').css('display', 'none');
+						$('.empty').css('display', 'block');
+						return;
+					}
+					$('.value').css('display', 'block');
+					$('.empty').css('display', 'none');
+					$('.value').empty();
+					$(json).each(function() {
+						$('.value').append(orderFromDom(this));
+					});
+				}
+			});
+
+		});
+
+
+    });
+</script>
+
+</html>

@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<link rel="stylesheet" href="../css/data/personalData.css">
+</head>
+<body>
+<div class="box">
+	<div class="right">
+		<div class="phone">
+			手机：<a href="changePhone.html">修改绑定</a>
+		</div>
+		<div class="email">
+			邮件：（未绑定）
+			<input type="email" placeholder="绑定邮箱，送成长值"/>
+			<div class="email-bind bottom">立即绑定</div>
+		</div>
+		<div class="ps">注：修改密码、邮箱、手机等信息请到 <a href="#">安全设置</a></div>
+	</div>
+
+	<div class="left">
+		<div class="img">
+			<span>头像：</span>
+			<div class="img-img">
+				<img src="http://img.yihaodianimg.com/myyhd/global/images/top/avatar_default.jpg" alt="">
+				<div>设置头像</div>
+			</div>
+		</div>
+		<div class="pet-name">
+			<span>昵称：</span>
+			<input type="text" disabled>
+		</div>
+		<div class="name">
+			<span><i>*</i>真实姓名：</span>
+			<input type="text">
+		</div>
+		<div class="sex">
+			<span><i>*</i>性别：</span>
+			<input type="radio" name="sex" value="男" checked> 男
+			<input type="radio" name="sex" value="女"> 女
+		</div>
+		<div class="birthday">
+			<span><i>*</i>生日：</span>
+			<select class="year">
+				<option>选择年</option>
+				<option value="2020">2020</option>
+				<option value="2019">2019</option>
+				<option value="2018">2018</option>
+				<option value="2017">2017</option>
+				<option value="2016">2016</option>
+				<option value="2015">2015</option>
+				<option value="2014">2014</option>
+				<option value="2013">2013</option>
+				<option value="2012">2012</option>
+				<option value="2011">2011</option>
+				<option value="2010">2010</option>
+				<option value="2009">2009</option>
+				<option value="2008">2008</option>
+				<option value="2007">2007</option>
+				<option value="2006">2006</option>
+				<option value="2005">2005</option>
+				<option value="2004">2004</option>
+				<option value="2003">2003</option>
+				<option value="2002">2002</option>
+				<option value="2001">2001</option>
+				<option value="2000">2000</option>
+			</select> 年
+			<select class="month">
+				<option>选择月</option>
+				<option value="01">1</option>
+				<option value="02">2</option>
+				<option value="03">3</option>
+				<option value="04">4</option>
+				<option value="05">5</option>
+				<option value="06">6</option>
+				<option value="07">7</option>
+				<option value="08">8</option>
+				<option value="09">9</option>
+				<option value="10">10</option>
+				<option value="11">11</option>
+				<option value="12">12</option>
+			</select> 月
+			<select class="day">
+				<option>选择日</option>
+				<option value="01">1</option>
+				<option value="02">2</option>
+				<option value="03">3</option>
+				<option value="04">4</option>
+				<option value="05">5</option>
+				<option value="06">6</option>
+				<option value="07">7</option>
+				<option value="08">8</option>
+				<option value="09">9</option>
+				<option value="10">10</option>
+				<option value="11">11</option>
+				<option value="12">12</option>
+				<option value="13">13</option>
+				<option value="14">14</option>
+				<option value="15">15</option>
+				<option value="16">16</option>
+				<option value="17">17</option>
+				<option value="18">18</option>
+				<option value="19">19</option>
+				<option value="20">20</option>
+				<option value="21">21</option>
+				<option value="22">22</option>
+				<option value="23">23</option>
+				<option value="24">24</option>
+				<option value="25">25</option>
+				<option value="26">26</option>
+				<option value="27">27</option>
+				<option value="28">28</option>
+				<option value="29">29</option>
+				<option value="10">30</option>
+			</select> 日
+		</div>
+		<div class="save">
+			<button>确认保存</button>
+		</div>
+	</div>
+</div>
+
+<div class="hint-box"
+	 style="background: #fff;width: 300px;position: fixed;right: 0;bottom: 0;border-radius: 6px;box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);display: none">
+	<div class="hint-title row" style="height: 30px; padding: 5px;">
+		<div class="title-name" style="position: absolute;left: 10px;font-size: 15px;">系统提示</div>
+		<div style="position: absolute;right: 10px;font-size: 12px;">WebHint</div>
+	</div>
+	<div class="hint-value"
+		 style="text-indent: 2em;border-top: 1px solid #999;font-size: 14px; padding: 9px 20px;"></div>
+	<button class="btn btn-primary" style="float: left;margin:7px;padding:2px 10px;margin-top: 0;">OK</button>
+</div>
+</body>
+<script src="../../js/jquery.min.js"></script>
+<script src="../js/util.js"></script>
+<script>
+
+
+	let param = getHrefParam(window.location.href);
+	$.ajax({
+		url: "/personalCenter/user",
+		method: "post",
+		data: {
+			"CONTENT_METHOD_NAME": "getUserById",
+			'name': param.get("username")[0]
+		},
+		success: function (data) {
+			let user = JSON.parse(data);
+			$('.box .left .pet-name input').val(user.id);
+			$('.box .left .name input').val(user.name);
+			$('.box .left .sex input').each(function () {
+				if ($(this).val() === user.sex)
+					$(this).attr('checked', 'checked');
+			});
+			let birthday = user.birthday.split('-');
+			$('.year').val(birthday[0]);
+			$('.month').val(birthday[1]);
+			$('.day').val(birthday[2]);
+			if (user.email != null) {
+				$('.email').html("邮箱：<a href='#' style='color: #f40;'>修改绑定</a>");
+			}
+		}
+	});
+
+	$('.save button').click(function () {
+		$.ajax({
+			url: "/personalCenter/user",
+			method: "post",
+			data: {
+				CONTENT_METHOD_NAME: "updateUserInfo",
+				userId: param.get("username")[0],
+				name: $('.box .left .name input').val(),
+				sex: $('.box .left .sex input:checked').val(),
+				birthday: $('.year').val() + "-" + $('.month').val() + "-" + $('.day').val()
+			},
+			success: function () {
+				$('.hint-box .hint-value').text("个人信息修改完成");
+				$('.hint-box').slideDown();
+			}
+
+		});
+	});
+
+	$('.email-bind').click(function () {
+		let emailValue = $('input[type="email"]').val();
+		if (emailValue === '') {
+			$('.hint-box .hint-value').text("email不可为空");
+			$('.hint-box').slideDown();
+		} else if (!/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(emailValue)) {
+			$('.hint-box .hint-value').text("email格式有误");
+			$('.hint-box').slideDown();
+		} else {
+			$.ajax({
+				url: "/personalCenter/user",
+				method: "post",
+				data: {
+					CONTENT_METHOD_NAME: "updateUserEmail",
+					userId: param.get("username")[0],
+					email: emailValue
+				},
+				success: function () {
+					$('.hint-box .hint-value').text("email绑定完成");
+					$('.hint-box').slideDown();
+					$('.email').html("邮箱：<a href='#' style='color: #f40;'>修改绑定</a>");
+				}
+
+			});
+		}
+	});
+
+	$(".hint-box button").click(function () {
+		$('.hint-box').slideUp(500);
+	});
+</script>
+</html>

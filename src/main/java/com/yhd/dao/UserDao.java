@@ -68,4 +68,29 @@ public interface UserDao {
 	 * @return 用户的个数
 	 */
 	long getUserCount(Connection conn, String id);
+
+	/**
+	 * 根据用户id获取其信息
+	 * @param conn 连接
+	 * @param userId 用户id
+	 * @return 用户
+	 */
+	User getUserById(Connection conn, String userId);
+
+	/**
+	 * 修改用户的默认地址
+	 * @param conn 连接
+	 * @param addressId 地址编号
+	 * @param userId 用户名称
+	 * @return 是否修改成功
+	 */
+	boolean updateUserDefaultAddress(Connection conn, int addressId, String userId);
+
+	/**
+	 * 检查手机号是否存在
+	 * @param conn 连接
+	 * @param phone 手机号
+	 * @return 是否存在
+	 */
+	boolean checkUserPhoneIsExist(Connection conn, String phone);
 }
