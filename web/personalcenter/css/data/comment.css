@@ -1,0 +1,113 @@
+@import '../Reset.css';
+
+
+.address,
+.date,
+.status {
+    padding-left: 50px;
+}
+
+.msg-top {
+    text-align: right;
+}
+.msg-top .id {
+    padding-right: 50px;
+}
+
+.oper {
+    max-width: 56px;
+    max-height: 30px;
+    padding-top: 6px;
+    margin: -6px 40px 0;
+    cursor: pointer;
+}
+
+.goods-msg-top,
+.goods-msg-main {
+    border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 4px; padding:5px;
+    text-align: center;
+    font-size: 13px;
+}
+.goods-msg-main {
+    margin-bottom: 15px;
+    margin-left: 0;
+}
+
+.goods-msg-top {
+    margin: 15px 0;
+    color: #999;
+}
+
+.row {
+    width: 100%;
+}
+.goods-msg-main .image {
+    max-width: 73px;
+}
+.goods-msg-main .goods-item {
+    height: 100px;
+    padding-top: 20px;
+    margin-top: 10px;
+    margin-left: 0;
+}
+
+.goods-msg-main .border-bottom {
+    border-bottom: rgba(0, 0, 0, 0.1) 1px solid;
+}
+
+.goods-msg-main .col-5 p{
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.goback {
+    padding: 3px 7px !important;
+    font-size: 13px;
+    float: right;
+    margin-right: 14px;
+}
+
+.msg-top>span,
+.msg-bottom>span {
+    font-size: 12px;
+}
+
+body {
+    margin: 40px;
+    background: #fff;
+}
+
+
+.title {
+    margin-bottom: 10px;
+}
+
+.top {
+    border-bottom: 1px solid #f3f3f3;
+}
+
+.top .item {
+    position: relative;
+    bottom: -1px;
+    text-align: center;
+    color: #f40;
+    background: #fff;
+    line-height: 28px;
+    width: 70px;
+    border: 1px solid #f3f3f3;
+    border-bottom: none;
+}
+
+.box {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: 1px solid #e5debc;
+    background: #fff7d1;
+    line-height: 22px;
+}
+
+.box a {
+    color: #519ae3;
+}

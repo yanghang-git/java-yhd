@@ -7,7 +7,6 @@ import com.yhd.dao.DaoFlyweightPatternFactory;
 import com.yhd.logger.LoggerServiceProxy;
 import com.yhd.pojo.Admin;
 import com.yhd.pojo.Indent;
-import com.yhd.pojo.User;
 import com.yhd.service.backend.IndentService;
 import com.yhd.service.backend.impl.IndentServiceImpl;
 import com.yhd.util.ContentConstant;
@@ -21,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.util.List;
 

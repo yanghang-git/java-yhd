@@ -49,4 +49,12 @@ public interface AddressDao {
 	 * @return 是否修改成功
 	 */
 	boolean updateAddress(Connection conn, Address address);
+
+	/**
+	 * 获取address的示例跟它的Id
+	 * @param conn 连接
+	 * @param addressId id
+	 * @return 示例
+	 */
+	Address getAddressById(Connection conn, int addressId);
 }

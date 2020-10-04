@@ -129,6 +129,63 @@
 		<url-pattern>/back/indent/indent</url-pattern>
 	</servlet-mapping>
 
+	<servlet>
+		<servlet-name>CenterIndentServlet</servlet-name>
+		<servlet-class>com.yhd.controller.personalcenter.IndentServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CenterIndentServlet</servlet-name>
+		<url-pattern>/personalCenter/indent</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CenterIndentStatusServlet</servlet-name>
+		<servlet-class>com.yhd.controller.personalcenter.IndentStatusServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CenterIndentStatusServlet</servlet-name>
+		<url-pattern>/personalCenter/indentstatus</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CenterAddressServlet</servlet-name>
+		<servlet-class>com.yhd.controller.personalcenter.AddressServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CenterAddressServlet</servlet-name>
+		<url-pattern>/personalCenter/address</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CenterGoodsServlet</servlet-name>
+		<servlet-class>com.yhd.controller.personalcenter.GoodsServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CenterGoodsServlet</servlet-name>
+		<url-pattern>/personalCenter/goods</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CenterAddressCatalogServlet</servlet-name>
+		<servlet-class>com.yhd.controller.personalcenter.AddressCatalogServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CenterAddressCatalogServlet</servlet-name>
+		<url-pattern>/personalCenter/addresscatalog</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CenterUserServlet</servlet-name>
+		<servlet-class>com.yhd.controller.personalcenter.UserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CenterUserServlet</servlet-name>
+		<url-pattern>/personalCenter/user</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>CenterGoodsCommentServlet</servlet-name>
+		<servlet-class>com.yhd.controller.personalcenter.GoodsCommentServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CenterGoodsCommentServlet</servlet-name>
+		<url-pattern>/personalCenter/goodscomment</url-pattern>
+	</servlet-mapping>
+
 	<listener>
 		<listener-class>com.yhd.util.webutil.SessionListener</listener-class>
 	</listener>

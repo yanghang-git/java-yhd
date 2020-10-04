@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<style>
+		.address,
+		.date,
+		.status {
+			padding-left: 50px;
+		}
+
+		.msg-top {
+			text-align: right;
+		}
+		.msg-top .id {
+			padding-right: 50px;
+		}
+
+		.goods-msg-top,
+		.goods-msg-main {
+			border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 4px; padding:5px;
+			text-align: center;
+			font-size: 13px;
+		}
+		.goods-msg-main {
+			margin-bottom: 15px;
+		}
+
+		.goods-msg-top {
+			margin: 15px 0;
+			color: #999;
+		}
+
+		.row {
+			width: 100%;
+		}
+		.goods-msg-main .image {
+			max-width: 73px;
+		}
+		.goods-msg-main .goods-item {
+			height: 100px;
+			padding-top: 20px;
+			margin-top: 10px;
+			margin-left: 0;
+		}
+
+		.goods-msg-main .border-bottom {
+			border-bottom: rgba(0, 0, 0, 0.1) 1px solid;
+		}
+
+		.goods-msg-main .col-5 p{
+			max-width: 100%;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.goback {
+			padding: 3px 7px !important;
+			font-size: 13px;
+			float: right;
+			margin-right: 14px;
+		}
+
+		.msg-top>span,
+		.msg-bottom>span {
+			font-size: 12px;
+		}
+	</style>
+	<head>
+		<meta charset="UTF-8">
+		<title>订单详情</title>
+		<script src="../js/jquery.min.js"></script>
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+	</head>
+<body>
+<div class="container">
+	<h2 class="mt-5">订单详情</h2>
+	<div class="msg-top">
+		<span class="id"></span>
+		<span>工作日、双休日与节假日均可发货</span>
+	</div>
+	<div class="goods-msg-top row">
+		<span class="col">主图</span>
+		<span class="col-5">商品信息</span>
+		<span class="col">单价(元)</span>
+		<span class="col">数量</span>
+		<span class="col">小计</span>
+	</div>
+	<div class="goods-msg-main row"></div>
+	<div class="msg-bottom">
+		<span class="total-price"></span>
+		<span class="address"></span>
+		<span class="date"></span>
+		<span class="status"></span>
+		<button class="btn btn-outline-dark goback">返回</button>
+	</div>
+</div>
+</body>
+<script src="../js/jquery.min.js"></script>
+<script src="js/util.js"></script>
+<script>
+	let param = getHrefParam(window.location.href);
+	let addressId, statusId, goodsId, type, buyNumber;
+	$.ajax({
+		url: "/personalCenter/indent",
+		method: "post",
+		async: false,
+		data: {
+			"CONTENT_METHOD_NAME" : "getIndentById",
+			"indentId": param.get('indentid')[0]
+		},
+		 success: function(data) {
+			 let indent = JSON.parse(data);
+			$('.id').text("编号：" + indent.id);
+			$('.total-price').text("总价：" + indent.totalPrices + "元");
+			$('.date').text("时间：" + indent.orderTime);
+			addressId = indent.addressId;
+			statusId = indent.statusId;
+			goodsId = indent.goodsId;
+			type = indent.type;
+			buyNumber = indent.buyNumber;
+		 }
+	});
+	$.ajax({
+		url: '/personalCenter/address',
+		method: 'post',
+		data: {
+			'CONTENT_METHOD_NAME' : "getAddressDetailByAddressId",
+			'addressId': addressId
+		},
+		success: (data) => {
+			$('.address').text("地址: " + data);
+		},
+		error: () => myError()
+	});
+
+	$.ajax({
+		url: '/personalCenter/indentstatus',
+		method: 'post',
+		data: {
+			"CONTENT_METHOD_NAME" : "getIndentStatusById",
+			statusId: statusId
+		},
+		success: (data) => {
+			$('.status').text("状态：" + data);
+		},
+	});
+
+	let idList = goodsId.split("&");
+	let typeList = type.split("&");
+	let numberList = buyNumber.split("&");
+	for (let i in idList) {
+		$.ajax({
+			url: '/personalCenter/goods',
+			method: 'post',
+			data: {
+				'CONTENT_METHOD_NAME': 'getGoodsById',
+				goodsId: idList[i]
+			},
+			success: (data) => {
+				let goods = JSON.parse(data);
+				$(".goods-msg-main").append(`
+				<div class="row goods-item ${(idList.length -1 == i ? "" : "border-bottom")}">
+					<span class="col"><img class="image" src="${goods.imagePrimary}"></span>
+					<span class="col-5">
+						<p>${goods.name}</p>
+						<p>${typeList[i]}</p>
+					</span>
+					<span class="col">${goods.price}</span>
+					<span class="col">${numberList[i]}</span>
+					<span class="col">${(parseInt(numberList[i]) * goods.price)}</span>
+				</div>`);
+			},
+		});
+	}
+
+	$(".goback").click(function () {
+		history.back();
+	});
+</script>
+</html>

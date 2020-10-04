@@ -3,7 +3,11 @@ package com.yhd.dao.impl;
 import com.yhd.dao.AddressDao;
 import com.yhd.dao.BaseDao;
 import com.yhd.pojo.Address;
+import com.yhd.util.JDBCUtils;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.util.List;
 
@@ -70,8 +74,46 @@ public class AddressDaoImpl extends BaseDao<Address> implements AddressDao {
 	 */
 	@Override
 	public boolean updateAddress(Connection conn, Address address) {
-		String sql = "update address set user_id = ?, username = ?, phone = ?, city = ?, county = ?, street = ?, detail = ? where id = ?";
-		return super.update(conn, sql, address.getUserId(), address.getUsername(), address.getPhone(), address.getCity()
-				,address.getCounty(), address.getStreet(), address.getDetail(), address.getId()) == 1;
+		if (address.getId() == null) throw new RuntimeException("alter address of id not is null");
+		StringBuilder sql = new StringBuilder();
+		sql.append("update address set ");
+		Field[] fields = address.getClass().getDeclaredFields();
+		try {
+			for (int i = 0; i < fields.length; i++) {
+				String fieldName = fields[i].getName();
+				if ("serialVersionUID".equals(fieldName) || "id".equals(fieldName)) continue;
+				Method method = address.getClass().getMethod(JDBCUtils.firstAddGet(fieldName));
+				Object value = method.invoke(address);
+				if (value != null) {
+					sql.append(JDBCUtils.replaceFirstToUpper_(fieldName)).append("=");
+					if (fields[i].getType().equals(String.class)) {
+						sql.append("'").append(value).append("'");
+					} else {
+						sql.append(value);
+					}
+					sql.append(",");
+				}
+			}
+			if (sql.charAt(sql.length() - 1) == ',') {
+				sql.replace(sql.length() - 1, sql.length(), "");
+			}
+			sql.append(" where id = ?");
+			return super.update(conn, sql.toString(), address.getId()) == 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	/**
+	 * 获取address的示例跟它的Id
+	 * @param conn      连接
+	 * @param addressId id
+	 * @return 示例
+	 */
+	@Override
+	public Address getAddressById(Connection conn, int addressId) {
+		String sql = "select  id, user_id, username, phone, city, county, street, detail from address where id = ?";
+		return super.getInstance(conn, sql, addressId);
 	}
 }

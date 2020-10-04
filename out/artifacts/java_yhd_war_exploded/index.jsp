@@ -4,6 +4,6 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
+  	<a href="personalcenter/index.html?username=Tom">前往个人中心</a>
   </body>
 </html>

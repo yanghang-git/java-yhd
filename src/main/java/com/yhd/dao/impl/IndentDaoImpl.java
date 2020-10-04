@@ -84,6 +84,18 @@ public class IndentDaoImpl extends BaseDao<Indent> implements IndentDao {
 	}
 
 	/**
+	 * 根据用户姓名查询订单
+	 * @param conn     连接
+	 * @param username 用户的姓名
+	 * @return 订单List
+	 */
+	@Override
+	public List<Indent> getIndentByUsername(Connection conn, String username) {
+		String sql = "select  id, user_id, goods_id, status_id, buy_number, type, total_prices, address_id,order_time from indent where user_id = ?";
+		return super.getInstances(conn, sql, username);
+	}
+
+	/**
 	 * 修改订单的类型、数量、价格、收货地址。 根据Id
 	 * @param conn       连接
 	 * @param goodsType  商品类型
@@ -100,7 +112,6 @@ public class IndentDaoImpl extends BaseDao<Indent> implements IndentDao {
 
 	/**
 	 * 根据订单编号修改订单状态
-	 *
 	 * @param conn     连接
 	 * @param statusId 订单状态Id
 	 * @param id       订单id
@@ -135,5 +146,30 @@ public class IndentDaoImpl extends BaseDao<Indent> implements IndentDao {
 	public boolean removeById(Connection conn, String id) {
 		String sql = "delete from indent where id = ?";
 		return super.update(conn, sql, id) == 1;
+	}
+
+	@Override
+	public List<Indent> getIndentByStatusIdAndUsername(Connection conn, int statusId, String username) {
+		String sql = "select  id, user_id, goods_id, status_id, buy_number, type, total_prices, address_id,order_time from indent where status_id = ? and user_id = ?";
+		return super.getInstances(conn, sql, statusId, username);
+	}
+
+	/**
+	 * 修改订单状态
+	 * @param conn     连接
+	 * @param indentId 订单Id
+	 * @param statusId 状态id
+	 * @return 是否修改成功
+	 */
+	@Override
+	public boolean alterIndentStatusById(Connection conn, String indentId, int statusId) {
+		String sql = "update indent set status_id = ? where id = ?";
+		return super.update(conn, sql, statusId, indentId) == 1;
+	}
+
+	@Override
+	public Indent getRecentlyIndentByUserName(Connection conn, String username) {
+		String sql = "SELECT id, user_id, goods_id, status_id, buy_number, type, total_prices, address_id,order_time FROM indent WHERE user_id = ? ORDER BY order_time DESC";
+		return super.getInstance(conn, sql, username);
 	}
 }

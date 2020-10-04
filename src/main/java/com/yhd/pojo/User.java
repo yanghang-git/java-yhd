@@ -1,7 +1,7 @@
 package com.yhd.pojo;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.sql.Date;
 
 /**
  * @Author 杨航
@@ -16,7 +16,7 @@ public class User implements Serializable {
 	private String password;
 	private String name;
 	private String sex;
-	private Timestamp birthday;
+	private Date birthday;
 	private String email;
 	private String phone;
 	private Integer addressId;
@@ -24,7 +24,7 @@ public class User implements Serializable {
 
 	public User() {}
 
-	public User(String id, String password, String name, String sex, Timestamp birthday, String email, String phone, Integer addressId, Boolean freeze) {
+	public User(String id, String password, String name, String sex, Date birthday, String email, String phone, Integer addressId, Boolean freeze) {
 		this.id = id;
 		this.password = password;
 		this.name = name;
@@ -93,11 +93,11 @@ public class User implements Serializable {
 		this.sex = sex;
 	}
 
-	public Timestamp getBirthday() {
+	public Date getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Timestamp birthday) {
+	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
 	}
 
@@ -106,6 +106,10 @@ public class User implements Serializable {
 	}
 
 	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void getEmail(String email) {
 		this.email = email;
 	}
 

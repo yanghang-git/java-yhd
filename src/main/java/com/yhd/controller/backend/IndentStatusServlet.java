@@ -58,7 +58,9 @@ public class IndentStatusServlet extends HttpServlet {
 
 	private void getIndentStatusById(HttpServletRequest req, HttpServletResponse resp) {
 		int statusId = Integer.parseInt(req.getParameter("statusId"));
+		System.out.println(statusId);
 		IndentStatus status = service.getStatusById(statusId);
+		System.out.println(status);
 		WebUtils.sendValue(resp, JsonUtils.getJson(status));
 	}
 

@@ -50,5 +50,21 @@ public class IndentDaoImplTest {
 		assertTrue(result);
 	}
 
+	@Test
+	public void alterIndentStatusById() {
+		System.out.println(dao.alterIndentStatusById(conn, "sdafoiajsdfi213134", 2));
+	}
+
+
+	@Test
+	public void getIndentByStatusId() {
+		System.out.println(dao.getIndentByStatusIdAndUsername(conn, 2, "Tom"));
+	}
+
+	@Test
+	public void getIndentByUsername() {
+		System.out.println(dao.getIndentByUsername(conn, "Tom"));
+	}
+
 
 }

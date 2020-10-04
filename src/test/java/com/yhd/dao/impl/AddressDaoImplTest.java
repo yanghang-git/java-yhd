@@ -48,7 +48,12 @@ public class AddressDaoImplTest {
 
 	@Test
 	public void updateAddress() {
-		boolean result = dao.updateAddress(conn, new Address(1, "Tom", "Tom", "13777776777", 1, 5, 8, "第30号"));
+		boolean result = dao.updateAddress(conn, new Address(1, null, null, "13777776727", null, null, 1, "第31号"));
 		assertTrue(result);
+	}
+
+	@Test
+	public void getAddressDetailByAddressId() {
+		System.out.println(dao.getAddressDetailById(conn, 1));
 	}
 }

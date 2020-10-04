@@ -64,5 +64,10 @@ public class UserDaoImplTest {
 		assertNotNull(userCount);
 	}
 
+	@Test
+	public void getUserById() {
+		System.out.println(dao.getUserById(conn, "Tom"));
+	}
+
 
 }
